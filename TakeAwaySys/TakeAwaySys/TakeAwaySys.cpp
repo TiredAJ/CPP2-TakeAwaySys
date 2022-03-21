@@ -6,13 +6,13 @@
 #include "Address.h"
 #include "FoodItem.h"
 #include "Graphics.h"
+#include "ScrClnTM.h"
 
 using namespace std;
 
-void ScreenCleanerTM(int);
-void ScreenCleanerTM(int, string);
-
+ScrClnTM SCHandler;
 Graphics GHandler;
+const string CurrencySym = "\x9C";
 
 class Customer
 {
@@ -77,6 +77,7 @@ public:
 	void NewDish()
 	{
 		string Command, Input, Temp, MenuTitle;
+		FoodItem TempFood;
 
 		cout << "New Dish" << endl;
 		
@@ -98,24 +99,25 @@ public:
 
 				MenuTitle = "New Dish > New Cuisine";
 
-				ScreenCleanerTM(0, (MenuTitle + "\n"));
+				SCHandler.ScreenCleanerTM(0, (MenuTitle + "\n"));
 
 				cout << "Cuisine Name: ";
 				cin >> Input;
 
-				cout << "Cuisine Prefix";
-				cin >> Temp;
-
-				Temp = Temp + "," + Input;
+				cout << "Cuisine Prefix: ";
+				cin >> Temp;			
 
 				Command.clear();
 
-				cout << endl << "New Cuisine: " << Input << endl;
+				cout << endl << "New Cuisine: " << Input;
+				cout << endl << "Prefix: " << Temp << endl;
 				cout << "Is this correct? [yes/no]" << endl;
 				cin >> Command;
+
+				Temp = Temp + "," + Input;
 			} while (Command != "yes");
 
-			Cuisine.push_back(Input);
+			Cuisine.push_back(Temp);
 			Input.clear();
 
 			do
@@ -131,10 +133,12 @@ public:
 			} while (Command != "yes" && Command != "no");
 		}
 
-		MenuTitle = "New Dish >";
+		MenuTitle = "New Dish > ";
+
+		double Price;
 
 		Input.clear();
-		ScreenCleanerTM(0, MenuTitle + "\n\n");
+		SCHandler.ScreenCleanerTM(0, MenuTitle + "\n\n");
 
 		if (Cuisine.size() == 0)
 		{
@@ -143,17 +147,15 @@ public:
 		}
 
 		cout << "Please choose a cuisine" << endl;
-		GHandler.DisplayOptions(Cuisine,0);
+		GHandler.DisplayOptions(Cuisine, 0);
 		cin >> Command;
 		cout << "You've chosen:" << Cuisine[stod(Command) - 1];
 
-		ScreenCleanerTM(0, MenuTitle + ("\nCuisine: " + Cuisine[stod(Command) - 1] + "\n"));
+		SCHandler.ScreenCleanerTM(0, MenuTitle + (Cuisine[stod(Command) - 1] + "\n"));
 
-		cout << "Dish Name: ";
-		cin >> Input;
+		TempFood.CreateDish(Cuisine[stod(Command) - 1] + "," + to_string(Dishes.size()));
 
-		cout << ""
-
+		TempFood.DisplayDish();
 	}
 
 	void UpdatePop()
@@ -263,17 +265,5 @@ int main()
 	RestraurantSys RSys;
 
 	RSys.TEMPCreateDish();
-
-}
-
-void ScreenCleanerTM(int Option)
-{
-	system("cls");
-}
-
-void ScreenCleanerTM(int Option, string Keeps)
-{
-	system("cls");
-	cout << Keeps << endl;
 
 }

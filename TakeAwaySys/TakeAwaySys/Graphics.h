@@ -90,7 +90,7 @@ public:
 	{
 		for (int i = 0; i < Input.size(); i++)
 		{
-			cout << i + 1 << "] " << Input[i] << endl;
+			cout << i + 1 << ") " << Input[i] << endl;
 		}
 
 		switch (Option)
@@ -109,6 +109,11 @@ public:
 		cout << "Please choose an option [1-" << Input.size() << "]" << endl;
 	}
 
+	void Line(char Character, int Length)
+	{
+		string TempString;
+		cout << TempString.assign(Character, Length) << endl;
+	}
 
 private:
 	class Table
