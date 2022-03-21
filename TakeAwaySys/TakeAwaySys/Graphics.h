@@ -86,6 +86,30 @@ public:
 		}
 	}
 
+	void DisplayOptions(vector <string> Input, int Option)
+	{
+		for (int i = 0; i < Input.size(); i++)
+		{
+			cout << i + 1 << "] " << Input[i] << endl;
+		}
+
+		switch (Option)
+		{
+		case 1:
+		{
+			cout << Input.size() + 1 << "Cancel" << endl;
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
+		
+		cout << "Please choose an option [1-" << Input.size() << "]" << endl;
+	}
+
+
 private:
 	class Table
 	{

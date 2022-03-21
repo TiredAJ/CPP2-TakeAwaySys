@@ -1,1 +1,20 @@
-﻿  TakeAwaySys.vcxproj -> E:\Uni Work\Year 1\_C++\Term 2\Coursework\Coursework 2\TakeAwaySys\x64\Debug\TakeAwaySys.exe
+﻿  TakeAwaySys.cpp
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(133,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(153,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(164,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(186,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(143,53): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(144,65): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+  TakeAwaySys.vcxproj -> E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\x64\Debug\TakeAwaySys.exe
