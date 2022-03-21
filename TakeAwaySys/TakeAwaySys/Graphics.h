@@ -70,6 +70,22 @@ public:
 		}
 	}
 
+	void ToFile(string TableName, string FileLoc)
+	{
+		for (int i = 0; i < Tables.size(); i++)
+		{
+			if (Tables[i].GetName() == TableName)
+			{
+				Tables[i].ToFile(FileLoc);
+				break;
+			}
+			else
+			{
+				cout << endl << "ERROR::Cannot find specified table" << endl;
+			}
+		}
+	}
+
 private:
 	class Table
 	{
@@ -185,6 +201,11 @@ private:
 				}
 
 			}
+		}
+
+		void ToFile(string FileLoc)
+		{
+
 		}
 
 	private:

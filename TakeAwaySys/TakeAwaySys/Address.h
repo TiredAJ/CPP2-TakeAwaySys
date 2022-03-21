@@ -11,6 +11,26 @@ public:
 
 	}
 
+	void CreateAddress()
+	{
+
+	}
+
+	void CreateAddress(string Input)
+	{
+
+	}
+
+	void EditAddress()
+	{
+
+	}
+
+	void DeleteAddress()
+	{
+
+	}
+
 private:
 	string HouseNo;
 	string StreetName;

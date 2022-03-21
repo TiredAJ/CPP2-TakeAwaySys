@@ -4,6 +4,7 @@
 #include <vector>
 #include "Employee.h"
 #include "Address.h"
+#include "FoodItem.h"
 #include "Graphics.h"
 
 using namespace std;
@@ -15,8 +16,26 @@ public:
 	{
 	
 	}
+	
+	void CreateCustomer()
+	{
 
-	~Customer();
+	}
+
+	void CreateCustomer(string Input)
+	{
+
+	}
+
+	void EditCustomer()
+	{
+
+	}
+
+	void NewOrder()
+	{
+
+	}
 
 private:
 	string CustID;
@@ -27,26 +46,6 @@ private:
 	int Loyalty;
 };
 
-class FoodItem
-{
-public:
-	FoodItem()
-	{
-
-	}
-
-	~FoodItem();
-
-private:
-	string FoodID;
-	string Name;
-	double Price;
-	string Cuisine;
-	string Course;
-	string Popularity;
-	int Availability;
-};
-
 class Menu
 {
 public:
@@ -54,9 +53,33 @@ public:
 	{
 
 	}
-	~Menu();
 
 	void Searcher()
+	{
+
+	}
+
+	void ReadFile()
+	{
+
+	}
+
+	void WriteFile()
+	{
+
+	}
+
+	void NewDish()
+	{
+
+	}
+
+	void UpdatePop()
+	{
+
+	}
+
+	void UpdateAvail()
 	{
 
 	}
@@ -69,7 +92,16 @@ class Order
 {
 public:
 	Order();
-	~Order();
+	
+	void AddItem(FoodItem AddedItem)
+	{
+
+	}
+
+	void ReadCustomer(string Customer)
+	{
+
+	}
 
 private:
 	string OrderID;
@@ -88,7 +120,46 @@ public:
 	{
 
 	}
-	~RestraurantSys();
+	
+	void MakeOrder()
+	{
+
+	}
+
+	void EditOrder()
+	{
+
+	}
+
+	void WriteOrders()
+	{
+
+	}
+
+	void WriteEmployees()
+	{
+
+	}
+
+	void WriteAllFiles()
+	{
+
+	}
+
+	void ReadAllFiles()
+	{
+
+	}
+
+	void ReadOrders()
+	{
+
+	}
+
+	void ReadEmployees()
+	{
+
+	}
 
 private:
 	vector <Order> Orders;
@@ -97,9 +168,8 @@ private:
 	double DeliveryCost;
 };
 
-
 int main()
 {
-	//RestraurantSys RSys;
+	RestraurantSys RSys;
 
 }
