@@ -7,8 +7,6 @@
 
 using namespace std;
 
-const string CurrencySym = "\x9C";
-
 class FoodItem
 {
 public:
