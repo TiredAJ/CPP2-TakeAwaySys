@@ -32,13 +32,10 @@ E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(169,1): war
               _Ty=int
           ]
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(191,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(152,53): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(154,67): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(156,45): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(138,10): warning C4101: 'Price': unreferenced local variable
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(155,54): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(157,68): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(159,4): error C2065: 'TempFood': undeclared identifier
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(159,46): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(161,4): error C2065: 'TempFood': undeclared identifier
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(163,21): error C2065: 'TempFood': undeclared identifier
   Generating Code...
-LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
-TakeAwaySys.obj : warning LNK4006: "class ScrClnTM SCHandler2" (?SCHandler2@@3VScrClnTM@@A) already defined in FoodItem.obj; second definition ignored
-TakeAwaySys.obj : warning LNK4006: "class Graphics GHandler2" (?GHandler2@@3VGraphics@@A) already defined in FoodItem.obj; second definition ignored
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\x64\Debug\TakeAwaySys.exe : warning LNK4088: image being generated due to /FORCE option; image may not run
-  TakeAwaySys.vcxproj -> E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\x64\Debug\TakeAwaySys.exe

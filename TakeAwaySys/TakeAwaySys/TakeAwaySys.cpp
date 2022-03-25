@@ -121,8 +121,6 @@ public:
 
 			do
 			{
-				FoodItem TempFood;
-
 				cout << "Would you like to add a new dish? [yes/no]" << endl;
 				cin >> Command;
 
@@ -149,6 +147,8 @@ public:
 
 		do
 		{
+			FoodItem TempFood;
+
 			cout << "Please choose a cuisine" << endl;
 			GHandler.DisplayOptions(Cuisine, 0);
 			cin >> Command;
