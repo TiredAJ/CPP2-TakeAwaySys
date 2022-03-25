@@ -77,7 +77,6 @@ public:
 	void NewDish()
 	{
 		string Command, Input, Temp, MenuTitle;
-		FoodItem TempFood;
 
 		cout << "New Dish" << endl;
 		
@@ -122,6 +121,8 @@ public:
 
 			do
 			{
+				FoodItem TempFood;
+
 				cout << "Would you like to add a new dish? [yes/no]" << endl;
 				cin >> Command;
 
@@ -138,7 +139,7 @@ public:
 		double Price;
 
 		Input.clear();
-		SCHandler.ScreenCleanerTM(0, MenuTitle + "\n\n");
+		SCHandler.ScreenCleanerTM(0, MenuTitle + "\n");
 
 		if (Cuisine.size() == 0)
 		{
@@ -146,16 +147,26 @@ public:
 			return;
 		}
 
-		cout << "Please choose a cuisine" << endl;
-		GHandler.DisplayOptions(Cuisine, 0);
-		cin >> Command;
-		cout << "You've chosen:" << Cuisine[stod(Command) - 1];
+		do
+		{
+			cout << "Please choose a cuisine" << endl;
+			GHandler.DisplayOptions(Cuisine, 0);
+			cin >> Command;
+			cout << "You've chosen:" << Cuisine[stod(Command) - 1];
 
-		SCHandler.ScreenCleanerTM(0, MenuTitle + (Cuisine[stod(Command) - 1] + "\n"));
+			SCHandler.ScreenCleanerTM(0, MenuTitle + (Cuisine[stod(Command) - 1] + "\n"));
 
-		TempFood.CreateDish(Cuisine[stod(Command) - 1] + "," + to_string(Dishes.size()));
+			TempFood.CreateDish(Cuisine[stod(Command) - 1] + "," + to_string(Dishes.size()));
 
-		TempFood.DisplayDish();
+			TempFood.DisplayDish();
+
+			Dishes.push_back(TempFood);
+
+			cout << "Would you like to make another dish? [yes/no]" << endl;
+			cin >> Command;
+
+		} while (Command != "no" || Command == "yes");
+		
 	}
 
 	void UpdatePop()

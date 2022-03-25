@@ -4,8 +4,13 @@
 #include <iomanip>
 #include <vector>
 #include "ScrClnTM.h"
+#include "Graphics.h"
 
 using namespace std;
+
+ScrClnTM SCHandler2;
+Graphics GHandler2;
+const string CurrencySym2 = "\x9C";
 
 class FoodItem
 {
@@ -37,7 +42,7 @@ public:
 		cout << "Dish Name: ";
 		getline(cin >> ws, Name);
 
-		cout << "Dish Price*: " << CurrencySym;
+		cout << "Dish Price*: " << CurrencySym2;
 		cin >> Price;
 
 		cout << "Course: ";
@@ -45,6 +50,9 @@ public:
 
 		cout << "Availability*: ";
 		cin >> Availability;
+
+		cout << "Expected popularity [low/med/high]";
+		cin >> Popularity;
 
 		for (int i = 0; i < CuisineSpec.size(); i++)
 		{
@@ -89,10 +97,10 @@ public:
 	{
 		string MenuTitle = "Menu > Dish > " + Name;
 
-		SCHandler.ScreenCleanerTM(0, MenuTitle);
+		SCHandler2.ScreenCleanerTM(0, MenuTitle);
 
 		cout << Name << ", ID:" << FoodID << endl << endl;
-		GHandler.Line('=', 45);
+		GHandler2.Line('=', 45);
 		cout << "Cuisine: " << Cuisine << endl;
 		cout << "Price: " << Price << endl << "Course: " << Course << endl;
 		cout << "Popularity: " << Popularity << endl;
