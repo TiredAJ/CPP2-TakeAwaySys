@@ -200,7 +200,10 @@ public:
 
 		if (Command == "yes")
 		{
-
+			for (int i = 0; i < Cuisine.size(); i++)
+			{
+				cout << Cuisine[i];
+			}
 		}
 
 		for (int i = 0; i < Dishes.size(); i++)
@@ -211,7 +214,9 @@ public:
 
 private:
 	vector <FoodItem> Dishes;
+
 	vector <string> Cuisine;
+	//work out nicer way to handle  cuisine name and prefix
 };
 
 class Order
