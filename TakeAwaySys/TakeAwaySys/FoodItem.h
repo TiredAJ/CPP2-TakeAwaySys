@@ -97,14 +97,12 @@ public:
 	{
 		string MenuTitle = "Menu > Dish > " + Name;
 
-		SCHandler2.ScreenCleanerTM(0, MenuTitle);
-
-		cout << Name << ", ID:" << FoodID << endl << endl;
-		GHandler2.Line('=', 45);
+		cout << Name << ", ID:" << FoodID << endl;
 		cout << "Cuisine: " << Cuisine << endl;
 		cout << "Price: " << Price << endl << "Course: " << Course << endl;
 		cout << "Popularity: " << Popularity << endl;
 		cout << "Availability: " << Availability << endl;
+		GHandler2.Line('=', 45);
 	}
 
 private:

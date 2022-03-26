@@ -137,16 +137,17 @@ public:
 		double Price;
 
 		Input.clear();
-		SCHandler.ScreenCleanerTM(0, MenuTitle + "\n");
-
-		if (Cuisine.size() == 0)
-		{
-			cout << "There are no cuisines available, please make a new cuisine first" << endl;
-			return;
-		}
-
+		
 		do
 		{
+			SCHandler.ScreenCleanerTM(0, MenuTitle + "\n");
+
+			if (Cuisine.size() == 0)
+			{
+				cout << "There are no cuisines available, please make a new cuisine first" << endl;
+				return;
+			}
+
 			FoodItem TempFood;
 
 			cout << "Please choose a cuisine" << endl;
@@ -158,12 +159,16 @@ public:
 
 			TempFood.CreateDish(Cuisine[stod(Command) - 1] + "," + to_string(Dishes.size()));
 
+			SCHandler.ScreenCleanerTM(0, MenuTitle);
+
 			TempFood.DisplayDish();
 
 			Dishes.push_back(TempFood);
 
 			cout << "Would you like to make another dish? [yes/no]" << endl;
 			cin >> Command;
+
+			SCHandler.ScreenCleanerTM(0);
 
 		} while (Command != "no" || Command == "yes");
 		
@@ -177,6 +182,30 @@ public:
 	void UpdateAvail()
 	{
 
+	}
+
+	void DisplayMenu() //replace with operator overload?
+	{
+		string Command, Input, MenuTitle;
+
+		cout << "Would you like to browse a specific cuisine? [yes/no]: ";
+		cin >> Command;
+
+		while (Command != "yes" && Command != "no")
+		{
+			cout << "Please enter [yes] or [no]: ";
+			cin >> Command;
+		}
+
+		if (Command == "yes")
+		{
+
+		}
+
+		for (int i = 0; i < Dishes.size(); i++)
+		{
+			Dishes[i].DisplayDish();
+		}
 	}
 
 private:
@@ -257,6 +286,11 @@ public:
 
 	}
 
+	void DisplayMenu()
+	{
+		LeMenu.DisplayMenu();
+	}
+
 	//Temp
 	void TEMPCreateDish()
 	{
@@ -276,5 +310,6 @@ int main()
 	RestraurantSys RSys;
 
 	RSys.TEMPCreateDish();
+	RSys.DisplayMenu();
 
 }
