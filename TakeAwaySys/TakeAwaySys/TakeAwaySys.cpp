@@ -8,9 +8,11 @@
 #include "FoodItem.h"
 #include "Graphics.h"
 #include "ScrClnTM.h"
+#include "CommaRemover.h"
 
 using namespace std;
 
+CommaRemover CRHandler;
 ScrClnTM SCHandler;
 Graphics GHandler;
 const string CurrencySym = "\x9C";
@@ -80,7 +82,9 @@ public:
 	{
 		string Command, Input, Temp;
 
-		cout << "New Dish" << endl;
+		MenuTitle = "New Dish >";
+
+		cout << MenuTitle << endl;
 		
 		cout << "Would you like to add a new cuisine? [yes/no]" << endl << "> ";
 		cin >> Command;
@@ -118,7 +122,8 @@ public:
 		
 		do
 		{
-			SCHandler.ScreenCleanerTM(0, MenuTitle + "\n");
+			MenuTitle = "New Dish > ";
+			SCHandler.ScreenCleanerTM(0, MenuTitle + "Choose Cuisine" + "\n");
 
 			if (Cuisine.size() == 0)
 			{
@@ -137,7 +142,7 @@ public:
 
 			TempFood.CreateDish(Cuisine[stod(Command) - 1] + "," + to_string(Dishes.size()));
 
-			SCHandler.ScreenCleanerTM(0, MenuTitle);
+			SCHandler.ScreenCleanerTM(0, MenuTitle + " Display Dish");
 
 			TempFood.DisplayDish();
 
@@ -196,6 +201,18 @@ public:
 		}
 		else
 		{
+			for (int i = 0; i < Cuisine.size(); i++)
+			{
+				cout << Cuisine[i] << endl;
+				for (int j = 0; j < Dishes.size(); j++)
+				{					
+					if (Dishes[j].GetCuisine() == CRHandler.Remove(',',Cuisine[i],"left"))
+					{
+						Dishes[j].DisplayDish();
+					}
+				}
+			}
+
 			for (int i = 0; i < Dishes.size(); i++)
 			{
 				Dishes[i].DisplayDish();
@@ -208,10 +225,9 @@ public:
 	{
 		string Input, Temp, Command;
 
+		MenuTitle += "New Cuisine > \n";
 		do
 		{
-			MenuTitle += "New Cuisine > \n";
-
 			SCHandler.ScreenCleanerTM(0, MenuTitle);
 
 			do
@@ -222,21 +238,22 @@ public:
 				cout << "Cuisine Prefix: ";
 				cin >> Temp;
 
-				cout << endl << "Cuisine Name: " << Input;
-				cout << "Cuisine Prefix: " << Temp;
-				cout << "Is this correct?";
+				cout << endl << "Cuisine Name: " << Input << endl;
+				cout << "Cuisine Prefix: " << Temp << endl;
+				cout << "Is this correct? [yes/no]" << endl;
 				cin >> Command;
 			} while (Command != "yes" && Command == "no");
 			
-
 			Temp += "," + Input;
 			Cuisine.push_back(Temp);
+
 			Input.clear();
+			Temp.clear();
 
 			cout << endl << "Would you like to make another cuisine? [yes/no]" << endl;
 			cin >> Command;
 
-		} while (Command != "yes" && Command != "no");
+		} while (Command == "yes" && Command != "no");
 
 		MenuTitle.clear();
 	}

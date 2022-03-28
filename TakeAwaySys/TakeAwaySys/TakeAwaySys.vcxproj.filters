@@ -21,9 +21,6 @@
     <ClCompile Include="Employee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Address.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FoodItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScrClnTM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommaRemover.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

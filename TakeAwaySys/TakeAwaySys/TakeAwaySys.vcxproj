@@ -140,7 +140,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Address.cpp" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="FoodItem.cpp" />
     <ClCompile Include="ScrClnTM.cpp" />
@@ -148,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Address.h" />
+    <ClInclude Include="CommaRemover.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="FoodItem.h" />
     <ClInclude Include="Graphics.h" />
