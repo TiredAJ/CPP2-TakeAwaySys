@@ -14,6 +14,7 @@ using namespace std;
 ScrClnTM SCHandler;
 Graphics GHandler;
 const string CurrencySym = "\x9C";
+string MenuTitle;
 
 class Customer
 {
@@ -77,7 +78,7 @@ public:
 
 	void NewDish()
 	{
-		string Command, Input, Temp, MenuTitle;
+		string Command, Input, Temp;
 
 		cout << "New Dish" << endl;
 		
@@ -90,36 +91,12 @@ public:
 			cin >> Command;
 		}
 
-		
 		if (Command == "yes")
 		{
-			do
-			{
-				Input.clear();
+				MenuTitle = "New Dish > ";
 
-				MenuTitle = "New Dish > New Cuisine";
-
-				SCHandler.ScreenCleanerTM(0, (MenuTitle + "\n"));
-
-				cout << "Cuisine Name: ";
-				cin >> Input;
-
-				cout << "Cuisine Prefix: ";
-				cin >> Temp;			
-
-				Command.clear();
-
-				cout << endl << "New Cuisine: " << Input;
-				cout << endl << "Prefix: " << Temp << endl;
-				cout << "Is this correct? [yes/no]" << endl;
-				cin >> Command;
-
-				Temp = Temp + "," + Input;
-			} while (Command != "yes");
-
-			Cuisine.push_back(Temp);
-			Input.clear();
-
+				CreateCuisine();
+				
 			do
 			{
 				cout << "Would you like to add a new dish? [yes/no]" << endl;
@@ -133,7 +110,7 @@ public:
 			} while (Command != "yes" && Command != "no");
 		}
 
-		MenuTitle = "New Dish > ";
+		MenuTitle += "New Cuisine \n";
 
 		double Price;
 
@@ -168,11 +145,10 @@ public:
 
 			cout << "Would you like to make another dish? [yes/no]" << endl;
 			cin >> Command;
-
-			SCHandler.ScreenCleanerTM(0);
-
+			
 		} while (Command != "no" || Command == "yes");
-		
+
+		SCHandler.ScreenCleanerTM(0);		
 	}
 
 	void UpdatePop()
@@ -187,7 +163,7 @@ public:
 
 	void DisplayMenu() //replace with operator overload?
 	{
-		string Command, Input, MenuTitle;
+		string Command, Input;
 
 		cout << "Would you like to browse a specific cuisine? [yes/no]: ";
 		cin >> Command;
@@ -208,6 +184,14 @@ public:
 			cout << "Please select [1-" << Cuisine.size() << "]" << endl;
 			cin >> Command;
 
+			for (int i = 0; i < Dishes.size(); i++)
+			{
+				if (Cuisine[stod(Command)] == Dishes[i].GetCuisine())
+				{
+					Dishes[i].DisplayDish();
+				}
+
+			}
 
 		}
 		else
@@ -218,6 +202,43 @@ public:
 			}
 		}
 		
+	}
+
+	void CreateCuisine()
+	{
+		string Input, Temp, Command;
+
+		do
+		{
+			MenuTitle += "New Cuisine > \n";
+
+			SCHandler.ScreenCleanerTM(0, MenuTitle);
+
+			do
+			{
+				cout << "Cuisine Name: ";
+				cin >> Input;
+
+				cout << "Cuisine Prefix: ";
+				cin >> Temp;
+
+				cout << endl << "Cuisine Name: " << Input;
+				cout << "Cuisine Prefix: " << Temp;
+				cout << "Is this correct?";
+				cin >> Command;
+			} while (Command != "yes" && Command == "no");
+			
+
+			Temp += "," + Input;
+			Cuisine.push_back(Temp);
+			Input.clear();
+
+			cout << endl << "Would you like to make another cuisine? [yes/no]" << endl;
+			cin >> Command;
+
+		} while (Command != "yes" && Command != "no");
+
+		MenuTitle.clear();
 	}
 
 private:
@@ -303,6 +324,11 @@ public:
 	void DisplayMenu()
 	{
 		LeMenu.DisplayMenu();
+	}
+
+	void CreateCusine()
+	{
+		LeMenu.CreateCuisine();
 	}
 
 	//Temp

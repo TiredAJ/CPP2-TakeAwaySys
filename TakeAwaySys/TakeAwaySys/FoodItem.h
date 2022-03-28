@@ -105,6 +105,9 @@ public:
 		GHandler2.Line('=', 45);
 	}
 
+	string GetCuisine()
+	{return Cuisine;}
+
 private:
 	string FoodID;
 	string Name;

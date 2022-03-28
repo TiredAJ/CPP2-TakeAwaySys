@@ -1,4 +1,21 @@
-﻿  TakeAwaySys.cpp
+﻿  FoodItem.cpp
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(138,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(158,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(169,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(191,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  TakeAwaySys.cpp
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(138,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
@@ -19,6 +36,8 @@ E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(157,54
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(159,68): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(161,46): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(138,10): warning C4101: 'Price': unreferenced local variable
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(213,21): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+  Generating Code...
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
 TakeAwaySys.obj : warning LNK4006: "class ScrClnTM SCHandler2" (?SCHandler2@@3VScrClnTM@@A) already defined in FoodItem.obj; second definition ignored
 TakeAwaySys.obj : warning LNK4006: "class Graphics GHandler2" (?GHandler2@@3VGraphics@@A) already defined in FoodItem.obj; second definition ignored
