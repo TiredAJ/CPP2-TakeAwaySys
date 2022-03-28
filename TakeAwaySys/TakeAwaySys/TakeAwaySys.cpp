@@ -204,12 +204,20 @@ public:
 			{
 				cout << Cuisine[i];
 			}
-		}
 
-		for (int i = 0; i < Dishes.size(); i++)
-		{
-			Dishes[i].DisplayDish();
+			cout << "Please select [1-" << Cuisine.size() << "]" << endl;
+			cin >> Command;
+
+
 		}
+		else
+		{
+			for (int i = 0; i < Dishes.size(); i++)
+			{
+				Dishes[i].DisplayDish();
+			}
+		}
+		
 	}
 
 private:
