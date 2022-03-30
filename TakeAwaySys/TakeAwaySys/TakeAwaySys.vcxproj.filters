@@ -44,8 +44,5 @@
     <ClInclude Include="ScrClnTM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CommaRemover.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

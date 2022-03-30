@@ -121,6 +121,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/FORCE %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,7 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Address.h" />
-    <ClInclude Include="CommaRemover.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="FoodItem.h" />
     <ClInclude Include="Graphics.h" />
