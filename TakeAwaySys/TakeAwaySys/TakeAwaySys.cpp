@@ -71,35 +71,47 @@ private:
 class Date
 {
 public:
-	Date();
+	Date()
+	{
+		Minute = -1;
+		Hour = -1;
+		Day = -1;
+		Month = -1;
+		Year = -1;
+	}
 
 	void SetTime()
 	{
 		do
 		{
-			cout << "Please enter the current: " << endl;
-			cout << "Hour (24hr): ";
-			cin >> Input;
+			Input.clear();
 
-			while (stoi(Input) > 24 || stoi(Input) < 0)
+			do
 			{
-				cout << "Please enter a value between [0] and [24]: ";
+				cout << "Please enter the current: " << endl;
+				cout << "Hour [0-23]: ";
 				cin >> Input;
-			}
+			} while (stoi(Input) > 23 || stoi(Input) < 0);
+
+			if (Input.size() == 1)
+			{Input = "0" + Input;}
+			
 			Hour = stoi(Input);
 			Input.clear();
 
-			cout << "Minute: ";
-			cin >> Input;
-
-			while (stoi(Input) > 60 || stoi(Input) < 0)
+			do
 			{
-				cout << "Please enter a value between [0] and [60]: ";
+				cout << "Minute [0-59]: ";
 				cin >> Input;
-			}
-			Minute = stoi(Input);
+			} while (stoi(Input) > 59 || stoi(Input) < 0);
+
+			if (Input.size() == 1)
+			{Input = "0" + Input;}
+
+			Minute = Input;
 			Input.clear();
 
+			cout << endl << Hour << ":" << Minute << endl;
 			cout << "Confirm time? [yes/no]" << endl << "> ";
 			cin >> Input;
 		} while (Input == "no");
@@ -109,35 +121,41 @@ public:
 	{
 		do
 		{
-			cout << "Please only enter numerical values" << endl;
-			cout << "Please enter the:" << endl;
-			cout << "Year: ";
-			cin >> Year;
-
-			cout << "Month: ";
-			cin >> Input;
-
-			while (stoi(Input) > 12 || stoi(Input) < 1)
-			{
-				cout << "Please enter a value between [1] and [12]: ";
-				cin >> Input;
-			}
-			Month = stoi(Input);
 			Input.clear();
 
-			cout << "Day: ";
-			cin >> Input;
-
-			do		//working here pal
+			do
 			{
-				if (stoi(Input) != MonthDays[Month-1])
-				{
-					cout << "Month " << Month << " only has " << MonthDays[Month-1];
-					cout << "Please enter a value between [1] and [" << MonthDays[Month-1] << "]";
-				}
+				cout << "Please enter the:" << endl;
+				cout << "Year[202#]: ";
+				cin >> Input;
+			} while (Input.size() != 4);
+			Year = stoi(Input);
 
-			} while (true);
+			do
+			{
+				cout << "Month [1-12]: ";
+				cin >> Input;
+			} while (stoi(Input) > 12 || stoi(Input) < 0);			
+			
+			if (Input.size() == 1)
+			{Input = "0" + Input;}
 
+			Month = Input;
+			Input.clear();
+
+			do
+			{
+				cout << "Day [1-" << MonthDays[stoi(Month) - 1] << "]: ";
+				cin >> Input;
+			} while (stoi(Input) > MonthDays[stoi(Month) - 1] || stoi(Input) < 1);
+
+			if (Input.size() == 1)
+			{Input = "0" + Input;}
+
+			Day = Input;
+			Input.clear();
+			
+			cout << Day << "/" << Month << "/" << Year << endl;
 			cout << "Confirm Date? [yes/no]" << endl << "> ";
 			cin >> Input;
 		} while (Input == "no");
@@ -147,6 +165,8 @@ public:
 	{
 		SetTime();
 		SetDate();
+
+		ScrClnTM();
 	}
 
 	bool operator>(Date D2)
@@ -173,13 +193,13 @@ public:
 		{return false;}
 		else if (this->Year < D2.Year)
 		{return true;}
-		else if (this->Month < D2.Month)
+		else if (stoi(this->Month) < stoi(D2.Month))
 		{return true;}
-		else if (this->Day < D2.Day)
+		else if (stoi(this->Day) < stoi(D2.Day))
 		{return true;}
-		else if (this->Hour < D2.Day)
+		else if (this->Hour < D2.Hour)
 		{return true;}
-		else if (this->Minute < D2.Minute)
+		else if (stoi(this->Minute) < stoi(D2.Minute))
 		{return true;}
 		else
 		{return false;}
@@ -188,21 +208,36 @@ public:
 	string GetDate()
 	{
 		Temp = Hour + ":" + Minute;
-		Temp += " " + Day + '/' + Month + '/' + Year;
+		Temp += " " + Day + "/" + Month + "/" + to_string(Year);
 		return Temp;
 	}
 
-	void SplitDate(string Input)
+	void SplitDate(string Input)	//string -> Date
 	{
+		Hour = Input.substr(0, 2);
+		Minute = Input.substr(3, 2);
+		Day = Input.substr(6, 2);
+		Month = Input.substr(9, 2);
+		Year = stoi(Input.substr(12));
+	}
 
+	friend ostream& operator<<(ostream& OS, const Date Dt)
+	{
+		if (stoi(Dt.Hour) != -1)
+		{
+			OS << Dt.Hour << ":" << Dt.Minute << "  " << Dt.Day << "/" << Dt.Month;
+			OS << "/" << Dt.Year;
+
+			return OS;
+		}
 	}
 
 private:
-	int Day;
-	int Month;
+	string Day;
+	string Month;
 	int Year;
-	int Minute;
-	int Hour;
+	string Minute;
+	string Hour;
 
 	int MonthDays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
 
@@ -556,9 +591,23 @@ private:
 
 int main()
 {
-	RestraurantSys RSys;
+	/*RestraurantSys RSys;
 
 	RSys.TEMPCreateDish();
-	RSys.DisplayMenu();
+	RSys.DisplayMenu();*/
 
+	Date TestDater1, TestDater2;
+
+	TestDater1.SetDateTime();
+
+	TestDater2.SetDateTime();
+
+	if (TestDater1 > TestDater2)
+	{
+		cout << TestDater1;
+	}
+	else
+	{
+		cout << TestDater2;
+	}
 }
