@@ -310,14 +310,41 @@ public:
 		for (int i = 0; i < NoDishes; i++)
 		{
 			Reader >> TempFood;
-			Dishes.push_back(TempFood);
+			Dishes.push_back(TempFood);			
 			TempFood.Clear();
 		}
 		Reader.close();
+
 		for (int i = 0; i < Dishes.size(); i++)
 		{
-
+			bool Found = false;
+			if (Cuisine.size() < 1)
+			{
+				Cuisine.push_back(Dishes[i].GetCuisine());
+			}
+			else
+			{
+				for (int j = 0; j < Cuisine.size(); j++)
+				{
+					if (Dishes[i].GetCuisine() == Cuisine[j])
+					{
+						Found = true;
+						break;
+					}
+				}
+				if (Found == false)
+				{
+					Cuisine.push_back(Dishes[i].GetCuisine());
+				}
+			}
 		}
+
+		//ok, so here's the sitch
+		//you need to work out wtf ur doing with the cuisine &
+		//cuisine prefixes. The file doesn't store prefixes currently
+		//do you want to change that?
+		// - AJ
+		
 	}
 
 	void WriteFile()
