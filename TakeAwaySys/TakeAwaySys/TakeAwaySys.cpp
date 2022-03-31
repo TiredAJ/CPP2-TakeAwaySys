@@ -19,15 +19,11 @@ string MenuTitle;
 class CommaRemover
 {
 public:
-	CommaRemover()
-	{
-		Temp = "";
-		Result = "";
-	};
+	CommaRemover();
 
 	string Remove(char Removable, string Input, string Option) //[left/right]
 	{
-
+		string Temp, Result;
 
 		for (int i = 0; i < Input.length(); i++)
 		{
@@ -65,7 +61,7 @@ public:
 	}
 
 private:
-	vector <string> Temps; string Temp, Result;
+	vector <string> Temps;
 };
 
 class Date
@@ -82,6 +78,7 @@ public:
 
 	void SetTime()
 	{
+		string Input;
 		do
 		{
 			Input.clear();
@@ -119,6 +116,7 @@ public:
 	
 	void SetDate()
 	{
+		string Input;
 		do
 		{
 			Input.clear();
@@ -207,6 +205,7 @@ public:
 
 	string GetDate()
 	{
+		string Temp;
 		Temp = Hour + ":" + Minute;
 		Temp += " " + Day + "/" + Month + "/" + to_string(Year);
 		return Temp;
@@ -240,8 +239,6 @@ private:
 	string Hour;
 
 	int MonthDays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
-
-	string Input, Temp;
 };
 
 class Customer
@@ -567,23 +564,24 @@ public:
 
 	void DisplayMenu()
 	{
-		LeMenu.DisplayMenu();
+		Bwydlen.DisplayMenu();
 	}
 
 	void CreateCusine()
 	{
-		LeMenu.CreateCuisine();
+		Bwydlen.CreateCuisine();
 	}
 
 	//Temp
 	void TEMPCreateDish()
 	{
-		LeMenu.NewDish();
+		Bwydlen.NewDish();
 	}
 
 private:
 	vector <Order> Orders;
-	Menu LeMenu;
+	//couldn't think of a better name for the menu object
+	Menu Bwydlen;
 	int MaxNoTakeaways;
 	int NoTakeaways;
 	double DeliveryCost;
@@ -591,12 +589,14 @@ private:
 
 int main()
 {
-	/*RestraurantSys RSys;
+	RestraurantSys RSys;
 
 	RSys.TEMPCreateDish();
-	RSys.DisplayMenu();*/
+	RSys.DisplayMenu();
 
-	Date TestDater1, TestDater2;
+	RSys.WriteAllFiles();
+
+	/*Date TestDater1, TestDater2;
 
 	TestDater1.SetDateTime();
 
@@ -609,5 +609,5 @@ int main()
 	else
 	{
 		cout << TestDater2;
-	}
+	}*/
 }
