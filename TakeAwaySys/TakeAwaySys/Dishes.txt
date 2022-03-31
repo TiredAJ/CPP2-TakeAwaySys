@@ -1,0 +1,4 @@
+3
+ITA0,Pasta,3.5,Italian,Main,med,5
+ITA1,Spaghetti,3,Italian,Main,high,5
+FRN2,Croque Monsieur,3.25,French,Introductory,med,50

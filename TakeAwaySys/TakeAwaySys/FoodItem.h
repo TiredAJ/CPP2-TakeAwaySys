@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream>
 #include <vector>
 #include "ScrClnTM.h"
 #include "Graphics.h"
@@ -17,12 +18,7 @@ class FoodItem
 public:
 	FoodItem()
 	{		
-		Name = "Default";
-		Price = -1.00;
-		Cuisine = "Default";
-		Course = "Default";
-		Popularity = "Undefined";
-		Availability = -1;
+		Clear();
 	}
 
 	//Necessary?
@@ -97,16 +93,69 @@ public:
 	{
 		string MenuTitle = "Menu > Dish > " + Name;
 
-		cout << Name << ", ID:" << FoodID << endl;
-		cout << "Cuisine: " << Cuisine << endl;
-		cout << "Price: " << Price << endl << "Course: " << Course << endl;
-		cout << "Popularity: " << Popularity << endl;
-		cout << "Availability: " << Availability << endl;
+		cout << Name << endl << "\tID:" << FoodID << endl;
+		cout << "\tCuisine: " << Cuisine << endl;
+		cout << "\tPrice: " << Price << endl << "\tCourse: " << Course << endl;
+		cout << "\tPopularity: " << Popularity << endl;
+		cout << "\tAvailability: " << Availability << endl;
 		GHandler2.Line('=', 45);
+	}
+
+	void Clear()
+	{
+		Name = "Default";
+		Price = -1.00;
+		Cuisine = "Default";
+		Course = "Default";
+		Popularity = "Undefined";
+		Availability = -1;
 	}
 
 	string GetCuisine()
 	{return Cuisine;}
+
+	friend ofstream& operator<<(ofstream& FS, const FoodItem FI)
+	{
+		FS << FI.FoodID << "," << FI.Name << "," << FI.Price << ",";
+		FS << FI.Cuisine << "," << FI.Course << "," << FI.Popularity;
+		FS << "," << FI.Availability << endl;
+
+		return FS;
+	}
+
+	friend ifstream& operator>>(ifstream& IS, FoodItem& FI)
+	{
+		vector <string> Segments;
+		string Input, Temp;
+		getline(IS >> ws, Input);
+
+		for (int i = 0; i < Input.size(); i++)
+		{
+			if (Input[i] != ',')
+			{
+				Temp += Input[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}			
+		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
+		FI.FoodID = Segments[0];
+		FI.Name = Segments[1];
+		FI.Price = stod(Segments[2]);
+		FI.Cuisine = Segments[3];
+		FI.Course = Segments[4];
+		FI.Popularity = Segments[5];
+		FI.Availability = stoi(Segments[6]);	
+
+		Segments.clear();
+
+		return IS;
+	}
 
 private:
 	string FoodID;

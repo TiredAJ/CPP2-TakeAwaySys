@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream>
 #include <vector>
 #include "Employee.h"
 #include "Address.h"
@@ -11,6 +12,7 @@
 
 using namespace std;
 
+//define the handlers on a per-class basis?
 ScrClnTM SCHandler;
 Graphics GHandler;
 const string CurrencySym = "\x9C";
@@ -19,11 +21,13 @@ string MenuTitle;
 class CommaRemover
 {
 public:
-	CommaRemover();
+	CommaRemover()
+	{};
 
 	string Remove(char Removable, string Input, string Option) //[left/right]
 	{
 		string Temp, Result;
+		Temps.clear();
 
 		for (int i = 0; i < Input.length(); i++)
 		{
@@ -36,27 +40,29 @@ public:
 				Temps.push_back(Temp);
 				Temp.clear();
 			}
-			Temps.push_back(Temp);
-
-			for (int j = 0; j < Temps.size(); j++)
-			{
-				if (Option == "left")		//removes first section
-				{
-					if (j != 0)
-					{
-						Result += Temps[j];
-					}
-				}
-				else if (Option == "right")		//removes last section
-				{
-					if (j != Temps.size())
-					{
-						Result += Temps[j];
-					}
-				}
-
-			}
+			
 		}
+		Temps.push_back(Temp);
+
+		for (int j = 0; j < Temps.size(); j++)
+		{
+			if (Option == "left")		//removes first section
+			{
+				if (j != 0)
+				{
+					Result += Temps[j];
+				}
+			}
+			else if (Option == "right")		//removes last section
+			{
+				if (j != Temps.size())
+				{
+					Result += Temps[j];
+				}
+			}
+
+		}
+
 		return Result;
 	}
 
@@ -293,12 +299,39 @@ public:
 
 	void ReadFile()
 	{
+		ifstream Reader;
+		FoodItem TempFood;
+		int NoDishes;
 
+		Reader.open("Dishes.txt");
+
+		Reader >> NoDishes;
+
+		for (int i = 0; i < NoDishes; i++)
+		{
+			Reader >> TempFood;
+			Dishes.push_back(TempFood);
+			TempFood.Clear();
+		}
+		Reader.close();
+		for (int i = 0; i < Dishes.size(); i++)
+		{
+
+		}
 	}
 
 	void WriteFile()
 	{
+		ofstream Writer;
+		Writer.open("Dishes.txt");
 
+		Writer << Dishes.size() << endl;
+
+		for (int i = 0; i < Dishes.size(); i++)
+		{
+			Writer << Dishes[i];
+		}
+		Writer.close();
 	}
 
 	void NewDish()
@@ -426,7 +459,7 @@ public:
 		{
 			for (int i = 0; i < Cuisine.size(); i++)
 			{
-				cout << Cuisine[i] << endl;
+				cout << endl << Cuisine[i] << endl;
 				for (int j = 0; j < Dishes.size(); j++)
 				{
 					if (Dishes[j].GetCuisine() == CRHandler.Remove(',',Cuisine[i],"left"))
@@ -544,12 +577,12 @@ public:
 
 	void WriteAllFiles()
 	{
-
+		Bwydlen.WriteFile();
 	}
 
 	void ReadAllFiles()
 	{
-
+		Bwydlen.ReadFile();
 	}
 
 	void ReadOrders()
@@ -591,10 +624,12 @@ int main()
 {
 	RestraurantSys RSys;
 
-	RSys.TEMPCreateDish();
-	RSys.DisplayMenu();
+	//RSys.TEMPCreateDish();
+	//RSys.DisplayMenu();
 
-	RSys.WriteAllFiles();
+	//RSys.WriteAllFiles();
+	RSys.ReadAllFiles();
+	RSys.DisplayMenu();
 
 	/*Date TestDater1, TestDater2;
 
