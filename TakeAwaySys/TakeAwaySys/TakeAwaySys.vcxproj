@@ -120,7 +120,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalOptions>/FORCE %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -143,15 +142,13 @@
   <ItemGroup>
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="FoodItem.cpp" />
-    <ClCompile Include="ScrClnTM.cpp" />
     <ClCompile Include="TakeAwaySys.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Address.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="FoodItem.h" />
-    <ClInclude Include="Graphics.h" />
-    <ClInclude Include="ScrClnTM.h" />
+    <ClInclude Include="AJTools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,69 +6,14 @@
 #include <vector>
 #include "Employee.h"
 #include "Address.h"
-#include "FoodItem.h"
-#include "Graphics.h"
-#include "ScrClnTM.h"
+#include "AJTools.h"
 
 using namespace std;
 
-//define the handlers on a per-class basis?
-ScrClnTM SCHandler;
-Graphics GHandler;
+AJTools AJT;
+
 const string CurrencySym = "\x9C";
 string MenuTitle;
-
-class CommaRemover
-{
-public:
-	CommaRemover()
-	{};
-
-	string Remove(char Removable, string Input, string Option) //[left/right]
-	{
-		string Temp, Result;
-		Temps.clear();
-
-		for (int i = 0; i < Input.length(); i++)
-		{
-			if (Input[i] != Removable)
-			{
-				Temp += Input[i];
-			}
-			else if (Input[i] == Removable)
-			{
-				Temps.push_back(Temp);
-				Temp.clear();
-			}
-			
-		}
-		Temps.push_back(Temp);
-
-		for (int j = 0; j < Temps.size(); j++)
-		{
-			if (Option == "left")		//removes first section
-			{
-				if (j != 0)
-				{
-					Result += Temps[j];
-				}
-			}
-			else if (Option == "right")		//removes last section
-			{
-				if (j != Temps.size())
-				{
-					Result += Temps[j];
-				}
-			}
-
-		}
-
-		return Result;
-	}
-
-private:
-	vector <string> Temps;
-};
 
 class Date
 {
@@ -170,7 +115,7 @@ public:
 		SetTime();
 		SetDate();
 
-		ScrClnTM();
+		AJT.SCH.ScreenCleanerTM(0);
 	}
 
 	bool operator>(Date D2)
@@ -276,12 +221,174 @@ public:
 	}
 
 private:
+
 	string CustID;
 	string Name;
 	Address Home;
 	string Email;
 	string PhoneNo;
 	int Loyalty;
+};
+
+class FoodItem
+{
+public:
+	FoodItem()
+	{
+		Clear();
+	}
+
+	//Necessary?
+	void CreateDish()
+	{
+
+	}
+
+	void CreateDish(string CuisineSpec)
+	{
+		string Temp, MenuTitle;
+		string Details[3];
+		int Counter = 0;
+
+		cout << "(* Values are -1 by default)" << endl;
+
+		cout << "Dish Name: ";
+		getline(cin >> ws, Name);
+
+		cout << "Dish Price*: " << CurrencySym;
+		cin >> Price;
+
+		cout << "Course: ";
+		getline(cin >> ws, Course);
+
+		cout << "Availability*: ";
+		cin >> Availability;
+
+		cout << "Expected popularity [low/med/high]";
+		cin >> Popularity;
+
+		//so, prefix + cuisine + ID# comes in, below splits it
+		//into a 3-part vector.
+		//make it better
+
+		for (int i = 0; i < CuisineSpec.size(); i++)
+		{
+			if (CuisineSpec[i] != ',')
+			{
+				Temp += CuisineSpec[i];
+			}
+			else
+			{
+				Details[Counter] = Temp;
+				Temp.clear();
+				Counter++;
+			}
+		}
+		Details[Counter] = Temp;
+
+		Cuisine = Details[0] + "," + Details[1];
+		FoodID = Details[0] + Details[2];
+	}
+
+	void UpdatePop()
+	{
+
+	}
+
+	void UpdateAvail()
+	{
+
+	}
+
+	void UpdatePrice()
+	{
+
+	}
+
+	void EditDish()
+	{
+
+	}
+
+	void DisplayDish()
+	{
+		string MenuTitle = "Menu > Dish > " + Name;
+
+		cout << Name << endl << "\tID:" << FoodID << endl;
+		cout << "\tCuisine: " << Cuisine << endl;
+		cout << "\tPrice: " << Price << endl << "\tCourse: " << Course << endl;
+		cout << "\tPopularity: " << Popularity << endl;
+		cout << "\tAvailability: " << Availability << endl;
+		AJT.Graphics.Line('=', 45);
+	}
+
+	void Clear()
+	{
+		Name = "Default";
+		Price = -1.00;
+		Cuisine = "Default";
+		Course = "Default";
+		Popularity = "Undefined";
+		Availability = -1;
+	}
+
+	string GetCuisine()
+	{
+		return Cuisine;
+	}
+
+	friend ofstream& operator<<(ofstream& FS, const FoodItem FI)
+	{
+		FS << FI.FoodID << "," << FI.Name << "," << FI.Price << ",";
+		FS << FI.Cuisine << "," << FI.Course << "," << FI.Popularity;
+		FS << "," << FI.Availability << endl;
+
+		return FS;
+	}
+
+	friend ifstream& operator>>(ifstream& IS, FoodItem& FI)
+	{
+		vector <string> Segments;
+		string Input, Temp;
+		getline(IS >> ws, Input);
+
+		for (int i = 0; i < Input.size(); i++)
+		{
+			if (Input[i] != ',')
+			{
+				Temp += Input[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
+		FI.FoodID = Segments[0];
+		FI.Name = Segments[1];
+		FI.Price = stod(Segments[2]);
+		FI.Cuisine = Segments[3];
+		FI.Course = Segments[4];
+		FI.Popularity = Segments[5];
+		FI.Availability = stoi(Segments[6]);
+
+		Segments.clear();
+
+		return IS;
+	}
+
+private:
+
+	string FoodID;
+	string Name;
+	double Price;
+	string Cuisine;
+	string Course;
+	string Popularity;
+	int Availability;
 };
 
 class Menu
@@ -406,7 +513,7 @@ public:
 		do
 		{
 			MenuTitle = "New Dish > ";
-			SCHandler.ScreenCleanerTM(0, MenuTitle + "Choose Cuisine" + "\n");
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Choose Cuisine" + "\n");
 
 			if (Cuisine.size() == 0)
 			{
@@ -417,15 +524,15 @@ public:
 			FoodItem TempFood;
 
 			cout << "Please choose a cuisine" << endl;
-			GHandler.DisplayOptions(Cuisine, 0);
+			AJT.Graphics.DisplayOptions(Cuisine, 0);
 			cin >> Command;
 			cout << "You've chosen:" << Cuisine[stod(Command) - 1];
 
-			SCHandler.ScreenCleanerTM(0, MenuTitle + (Cuisine[stod(Command) - 1] + "\n"));
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle + (Cuisine[stod(Command) - 1] + "\n"));
 
 			TempFood.CreateDish(Cuisine[stod(Command) - 1] + "," + to_string(Dishes.size()));
 
-			SCHandler.ScreenCleanerTM(0, MenuTitle + " Display Dish");
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle + " Display Dish");
 
 			TempFood.DisplayDish();
 
@@ -436,7 +543,7 @@ public:
 			
 		} while (Command != "no" || Command == "yes");
 
-		SCHandler.ScreenCleanerTM(0);		
+		AJT.SCH.ScreenCleanerTM(0);
 	}
 
 	void UpdatePop()
@@ -489,7 +596,7 @@ public:
 				cout << endl << Cuisine[i] << endl;
 				for (int j = 0; j < Dishes.size(); j++)
 				{
-					if (Dishes[j].GetCuisine() == CRHandler.Remove(',',Cuisine[i],"left"))
+					if (Dishes[j].GetCuisine() == AJT.CMH.Remove(',',Cuisine[i],"left"))
 					{
 						Dishes[j].DisplayDish();
 					}
@@ -511,7 +618,7 @@ public:
 		MenuTitle += "New Cuisine > \n";
 		do
 		{
-			SCHandler.ScreenCleanerTM(0, MenuTitle);
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
 			do
 			{
@@ -544,8 +651,6 @@ public:
 private:
 	vector <FoodItem> Dishes;
 	vector <string> Cuisine;
-
-	CommaRemover CRHandler;
 };
 
 class Order

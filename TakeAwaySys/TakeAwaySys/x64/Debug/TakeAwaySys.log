@@ -1,26 +1,57 @@
-﻿  TakeAwaySys.cpp
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(138,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+﻿  FoodItem.cpp
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(34,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(158,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(54,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(169,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(65,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Graphics.h(191,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(422,54): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(424,68): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(426,46): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(477,21): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(89,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  TakeAwaySys.cpp
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(34,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(54,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(65,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(89,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(529,54): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(531,66): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(533,46): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(584,21): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+  Generating Code...
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
-TakeAwaySys.obj : warning LNK4006: "class ScrClnTM SCHandler2" (?SCHandler2@@3VScrClnTM@@A) already defined in FoodItem.obj; second definition ignored
-TakeAwaySys.obj : warning LNK4006: "class Graphics GHandler2" (?GHandler2@@3VGraphics@@A) already defined in FoodItem.obj; second definition ignored
+TakeAwaySys.obj : error LNK2019: unresolved external symbol "public: __cdecl AJTools::_Graphics::~_Graphics(void)" (??1_Graphics@AJTools@@QEAA@XZ) referenced in function "int `public: __cdecl AJTools::AJTools(void)'::`1'::dtor$0" (?dtor$0@?0???0AJTools@@QEAA@XZ@4HA)
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\x64\Debug\TakeAwaySys.exe : warning LNK4088: image being generated due to /FORCE option; image may not run
-  TakeAwaySys.vcxproj -> E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\x64\Debug\TakeAwaySys.exe
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1092,5): warning MSB4220: Waiting for the currently executing task "Link" to cancel.
+MSBUILD : error MSB4166: Child node "2" exited prematurely. Shutting down. Diagnostic information may be found in files in "C:\Users\gecko\AppData\Local\Temp\" and will be named MSBuild_*.failure.txt. This location can be changed by setting the MSBUILDDEBUGPATH environment variable to a different directory.
