@@ -651,12 +651,12 @@ int main()
 {
 	RestraurantSys RSys;
 
-	//RSys.TEMPCreateDish();
+	RSys.TEMPCreateDish();
 	//RSys.DisplayMenu();
 
 	//RSys.WriteAllFiles();
-	RSys.ReadAllFiles();
-	RSys.DisplayMenu();
+	//RSys.ReadAllFiles();
+	//RSys.DisplayMenu();
 
 	/*Date TestDater1, TestDater2;
 
