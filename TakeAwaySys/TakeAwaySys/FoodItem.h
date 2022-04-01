@@ -50,6 +50,10 @@ public:
 		cout << "Expected popularity [low/med/high]";
 		cin >> Popularity;
 
+		//so, prefix + cuisine + ID# comes in, below splits it
+		//into a 3-part vector.
+		//make it better
+
 		for (int i = 0; i < CuisineSpec.size(); i++)
 		{
 			if (CuisineSpec[i] != ',')
