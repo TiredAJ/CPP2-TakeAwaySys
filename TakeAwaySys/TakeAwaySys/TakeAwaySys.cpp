@@ -649,7 +649,7 @@ public:
 	}
 
 private:
-	vector <FoodItem> Dishes;
+	vector<FoodItem> Dishes;
 	vector <string> Cuisine;
 };
 
