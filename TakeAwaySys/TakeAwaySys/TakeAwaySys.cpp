@@ -1030,7 +1030,6 @@ public:
 private:
 	vector <FoodItem> Basket;
 	Customer Cust;
-	Date OrderDate;
 	string OrderID;
 	bool Open;
 	bool Delivery;
