@@ -319,7 +319,7 @@ private:
 				{
 					cout << i + 1 << ") " << Input[i] << endl;
 				}
-				cout << Input.size() + 1 << "Cancel" << endl;
+				cout << Input.size() + 1 << ") Exit" << endl << endl;
 				break;
 			}
 			case 2:

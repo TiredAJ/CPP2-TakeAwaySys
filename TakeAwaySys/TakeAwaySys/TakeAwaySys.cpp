@@ -15,183 +15,6 @@ AJTools AJT;
 const string CurrencySym = "\x9C";
 string MenuTitle;
 
-class Date
-{
-public:
-	Date()
-	{
-		Minute = -1;
-		Hour = -1;
-		Day = -1;
-		Month = -1;
-		Year = -1;
-	}
-
-	void SetTime()
-	{
-		string Input;
-		do
-		{
-			Input.clear();
-
-			do
-			{
-				cout << "Please enter the current: " << endl;
-				cout << "Hour [0-23]: ";
-				cin >> Input;
-			} while (stoi(Input) > 23 || stoi(Input) < 0);
-
-			if (Input.size() == 1)
-			{Input = "0" + Input;}
-			
-			Hour = stoi(Input);
-			Input.clear();
-
-			do
-			{
-				cout << "Minute [0-59]: ";
-				cin >> Input;
-			} while (stoi(Input) > 59 || stoi(Input) < 0);
-
-			if (Input.size() == 1)
-			{Input = "0" + Input;}
-
-			Minute = Input;
-			Input.clear();
-
-			cout << endl << Hour << ":" << Minute << endl;
-			cout << "Confirm time? [yes/no]" << endl << "> ";
-			cin >> Input;
-		} while (Input == "no");
-	}
-	
-	void SetDate()
-	{
-		string Input;
-		do
-		{
-			Input.clear();
-
-			do
-			{
-				cout << "Please enter the:" << endl;
-				cout << "Year[202#]: ";
-				cin >> Input;
-			} while (Input.size() != 4);
-			Year = stoi(Input);
-
-			do
-			{
-				cout << "Month [1-12]: ";
-				cin >> Input;
-			} while (stoi(Input) > 12 || stoi(Input) < 0);			
-			
-			if (Input.size() == 1)
-			{Input = "0" + Input;}
-
-			Month = Input;
-			Input.clear();
-
-			do
-			{
-				cout << "Day [1-" << MonthDays[stoi(Month) - 1] << "]: ";
-				cin >> Input;
-			} while (stoi(Input) > MonthDays[stoi(Month) - 1] || stoi(Input) < 1);
-
-			if (Input.size() == 1)
-			{Input = "0" + Input;}
-
-			Day = Input;
-			Input.clear();
-			
-			cout << Day << "/" << Month << "/" << Year << endl;
-			cout << "Confirm Date? [yes/no]" << endl << "> ";
-			cin >> Input;
-		} while (Input == "no");
-	}
-
-	void SetDateTime()
-	{
-		SetTime();
-		SetDate();
-
-		AJT.SCH.ScreenCleanerTM(0);
-	}
-
-	bool operator>(Date D2)
-	{
-		if (this->Year < D2.Year)
-		{return false;}
-		else if (this->Year > D2.Year)
-		{return true;}
-		else if (this->Month > D2.Month)
-		{return true;}
-		else if (this->Day > D2.Day)
-		{return true;}
-		else if (this->Hour > D2.Hour)
-		{return true;}
-		else if (this->Minute > D2.Minute)
-		{return true;}
-		else 
-		{return false;}
-	}
-
-	bool operator<(Date D2)
-	{
-		if (this->Year > D2.Year)
-		{return false;}
-		else if (this->Year < D2.Year)
-		{return true;}
-		else if (stoi(this->Month) < stoi(D2.Month))
-		{return true;}
-		else if (stoi(this->Day) < stoi(D2.Day))
-		{return true;}
-		else if (this->Hour < D2.Hour)
-		{return true;}
-		else if (stoi(this->Minute) < stoi(D2.Minute))
-		{return true;}
-		else
-		{return false;}
-	}
-
-	string GetDate()
-	{
-		string Temp;
-		Temp = Hour + ":" + Minute;
-		Temp += " " + Day + "/" + Month + "/" + to_string(Year);
-		return Temp;
-	}
-
-	void SplitDate(string Input)	//string -> Date
-	{
-		Hour = Input.substr(0, 2);
-		Minute = Input.substr(3, 2);
-		Day = Input.substr(6, 2);
-		Month = Input.substr(9, 2);
-		Year = stoi(Input.substr(12));
-	}
-
-	friend ostream& operator<<(ostream& OS, const Date Dt)
-	{
-		if (stoi(Dt.Hour) != -1)
-		{
-			OS << Dt.Hour << ":" << Dt.Minute << "  " << Dt.Day << "/" << Dt.Month;
-			OS << "/" << Dt.Year;
-
-			return OS;
-		}
-	}
-
-private:
-	string Day;
-	string Month;
-	int Year;
-	string Minute;
-	string Hour;
-
-	int MonthDays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
-};
-
 class Customer
 {
 public:
@@ -239,11 +62,22 @@ public:
 	}
 
 	//Necessary?
+	/*
 	void CreateDish()
 	{
 
 	}
-
+	void CreateDish(string ID, string name, double Price, string Cuis, string Cour, string pop, int Avail)
+	{
+		this->FoodID = ID;
+		this->Name = name;
+		this->Price = Price;
+		this->Cuisine = Cuis;
+		this->Course = Cour;
+		this->Popularity = pop;
+		this->Availability= Avail;
+	}
+	*/
 	void CreateDish(string CuisineSpec)
 	{
 		string Temp, MenuTitle;
@@ -261,16 +95,12 @@ public:
 		cout << "Course: ";
 		getline(cin >> ws, Course);
 
-		cout << "Availability*: ";
-		cin >> Availability;
-
 		cout << "Expected popularity [low/med/high]: ";
 		cin >> Popularity;
 
-		//so, prefix + cuisine + ID# comes in, below splits it
-		//into a 3-part vector.
-		//make it better
-
+		cout << "Availability*: ";
+		cin >> Availability;
+		
 		for (int i = 0; i < CuisineSpec.size(); i++)
 		{
 			if (CuisineSpec[i] != ',')
@@ -313,15 +143,26 @@ public:
 
 	void UpdateAvail()
 	{
+		string Input;
+		MenuTitle = "Update Availability > " + Name;
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle + "\n");
 
+		cout << "Current Availability: " << Availability << endl;
+		cout << "Updated [>1]: ";
+		cin >> Input;
+
+		while (stoi(Input) <= 1 )
+		{
+			cout << "Please enter a value greater than [1]: ";
+			cin >> Input;
+		}
+
+		Availability = stoi(Input);
+
+		return;
 	}
 
 	void UpdatePrice()
-	{
-
-	}
-
-	void EditDish()
 	{
 
 	}
@@ -341,11 +182,30 @@ public:
 		return Cuisine;
 	}
 
+	void SetCuisine(string Cuisine)
+	{this->Cuisine = Cuisine;}
+	
+	void SetID(string ID)
+	{this->FoodID = ID;}
+
 	string GetID()
 	{return FoodID;}
 
 	string GetName()
 	{return Name;}
+
+	FoodItem& operator=(const FoodItem& FI2)
+	{
+		this->FoodID = FI2.FoodID;
+		this->Name = FI2.Name;
+		this->Price = FI2.Price;
+		this->Cuisine = FI2.Cuisine;
+		this->Course = FI2.Course;
+		this->Popularity = FI2.Popularity;
+		this->Availability = FI2.Availability;
+
+		return *this;
+	}
 
 	friend ofstream& operator<<(ofstream& FS, const FoodItem FI)
 	{
@@ -393,7 +253,7 @@ public:
 
 	friend ostream& operator<<(ostream& OS, const FoodItem FI)
 	{
-		MenuTitle = "Menu > Dish > " + FI.Name;
+		//MenuTitle = "Menu > Dish > " + FI.Name;
 
 		OS << FI.Name << endl << "\tID:" << FI.FoodID << endl;
 		OS << "\tCuisine: " << FI.Cuisine << endl;
@@ -407,7 +267,6 @@ public:
 	}
 
 private:
-
 	string FoodID;
 	string Name;
 	double Price;
@@ -464,6 +323,7 @@ public:
 		if (Found == true)
 		{
 			cout << "ERROR::object found, but not returned (Searcher())" << endl;
+			abort();
 		}
 		else
 		{
@@ -660,7 +520,7 @@ public:
 
 			if (Temp == "-1")
 			{
-				cout << "Item could not be found, return to menu?" << endl;
+				cout << "Item could not be found, Return to menu? [yes/no]" << endl;
 				cin >> Command;
 
 				if (Command == "yes")
@@ -685,7 +545,7 @@ public:
 
 				Dishes[OuterVal][InnerVal].UpdatePop();
 
-				AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + " > Details");
 
 				cout << "Updated: ";
 				cout << Dishes[OuterVal][InnerVal];
@@ -695,18 +555,215 @@ public:
 		} while (Active == true);
 
 		cout << "ERROR::Program escaped the loop" << endl;
+		abort();
 		
 	}
 
 	void UpdateAvail()
 	{
+		int OuterVal, InnerVal, Mid;
+		string Temp, Command;
+		bool Active = true;
 
+		do
+		{
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			MenuTitle = "Update Availability > ";
+
+			Temp = Searcher();
+
+			if (Temp == "-1")
+			{
+				cout << "Item could not be found, Return to menu? [yes/no]" << endl;
+				cin >> Command;
+
+				if (Command == "yes")
+				{
+					Active = false;
+					return;
+				}
+				else
+				{
+					Active = true;
+				}
+			}
+			else
+			{
+				Mid = Temp.find(',');
+				OuterVal = stoi(Temp.substr(0, Mid));
+				InnerVal = stoi(Temp.substr(Mid + 1));
+
+				MenuTitle = "Update Availability > " + Dishes[OuterVal][InnerVal].GetName();
+
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+				Dishes[OuterVal][InnerVal].UpdateAvail();
+
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + " > Details");
+
+				cout << "Updated: ";
+				cout << Dishes[OuterVal][InnerVal];
+
+				return;
+			}
+
+
+		} while (Active == true);
+	}
+
+	void EditDish()
+	{
+		int OuterVal, InnerVal, Mid;
+		string Temp, Command;
+		bool Active = true;
+		FoodItem TempDish;
+
+		MenuTitle = "Edit Dish > ";
+
+		do
+		{
+			TempDish.Clear();
+
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			Temp = Searcher();
+
+			if (Temp == "-1")
+			{
+				cout << "Item could not be found, Return to menu? [yes/no]" << endl;
+				cin >> Command;
+
+				if (Command == "yes")
+				{
+					Active = false;
+					return;
+				}
+				else
+				{
+					Active = true;
+				}
+			}
+			else
+			{
+				Mid = Temp.find(',');
+				OuterVal = stoi(Temp.substr(0, Mid));
+				InnerVal = stoi(Temp.substr(Mid + 1));
+
+				MenuTitle = "Edit Dish > ";
+
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + Dishes[OuterVal][InnerVal].GetName());
+
+				cout << "Current Details: " << endl;
+				cout << Dishes[OuterVal][InnerVal] << endl;
+
+				TempDish.CreateDish(Cuisine[OuterVal] + "," + to_string(Dishes[OuterVal].size()));
+
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Updated Details");
+
+				cout << TempDish;
+
+				Dishes[OuterVal][InnerVal] = TempDish;
+
+				do
+				{
+					cout << "Return to menu? [yes/no]" << endl << "> ";
+					cin >> Command;
+
+					if (Command == "yes")
+					{return;}
+
+				} while (true);
+
+
+				return;
+			}
+
+
+		} while (Active == true);
+	}
+
+	void DeleteDish()
+	{
+		int OuterVal, InnerVal, Mid;
+		string Temp, Command;
+		bool Active = true;
+
+		MenuTitle = "Delete Dish > ";
+
+		do
+		{
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			Temp = Searcher();
+
+			vector <FoodItem> TempFoods;
+
+			if (Temp == "-1")
+			{
+				cout << "Item could not be found, Return to menu? [yes/no]" << endl;
+				cin >> Command;
+
+				if (Command == "yes")
+				{
+					Active = false;
+					return;
+				}
+				else
+				{
+					Active = true;
+				}
+			}
+			else
+			{
+				Mid = Temp.find(',');
+				OuterVal = stoi(Temp.substr(0, Mid));
+				InnerVal = stoi(Temp.substr(Mid + 1));
+
+				MenuTitle = "Delete Dish > ";
+
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + Dishes[OuterVal][InnerVal].GetName());
+
+				cout << Dishes[OuterVal][InnerVal];
+
+				cout << "Is this the correct dish? [yes/no]" << endl << "> ";
+				cin >> Command;
+
+				while (Command != "yes" && Command != "no")
+				{
+					cout << "Please enter [yes] or [no]" << endl << "> ";
+					cin >> Command;
+				}
+
+				if (Command == "yes")
+				{
+					Dishes[OuterVal][InnerVal].SetID("-1");
+
+					for (int i = 0; i < Dishes[OuterVal].size(); i++)
+					{
+						if (Dishes[OuterVal][i].GetID() != "-1")
+						{
+							TempFoods.push_back(Dishes[OuterVal][i]);
+						}						
+					}
+					Dishes[OuterVal] = TempFoods;
+				}
+				else
+				{
+					return;
+				}
+
+				return;
+			}
+
+
+		} while (Active == true);
 	}
 
 	void DisplayMenu()
 	{
 		string Command, Input;
-		int CuisineChoice;
+		int CuisineChoice, CurrentPg;
 
 		cout << "Would you like to browse a specific cuisine? [yes/no]: ";
 		cin >> Command;
@@ -720,12 +777,7 @@ public:
 		if (Command == "yes")
 		{
 			AJT.Graphics.DisplayOptions(Cuisine, 2);
-
-			/*for (int i = 0; i < Cuisine.size(); i++)
-			{
-				cout << i+1 << ") " << AJT.CMH.Remove(',', Cuisine[i], "left") << endl;
-			}*/
-
+			
 			cin >> Input;
 
 			while (stoi(Input) > Cuisine.size() || stoi(Input) < 1)
@@ -744,17 +796,40 @@ public:
 		}
 		else
 		{
-			for (int i = 0; i < Cuisine.size(); i++)
-			{
-				cout << AJT.CMH.Remove(',', Cuisine[i], "left") << endl;
+			Command.clear();
+			CurrentPg = 0;
 
-				for (int j = 0; j < Dishes[i].size(); j++)
+			MenuTitle = "Menu Browse > Page ";
+
+			do
+			{
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + to_string(CurrentPg + 1));
+
+				cout << AJT.CMH.Remove(',', Cuisine[CurrentPg], "left") << endl;
+
+				for (int j = 0; j < Dishes[CurrentPg].size(); j++)
 				{
-					cout << Dishes[i][j];
+					cout << Dishes[CurrentPg][j];
 				}
 
 				cout << endl;
-			}
+				cout << "Which page would you like to visit?" << endl << "[1-";
+				cout << Cuisine.size() << "] or [exit] to leave" << endl << "> ";
+				cin >> Command;
+
+				if (Command == "exit")
+				{return;}
+
+				while (stoi(Command) > Cuisine.size() || stoi(Command) < 1)
+				{
+					cout << "Please enter a value between [1-" << Cuisine.size();
+					cout << "] or type [exit] to leave" << endl << "> ";
+					cin >> Command;
+				}
+
+				CurrentPg = stoi(Command) -1;
+
+			} while (Command != "exit");
 		}		
 	}
 
@@ -795,9 +870,141 @@ public:
 		MenuTitle.clear();
 	}
 
+	void EditDetailsMenu()
+	{
+		string Command; int Choice;
+		vector <string> Options{ "Edit Item","Edit Popularity","Edit Availability","Delete Item"};
+
+		MenuTitle = "Edit Details Menu > ";
+
+		do
+		{
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			AJT.Graphics.DisplayOptions(Options, 1);
+			cin >> Command;
+
+			if (Command == "exit")
+			{
+				return;
+			}
+
+			while (stoi(Command) < 1 || stoi(Command) > Options.size() + 1)
+			{
+				cout << "Please enter a value between [1-" << Options.size() + 1 << "]";
+				cout << endl << "> ";
+				cin >> Command;
+			}
+
+			Choice = stoi(Command);
+
+			switch (Choice)
+			{
+			case 1:
+			{
+				EditDish();
+				break;
+			}
+			case 2:
+			{
+				UpdatePop();
+				break;
+			}
+			case 3:
+			{
+				UpdateAvail();
+				break;
+			}
+			case 4:
+			{
+				DeleteDish();
+				break;
+			}
+			case 5:
+			{
+				return;
+				break;
+			}
+			default:
+			{
+				cout << "ERROR::Outside Switch Case boundaries" << endl;
+				abort();
+				break;
+			}
+			}
+
+		} while (Command != "exit");
+
+		return;
+	}
+
 	void SelectionMenu()
 	{
+		string Command; int Choice;
+		vector <string> Options{
+			"Browse Menu", "Edit Item", "Add Dish", "Add Cuisine",
+			"Save Menu to file"
+		};
 
+		MenuTitle = "Menu Menu > ";
+
+		do
+		{
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			AJT.Graphics.DisplayOptions(Options, 1);
+			cin >> Command;
+
+			if (Command == "Exit")
+			{return;}
+
+			while (stoi(Command) < 1 || stoi(Command) > Options.size() +2)
+			{
+				cout << "Please enter a value between [1-" << Options.size() + 2 << "]";
+				cout << endl << "> ";
+				cin >> Command;
+			}
+
+			Choice = stoi(Command);
+
+			switch (Choice)
+			{
+			case 1:
+			{
+				DisplayMenu();
+				break;
+			}
+			case 2:
+			{
+				EditDetailsMenu();
+				break;
+			}
+			case 3:
+			{
+				NewDish();
+				break;
+			}
+			case 4:
+			{
+				CreateCuisine();
+				break;
+			}
+			case 5:
+			{
+				WriteFile();
+				break;
+			}
+			default:
+			{
+				cout << "ERROR::Outside Switch Case boundaries" << endl;
+				abort();
+				break;
+			}
+			}
+
+		} while (Command != "exit");
+
+		return;
 	}
 
 private:
@@ -889,6 +1096,9 @@ public:
 		Bwydlen.CreateCuisine();
 	}
 
+	void MainMenu()
+	{Bwydlen.SelectionMenu();}
+
 	//Temp
 	void TEMPCreateDish()
 	{
@@ -899,10 +1109,10 @@ public:
 	{
 		Bwydlen.UpdatePop();
 	}
-
-	void SelectionMenu()
+	
+	void TEMPUpdateAvail()
 	{
-
+		Bwydlen.UpdateAvail();
 	}
 
 private:
@@ -930,9 +1140,13 @@ int main()
 	//RSys.DisplayMenu();
 
 	//RSys.WriteAllFiles();
+
 	RSys.ReadAllFiles();
-	//RSys.DisplayMenu();
-	RSys.TEMPUpdatePop();
+	RSys.MainMenu();
+
+	//RSys.TEMPUpdatePop();
+	//RSys.TEMPUpdateAvail();
+
 
 	/*Date TestDater1, TestDater2;
 
