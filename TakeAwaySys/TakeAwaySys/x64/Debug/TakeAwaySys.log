@@ -15,9 +15,6 @@ E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(65,1): warni
               _Ty=int
           ]
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(89,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(414,29): warning C4101: 'Counter': unreferenced local variable
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(513,54): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(515,66): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(517,46): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(574,21): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(421,29): warning C4101: 'Counter': unreferenced local variable
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(532,54): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
   TakeAwaySys.vcxproj -> E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\x64\Debug\TakeAwaySys.exe

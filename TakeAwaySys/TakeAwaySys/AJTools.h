@@ -303,20 +303,44 @@ private:
 
 		void DisplayOptions(vector <string> Input, int Option)
 		{
-			for (int i = 0; i < Input.size(); i++)
-			{
-				cout << i + 1 << ") " << Input[i] << endl;
-			}
-
 			switch (Option)
 			{
+			case 0:
+			{
+				for (int i = 0; i < Input.size(); i++)
+				{
+					cout << i + 1 << ") " << Input[i] << endl;
+				}
+				break;
+			}
 			case 1:
 			{
+				for (int i = 0; i < Input.size(); i++)
+				{
+					cout << i + 1 << ") " << Input[i] << endl;
+				}
 				cout << Input.size() + 1 << "Cancel" << endl;
+				break;
+			}
+			case 2:
+			{
+				for (int i = 0; i < Input.size(); i++)
+				{
+					cout << i + 1 << ") " << GCR.Remove(',',Input[i], "left") << endl;
+				}
+				break;
+			}
+			case 3:
+			{
+				for (int i = 0; i < Input.size(); i++)
+				{
+					cout << i + 1 << ") " << GCR.Remove(',',Input[i], "right") << endl;
+				}
 				break;
 			}
 			default:
 			{
+
 				break;
 			}
 			}
@@ -332,6 +356,8 @@ private:
 
 	private:
 		vector <Table> Tables;
+		_CommaRemover GCR;
+		_ScrClnTM GSC;
 	};
 	
 public:

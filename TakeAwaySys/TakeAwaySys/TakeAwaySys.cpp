@@ -264,7 +264,7 @@ public:
 		cout << "Availability*: ";
 		cin >> Availability;
 
-		cout << "Expected popularity [low/med/high]";
+		cout << "Expected popularity [low/med/high]: ";
 		cin >> Popularity;
 
 		//so, prefix + cuisine + ID# comes in, below splits it
@@ -328,7 +328,8 @@ public:
 	friend ofstream& operator<<(ofstream& FS, const FoodItem FI)
 	{
 		FS << FI.FoodID << "," << FI.Name << "," << FI.Price << ",";
-		FS << FI.Cuisine << "," << FI.Course << "," << FI.Popularity;
+		FS << AJT.CMH.Remove(',', FI.Cuisine, "left");
+		FS << "," << FI.Course << "," << FI.Popularity;
 		FS << "," << FI.Availability << endl;
 
 		return FS;
@@ -372,11 +373,12 @@ public:
 	{
 		MenuTitle = "Menu > Dish > " + FI.Name;
 
-		cout << FI.Name << endl << "\tID:" << FI.FoodID << endl;
-		cout << "\tCuisine: " << FI.Cuisine << endl;
-		cout << "\tPrice: " << FI.Price << endl << "\tCourse: " << FI.Course << endl;
-		cout << "\tPopularity: " << FI.Popularity << endl;
-		cout << "\tAvailability: " << FI.Availability << endl;
+		OS << FI.Name << endl << "\tID:" << FI.FoodID << endl;
+		OS << "\tCuisine: " << FI.Cuisine << endl;
+		OS << "\tPrice: " << CurrencySym << setprecision(2) << fixed << FI.Price;
+		OS << endl << "\tCourse: " << FI.Course << endl;
+		OS << "\tPopularity: " << FI.Popularity << endl;
+		OS << "\tAvailability: " << FI.Availability << endl;
 		AJT.Graphics.Line('=', 45);
 
 		return OS;
@@ -395,6 +397,11 @@ private:
 
 class Menu
 {
+	/*
+	* so, to delete a dish, I was thinking we set the ID to -1
+	* then in the delete function, when copying things to the temp
+	* vector, we ignore any with an ID of -1
+	*/
 public:
 	Menu()
 	{
@@ -437,24 +444,33 @@ public:
 		}
 	}
 
-	//here next
 	void WriteFile()
 	{
 		ofstream Writer;
 		Writer.open("Dishes.txt");
 
-		Writer << Dishes.size() << endl;
+		Writer << Cuisine.size() << endl;
 
-		/*for (int i = 0; i < Dishes.size(); i++)
+		for (int i = 0; i < Cuisine.size(); i++)
 		{
-			Writer << Dishes[i];
+			Writer << Dishes[i].size() << endl;
+			Writer << Cuisine[i] << endl;
+
+			for (int j = 0; j < Dishes[i].size(); j++)
+			{
+				Writer << Dishes[i][j];
+			}
 		}
-		Writer.close();*/
+
+		Writer.close();
 	}
 
+	//here next
 	void NewDish()
 	{
-		string Command, Input, Temp;
+		vector <FoodItem> TempFoods;
+		string Command, Input;
+		int ChosenCuisine;
 
 		MenuTitle = "New Dish >";
 
@@ -473,7 +489,7 @@ public:
 		{
 				MenuTitle = "New Dish > ";
 
-				//CreateCuisine();
+				CreateCuisine();
 				
 			do
 			{
@@ -488,11 +504,8 @@ public:
 			} while (Command != "yes" && Command != "no");
 		}
 
-		MenuTitle += "New Cuisine \n";
-
-		//double Price;
-
 		Input.clear();
+		Command.clear();
 		
 		do
 		{
@@ -507,20 +520,60 @@ public:
 
 			FoodItem TempFood;
 
-			cout << "Please choose a cuisine" << endl;
 			AJT.Graphics.DisplayOptions(Cuisine, 0);
 			cin >> Command;
+
+			while (stoi(Command) > Cuisine.size() + 1 || stoi(Command) < 1)
+			{
+				cout << "Please choose a cuisine[1-" << Cuisine.size() + 1 << "]" << endl;
+				cin >> Command;
+			}
+
 			cout << "You've chosen:" << Cuisine[stod(Command) - 1];
+			ChosenCuisine = stoi(Command) - 1;
 
-			AJT.SCH.ScreenCleanerTM(0, MenuTitle + (Cuisine[stod(Command) - 1] + "\n"));
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle + (Cuisine[ChosenCuisine] + "\n"));
 
-			TempFood.CreateDish(Cuisine[stod(Command) - 1] + "," + to_string(Dishes.size()));
+			if (Dishes.size() == 0)
+			{
+				TempFood.CreateDish(Cuisine[ChosenCuisine] + ",0");				
+			}
+			else
+			{
+				if (Dishes.size() <= ChosenCuisine)
+				{
+					TempFood.CreateDish(Cuisine[ChosenCuisine] + ",0");
+				}
+				else
+				{
+					TempFood.CreateDish(Cuisine[ChosenCuisine] + "," + to_string(Dishes[ChosenCuisine].size()));
+				}				
+			}
+			
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + " Display Dish");
 
 			cout << TempFood;
 
-			//Dishes.push_back(TempFood);
+			TempFoods.clear();
+
+			if (Dishes.size() == 0)
+			{
+				TempFoods.push_back(TempFood);
+				Dishes.push_back(TempFoods);
+			}
+			else
+			{
+				if (Dishes.size() <= ChosenCuisine)
+				{
+					TempFoods.push_back(TempFood);
+					Dishes.push_back(TempFoods);
+				}
+				else
+				{
+					Dishes[ChosenCuisine].push_back(TempFood);
+				}				
+			}		
 
 			cout << "Would you like to make another dish? [yes/no]" << endl;
 			cin >> Command;
@@ -540,7 +593,7 @@ public:
 
 	}
 
-	void DisplayMenu() //replace with operator overload?
+	void DisplayMenu()
 	{
 		string Command, Input;
 		int CuisineChoice;
@@ -556,26 +609,26 @@ public:
 
 		if (Command == "yes")
 		{
-			for (int i = 0; i < Cuisine.size(); i++)
-			{
-				cout << AJT.CMH.Remove(',',Cuisine[i], "left");
-			}
+			AJT.Graphics.DisplayOptions(Cuisine, 2);
 
-			do
+			/*for (int i = 0; i < Cuisine.size(); i++)
+			{
+				cout << i+1 << ") " << AJT.CMH.Remove(',', Cuisine[i], "left") << endl;
+			}*/
+
+			cin >> Input;
+
+			while (stoi(Input) > Cuisine.size() || stoi(Input) < 1)
 			{
 				cout << "Please select [1-" << Cuisine.size() << "]" << endl;
 				cin >> Input;
-			} while (stoi(Input)> Cuisine.size() || stoi(Input) < 1);
-			
+			}
+
 			CuisineChoice = stoi(Input) - 1;
 
-			for (int i = 0; i < Dishes.size(); i++)
+			for (int i = 0; i < Dishes[CuisineChoice].size(); i++)
 			{
-				if (Cuisine[stod(Command)] == Dishes[CuisineChoice][i].GetCuisine())
-				{
-					cout << Dishes[CuisineChoice][i];
-				}
-
+				cout << Dishes[CuisineChoice][i];
 			}
 
 		}
@@ -592,25 +645,7 @@ public:
 
 				cout << endl;
 			}
-
-			/*for (int i = 0; i < Cuisine.size(); i++)
-			{
-				cout << endl << Cuisine[i] << endl;
-				for (int j = 0; j < Dishes.size(); j++)
-				{
-					if (Dishes[j].GetCuisine() == AJT.CMH.Remove(',',Cuisine[i],"left"))
-					{
-						Dishes[j].DisplayDish();
-					}
-				}
-			}
-
-			for (int i = 0; i < Dishes.size(); i++)
-			{
-				Dishes[i].DisplayDish();
-			}*/
-		}
-		
+		}		
 	}
 
 	void CreateCuisine()
