@@ -292,7 +292,23 @@ public:
 
 	void UpdatePop()
 	{
+		string Input;
+		MenuTitle = "Update Popularity > " + Name;
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
+		cout << "Current popularity: " << Popularity << endl;
+		cout << "Updated [low/med/high]: ";
+		cin >> Input;
+
+		while (Input != "high" && Input !="med" && Input != "low")
+		{
+			cout << "Please enter either [low][med] or [high]: ";
+			cin >> Input;
+		}
+
+		Popularity = Input;
+
+		return;
 	}
 
 	void UpdateAvail()
@@ -324,6 +340,12 @@ public:
 	{
 		return Cuisine;
 	}
+
+	string GetID()
+	{return FoodID;}
+
+	string GetName()
+	{return Name;}
 
 	friend ofstream& operator<<(ofstream& FS, const FoodItem FI)
 	{
@@ -408,8 +430,46 @@ public:
 
 	}
 
-	void Searcher()
+	string Searcher()
 	{
+		bool Found = false;
+		string Query;
+
+		MenuTitle += "Search > ";
+
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle + "\n");
+
+		cout << "Please enter either the FoodID or it's name:";
+		cout << endl << "> ";
+
+		getline(cin >> ws, Query);
+
+		for (int i = 0; i < Dishes.size(); i++)
+		{
+			for (int j = 0; j < Dishes[i].size(); j++)
+			{
+				if (Dishes[i][j].GetName() == Query)
+				{
+					Found = true;
+					return(to_string(i) + "," + to_string(j));
+				}
+				else if (Dishes[i][j].GetID() == Query)
+				{
+					Found = true;
+					return(to_string(i) + "," + to_string(j));
+				}
+			}
+		}
+
+		if (Found == true)
+		{
+			cout << "ERROR::object found, but not returned (Searcher())" << endl;
+		}
+		else
+		{
+			cout << "We could not find the item you were looking for, apologies" << endl;
+			return("-1");
+		}
 
 	}
 
@@ -585,7 +645,57 @@ public:
 
 	void UpdatePop()
 	{
+		//index in the outer, inner vectors + location of comma
+		int OuterVal, InnerVal, Mid;
+		string Temp, Command;
+		bool Active = true;
 
+		do
+		{
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			MenuTitle = "Update Popularity > ";
+
+			Temp = Searcher();
+
+			if (Temp == "-1")
+			{
+				cout << "Item could not be found, return to menu?" << endl;
+				cin >> Command;
+
+				if (Command == "yes")
+				{
+					Active = false;
+					return;
+				}
+				else
+				{
+					Active = true;
+				}
+			}
+			else
+			{
+				Mid = Temp.find(',');
+				OuterVal = stoi(Temp.substr(0, Mid));
+				InnerVal = stoi(Temp.substr(Mid+1));
+
+				MenuTitle = "Update Popularity > " + Dishes[OuterVal][InnerVal].GetName();
+
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+				Dishes[OuterVal][InnerVal].UpdatePop();
+
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+				cout << "Updated: ";
+				cout << Dishes[OuterVal][InnerVal];
+
+				return;
+			}			
+		} while (Active == true);
+
+		cout << "ERROR::Program escaped the loop" << endl;
+		
 	}
 
 	void UpdateAvail()
@@ -685,6 +795,11 @@ public:
 		MenuTitle.clear();
 	}
 
+	void SelectionMenu()
+	{
+
+	}
+
 private:
 	vector<vector<FoodItem>> Dishes;
 	vector <string> Cuisine;
@@ -779,6 +894,16 @@ public:
 	{
 		Bwydlen.NewDish();
 	}
+	
+	void TEMPUpdatePop()
+	{
+		Bwydlen.UpdatePop();
+	}
+
+	void SelectionMenu()
+	{
+
+	}
 
 private:
 	vector <Order> Orders;
@@ -791,6 +916,14 @@ private:
 
 int main()
 {
+	/*
+	* idea time
+	* what if we had a sperate selection menu /within/ Menu
+	* instead of having "linker" funtions connecting 
+	* Rsys to Bwydlen
+	* say hello to SelectionMenu()
+	*/
+
 	RestraurantSys RSys;
 
 	//RSys.TEMPCreateDish();
@@ -798,7 +931,8 @@ int main()
 
 	//RSys.WriteAllFiles();
 	RSys.ReadAllFiles();
-	RSys.DisplayMenu();
+	//RSys.DisplayMenu();
+	RSys.TEMPUpdatePop();
 
 	/*Date TestDater1, TestDater2;
 
