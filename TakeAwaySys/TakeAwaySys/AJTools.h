@@ -223,7 +223,6 @@ private:
 	public:
 		_Graphics()
 		{}
-		~_Graphics();
 
 		void TableSetup(string TableName, char PrimaryBorder, char SecondaryBorder, char OuterBorder)
 		{

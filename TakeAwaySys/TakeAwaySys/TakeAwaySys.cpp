@@ -310,18 +310,6 @@ public:
 
 	}
 
-	void DisplayDish()
-	{
-		string MenuTitle = "Menu > Dish > " + Name;
-
-		cout << Name << endl << "\tID:" << FoodID << endl;
-		cout << "\tCuisine: " << Cuisine << endl;
-		cout << "\tPrice: " << Price << endl << "\tCourse: " << Course << endl;
-		cout << "\tPopularity: " << Popularity << endl;
-		cout << "\tAvailability: " << Availability << endl;
-		AJT.Graphics.Line('=', 45);
-	}
-
 	void Clear()
 	{
 		Name = "Default";
@@ -380,6 +368,20 @@ public:
 		return IS;
 	}
 
+	friend ostream& operator<<(ostream& OS, const FoodItem FI)
+	{
+		MenuTitle = "Menu > Dish > " + FI.Name;
+
+		cout << FI.Name << endl << "\tID:" << FI.FoodID << endl;
+		cout << "\tCuisine: " << FI.Cuisine << endl;
+		cout << "\tPrice: " << FI.Price << endl << "\tCourse: " << FI.Course << endl;
+		cout << "\tPopularity: " << FI.Popularity << endl;
+		cout << "\tAvailability: " << FI.Availability << endl;
+		AJT.Graphics.Line('=', 45);
+
+		return OS;
+	}
+
 private:
 
 	string FoodID;
@@ -408,52 +410,34 @@ public:
 	{
 		ifstream Reader;
 		FoodItem TempFood;
-		int NoDishes;
+		vector <FoodItem> TempFoods;
+		int NoCuisines, NoDishes, Counter;
+		string Temp;
 
 		Reader.open("Dishes.txt");
 
-		Reader >> NoDishes;
+		Reader >> NoCuisines;
 
-		for (int i = 0; i < NoDishes; i++)
+		for (int i = 0; i < NoCuisines; i++)
 		{
-			Reader >> TempFood;
-			Dishes.push_back(TempFood);			
-			TempFood.Clear();
-		}
-		Reader.close();
+			Reader >> NoDishes;
+			Reader >> Temp;
 
-		for (int i = 0; i < Dishes.size(); i++)
-		{
-			bool Found = false;
-			if (Cuisine.size() < 1)
-			{
-				Cuisine.push_back(Dishes[i].GetCuisine());
-			}
-			else
-			{
-				for (int j = 0; j < Cuisine.size(); j++)
-				{
-					if (Dishes[i].GetCuisine() == Cuisine[j])
-					{
-						Found = true;
-						break;
-					}
-				}
-				if (Found == false)
-				{
-					Cuisine.push_back(Dishes[i].GetCuisine());
-				}
-			}
-		}
+			Cuisine.push_back(Temp);
+			Temp.clear();
+			TempFoods.clear();
 
-		//ok, so here's the sitch
-		//you need to work out wtf ur doing with the cuisine &
-		//cuisine prefixes. The file doesn't store prefixes currently
-		//do you want to change that?
-		// - AJ
-		
+			for (int j = 0; j < NoDishes; j++)
+			{
+				Reader >> TempFood;
+				TempFoods.push_back(TempFood);
+				TempFood.Clear();
+			}
+			Dishes.push_back(TempFoods);
+		}
 	}
 
+	//here next
 	void WriteFile()
 	{
 		ofstream Writer;
@@ -461,11 +445,11 @@ public:
 
 		Writer << Dishes.size() << endl;
 
-		for (int i = 0; i < Dishes.size(); i++)
+		/*for (int i = 0; i < Dishes.size(); i++)
 		{
 			Writer << Dishes[i];
 		}
-		Writer.close();
+		Writer.close();*/
 	}
 
 	void NewDish()
@@ -489,7 +473,7 @@ public:
 		{
 				MenuTitle = "New Dish > ";
 
-				CreateCuisine();
+				//CreateCuisine();
 				
 			do
 			{
@@ -534,9 +518,9 @@ public:
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + " Display Dish");
 
-			TempFood.DisplayDish();
+			cout << TempFood;
 
-			Dishes.push_back(TempFood);
+			//Dishes.push_back(TempFood);
 
 			cout << "Would you like to make another dish? [yes/no]" << endl;
 			cin >> Command;
@@ -559,6 +543,7 @@ public:
 	void DisplayMenu() //replace with operator overload?
 	{
 		string Command, Input;
+		int CuisineChoice;
 
 		cout << "Would you like to browse a specific cuisine? [yes/no]: ";
 		cin >> Command;
@@ -573,17 +558,22 @@ public:
 		{
 			for (int i = 0; i < Cuisine.size(); i++)
 			{
-				cout << Cuisine[i];
+				cout << AJT.CMH.Remove(',',Cuisine[i], "left");
 			}
 
-			cout << "Please select [1-" << Cuisine.size() << "]" << endl;
-			cin >> Command;
+			do
+			{
+				cout << "Please select [1-" << Cuisine.size() << "]" << endl;
+				cin >> Input;
+			} while (stoi(Input)> Cuisine.size() || stoi(Input) < 1);
+			
+			CuisineChoice = stoi(Input) - 1;
 
 			for (int i = 0; i < Dishes.size(); i++)
 			{
-				if (Cuisine[stod(Command)] == Dishes[i].GetCuisine())
+				if (Cuisine[stod(Command)] == Dishes[CuisineChoice][i].GetCuisine())
 				{
-					Dishes[i].DisplayDish();
+					cout << Dishes[CuisineChoice][i];
 				}
 
 			}
@@ -592,6 +582,18 @@ public:
 		else
 		{
 			for (int i = 0; i < Cuisine.size(); i++)
+			{
+				cout << AJT.CMH.Remove(',', Cuisine[i], "left") << endl;
+
+				for (int j = 0; j < Dishes[i].size(); j++)
+				{
+					cout << Dishes[i][j];
+				}
+
+				cout << endl;
+			}
+
+			/*for (int i = 0; i < Cuisine.size(); i++)
 			{
 				cout << endl << Cuisine[i] << endl;
 				for (int j = 0; j < Dishes.size(); j++)
@@ -606,7 +608,7 @@ public:
 			for (int i = 0; i < Dishes.size(); i++)
 			{
 				Dishes[i].DisplayDish();
-			}
+			}*/
 		}
 		
 	}
@@ -756,12 +758,12 @@ int main()
 {
 	RestraurantSys RSys;
 
-	RSys.TEMPCreateDish();
+	//RSys.TEMPCreateDish();
 	//RSys.DisplayMenu();
 
 	//RSys.WriteAllFiles();
-	//RSys.ReadAllFiles();
-	//RSys.DisplayMenu();
+	RSys.ReadAllFiles();
+	RSys.DisplayMenu();
 
 	/*Date TestDater1, TestDater2;
 
