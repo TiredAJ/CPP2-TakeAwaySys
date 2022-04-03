@@ -60,6 +60,46 @@ public:
 		return OS;
 	}
 
+	//use different delimter for address, pls, I beg
+
+	friend ifstream& operator>>(ifstream& Obtainer, Address& Addr)
+	{
+		vector <string> Segments;
+		string Input, Temp;
+		getline(Obtainer >> ws, Input);
+
+		for (int i = 0; i < Input.size(); i++)
+		{
+			if (Input[i] != '+')
+			{
+				Temp += Input[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
+		Addr.HouseNo = Segments[0];
+		Addr.StreetName = Segments[1];
+		Addr.City = Segments[2];
+		Addr.County = Segments[3];
+		Addr.Postcode = Segments[4];
+		Segments.clear();
+
+		return Obtainer;
+	}
+
+	friend ofstream& operator<<(ofstream& Filer, const Address Addr)
+	{
+		Filer << Addr.HouseNo << "+" << Addr.StreetName << "+";
+		Filer << Addr.City << "+" << Addr.County << "+";
+		Filer << Addr.Postcode << endl;
+	}
+
 private:
 	string HouseNo;
 	string StreetName;

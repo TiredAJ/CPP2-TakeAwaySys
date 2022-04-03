@@ -58,7 +58,7 @@ public:
 
 			AJT.Graphics.Line('-', 35);
 
-			cout << "Is this correct? [yes/no]" << endl << "> ";
+			cout << "Obtainer this correct? [yes/no]" << endl << "> ";
 			cin >> Command;
 
 			while (Command != "yes" && Command != "no")
@@ -73,11 +73,6 @@ public:
 			}
 
 		} while (Command != "yes");		
-	}
-
-	void CreateCustomer(string Input)
-	{
-
 	}
 
 	void EditCustomer()
@@ -120,6 +115,48 @@ public:
 		AJT.Graphics.Line('-', 35);
 		
 		return OS;
+	}
+
+	friend ofstream& operator<<(ofstream& Filer, const Customer Cust)
+	{
+		Filer << Cust.CustID << "," << Cust.Name << ",";
+		Filer << Cust.Email << "," << Cust.PhoneNo << "," << Cust.Loyalty << endl;
+		Filer << Cust.Home << endl;
+
+		return Filer;
+	}
+
+	friend ifstream& operator>>(ifstream& Obtainer, Customer& Cust)
+	{
+		vector <string> Segments;
+		string Input, Temp;
+		getline(Obtainer >> ws, Input);
+
+		for (int i = 0; i < Input.size(); i++)
+		{
+			if (Input[i] != ',')
+			{
+				Temp += Input[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
+		Cust.CustID = Segments[0];
+		Cust.Name = Segments[1];
+		Cust.Email = Segments[2];
+		Cust.PhoneNo = Segments[3];
+		Cust.Loyalty = stoi(Segments[4]);
+		Segments.clear();
+
+		Obtainer >> Cust.Home;
+
+		return Obtainer;
 	}
 
 private:
@@ -269,20 +306,20 @@ public:
 		return *this;
 	}
 
-	friend ofstream& operator<<(ofstream& FS, const FoodItem FI)
+	friend ofstream& operator<<(ofstream& Filer, const FoodItem FI)
 	{
-		FS << FI.FoodID << "," << FI.Name << "," << FI.Price << ",";
-		FS << FI.Cuisine << "," << FI.Course << ",";
-		FS << FI.Popularity << "," << FI.Availability << endl;
+		Filer << FI.FoodID << "," << FI.Name << "," << FI.Price << ",";
+		Filer << FI.Cuisine << "," << FI.Course << ",";
+		Filer << FI.Popularity << "," << FI.Availability << endl;
 
-		return FS;
+		return Filer;
 	}
 
-	friend ifstream& operator>>(ifstream& IS, FoodItem& FI)
+	friend ifstream& operator>>(ifstream& Obtainer, FoodItem& FI)
 	{
 		vector <string> Segments;
 		string Input, Temp;
-		getline(IS >> ws, Input);
+		getline(Obtainer >> ws, Input);
 
 		for (int i = 0; i < Input.size(); i++)
 		{
@@ -309,7 +346,7 @@ public:
 
 		Segments.clear();
 
-		return IS;
+		return Obtainer;
 	}
 
 	friend ostream& operator<<(ostream& OS, const FoodItem FI)
@@ -365,7 +402,7 @@ public:
 		Total += Input;
 	}
 
-	//tf is this for?
+	//tf Obtainer this for?
 	void ReadCustomer(string Customer)
 	{
 
@@ -594,7 +631,7 @@ public:
 
 			cout << TempFood;
 
-			cout << "Is this correct? [yes/no] " << endl << "> ";
+			cout << "Obtainer this correct? [yes/no] " << endl << "> ";
 			cin >> Command;
 
 			if (Command != "no")
@@ -851,7 +888,7 @@ public:
 
 				cout << Dishes[OuterVal][InnerVal];
 
-				cout << "Is this the correct dish? [yes/no]" << endl << "> ";
+				cout << "Obtainer this the correct dish? [yes/no]" << endl << "> ";
 				cin >> Command;
 
 				while (Command != "yes" && Command != "no")
@@ -953,7 +990,7 @@ public:
 
 				cout << endl << "Cuisine Name: " << Input << endl;
 				cout << "Cuisine Prefix: " << Temp << endl;
-				cout << "Is this correct? [yes/no]" << endl;
+				cout << "Obtainer this correct? [yes/no]" << endl;
 				cin >> Command;
 			} while (Command != "yes" && Command == "no");
 			
