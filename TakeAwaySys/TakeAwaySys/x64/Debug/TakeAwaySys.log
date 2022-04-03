@@ -15,10 +15,12 @@ E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(65,1): warni
               _Ty=int
           ]
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(89,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(308,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(340,29): warning C4101: 'Counter': unreferenced local variable
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(455,55): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(541,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(596,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(652,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(722,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(547,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(602,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(658,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(728,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(775,7): warning C4101: 'CuisineChoice': unreferenced local variable
   TakeAwaySys.vcxproj -> E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\x64\Debug\TakeAwaySys.exe

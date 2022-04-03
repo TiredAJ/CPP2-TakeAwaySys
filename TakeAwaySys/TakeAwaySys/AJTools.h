@@ -303,6 +303,10 @@ private:
 
 		void DisplayOptions(vector <string> Input, int Option)
 		{
+			int NoOptions;
+
+			NoOptions = Input.size();
+
 			switch (Option)
 			{
 			case 0:
@@ -320,6 +324,7 @@ private:
 					cout << i + 1 << ") " << Input[i] << endl;
 				}
 				cout << Input.size() + 1 << ") Exit" << endl << endl;
+				NoOptions++;
 				break;
 			}
 			case 2:
@@ -345,7 +350,7 @@ private:
 			}
 			}
 
-			cout << "Please choose an option [1-" << Input.size() << "]" << endl;
+			cout << "Please choose an option [1-" << NoOptions << "]" << endl;
 		}
 
 		void Line(char Character, int Length)

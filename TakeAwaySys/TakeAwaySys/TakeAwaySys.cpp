@@ -20,7 +20,7 @@ class Customer
 public:
 	Customer()
 	{
-	
+		Clear();
 	}
 	
 	void CreateCustomer()
@@ -43,6 +43,16 @@ public:
 
 	}
 
+	void Clear()
+	{
+		CustID = "-1";
+		Name = "Unnamed";
+		Home.Clear();
+		Email = "Undefined";
+		PhoneNo = "Undefined";
+		Loyalty = -1;
+	}
+
 private:
 
 	string CustID;
@@ -61,23 +71,6 @@ public:
 		Clear();
 	}
 
-	//Necessary?
-	/*
-	void CreateDish()
-	{
-
-	}
-	void CreateDish(string ID, string name, double Price, string Cuis, string Cour, string pop, int Avail)
-	{
-		this->FoodID = ID;
-		this->Name = name;
-		this->Price = Price;
-		this->Cuisine = Cuis;
-		this->Course = Cour;
-		this->Popularity = pop;
-		this->Availability= Avail;
-	}
-	*/
 	void CreateDish(string CuisineSpec)
 	{
 		string Temp;
@@ -773,87 +766,49 @@ public:
 	{
 		string Command, Input;
 		int CuisineChoice, CurrentPg;
-
-		cout << "Would you like to browse a specific cuisine? [yes/no]: ";
-		cin >> Command;
-
-		while (Command != "yes" && Command != "no")
-		{
-			cout << "Please enter [yes] or [no]: ";
-			cin >> Command;
-		}
-
-		if (Command == "yes")
-		{
-			AJT.Graphics.DisplayOptions(Cuisine, 2);
 			
-			cin >> Input;
+		Command.clear();
+		CurrentPg = 0;
 
-			while (stoi(Input) > Cuisine.size() || stoi(Input) < 1)
+		MenuTitle = "Menu Browse > Page ";
+
+		do
+		{
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle + to_string(CurrentPg + 1));
+
+			cout << AJT.CMH.Remove(',', Cuisine[CurrentPg], "left") << endl;
+
+			if (Dishes[CurrentPg].empty() != true)
 			{
-				cout << "Please select [1-" << Cuisine.size() << "]" << endl;
-				cin >> Input;
-			}
-
-			CuisineChoice = stoi(Input) - 1;
-
-			if (Dishes[CuisineChoice].empty() != true)
-			{
-				for (int i = 0; i < Dishes[CuisineChoice].size(); i++)
+				for (int i = 0; i < Dishes[CurrentPg].size(); i++)
 				{
-					cout << Dishes[CuisineChoice][i];
+					cout << Dishes[CurrentPg][i];
 				}
 			}
 			else
 			{
-				cout << "No dishes" << endl;
+				cout << endl << "*No dishes*" << endl;
 			}
-		}
-		else
-		{
-			Command.clear();
-			CurrentPg = 0;
 
-			MenuTitle = "Menu Browse > Page ";
+			cout << endl;
+			cout << "Which page would you like to visit?" << endl << "[1-";
+			cout << Cuisine.size() << "] or [exit] to leave" << endl << "> ";
+			cin >> Command;
 
-			do
+			if (Command == "exit")
+			{return;}
+
+			while (stoi(Command) > Cuisine.size() || stoi(Command) < 1)
 			{
-				AJT.SCH.ScreenCleanerTM(0, MenuTitle + to_string(CurrentPg + 1));
-
-				cout << AJT.CMH.Remove(',', Cuisine[CurrentPg], "left") << endl;
-
-				if (Dishes[CurrentPg].empty() != true)
-				{
-					for (int i = 0; i < Dishes[CurrentPg].size(); i++)
-					{
-						cout << Dishes[CurrentPg][i];
-					}
-				}
-				else
-				{
-					cout << endl << "*No dishes*" << endl;
-				}
-
-				cout << endl;
-				cout << "Which page would you like to visit?" << endl << "[1-";
-				cout << Cuisine.size() << "] or [exit] to leave" << endl << "> ";
+				cout << "Please enter a value between [1-" << Cuisine.size();
+				cout << "] or type [exit] to leave" << endl << "> ";
 				cin >> Command;
+			}
 
-				if (Command == "exit")
-				{return;}
+			CurrentPg = stoi(Command) -1;
 
-				while (stoi(Command) > Cuisine.size() || stoi(Command) < 1)
-				{
-					cout << "Please enter a value between [1-" << Cuisine.size();
-					cout << "] or type [exit] to leave" << endl << "> ";
-					cin >> Command;
-				}
-
-				CurrentPg = stoi(Command) -1;
-
-			} while (Command != "exit");
-		}		
-	}
+		} while (Command != "exit");
+	}		
 
 	void CreateCuisine()
 	{
@@ -1019,6 +974,11 @@ public:
 				WriteFile();
 				break;
 			}
+			case 6:
+			{
+				Command = "exit";
+				break;
+			}
 			default:
 			{
 				cout << "ERROR::Outside Switch Case boundaries" << endl;
@@ -1040,16 +1000,66 @@ private:
 class Order
 {
 public:
-	Order();
+	Order()
+	{
+		Clear();
+	};
+
+	void MakeOrder(double DeliveryCost)
+	{
+		string Command;
+
+		MenuTitle = "Make order > ";
+
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle + " Select customer > ");
+		//customer select goes here
+
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle + " collection options >");
+
+		cout << "[pickup] or [delivery]?" << endl << "> ";
+		cin >> Command;
+
+		while (Command != "pickup" && Command != "delivery")
+		{
+			cout << "Please choose either [pickup] or [delivery]" << endl << "> ";
+			cin >> Command;
+		}
+
+		if (Command == "pickup")
+		{
+			Delivery = false;
+		}
+		else
+		{
+			Delivery = true;
+			Total += DeliveryCost;
+		}
+
+		//pickup or delivery
+
+		//food selection loop (calls AddItem())
+	}
 	
 	void AddItem(FoodItem AddedItem)
 	{
 
 	}
 
+	//tf is this for?
 	void ReadCustomer(string Customer)
 	{
 
+	}
+
+	void Clear()
+	{
+		Basket.clear();
+		Cust.Clear();
+		OrderID.clear();
+		Open = true;
+		Delivery = true;
+		BasketPrice = -1;
+		Total = -1;
 	}
 
 private:
@@ -1079,17 +1089,7 @@ public:
 	{
 
 	}
-
-	void WriteOrders()
-	{
-
-	}
-
-	void WriteEmployees()
-	{
-
-	}
-
+	
 	void WriteAllFiles()
 	{
 		Bwydlen.WriteFile();
@@ -1120,23 +1120,85 @@ public:
 		Bwydlen.CreateCuisine();
 	}
 
-	void MainMenu()
-	{Bwydlen.SelectionMenu();}
+	void EditDeliveryCost()
+	{
+		MenuTitle = "Delivery cost > ";
 
-	//Temp
-	void TEMPCreateDish()
-	{
-		Bwydlen.NewDish();
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+		cout << "How much for delivery?" << endl << "> " << CurrencySym;
+		cin >> DeliveryCost;
 	}
-	
-	void TEMPUpdatePop()
+
+	void MainMenu()
 	{
-		Bwydlen.UpdatePop();
-	}
-	
-	void TEMPUpdateAvail()
-	{
-		Bwydlen.UpdateAvail();
+		vector <string> Options{
+			"View Menu sub-menu","Make new order","View Employee Menu",
+			"View Customer menu", "Change delivery cost", "Save all files",
+			"Read all files"
+		};
+		string Command;
+		do
+		{
+			MenuTitle = "Main Menu > ";
+
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			AJT.Graphics.DisplayOptions(Options, 1);
+
+			cin >> Command;
+
+			while (stoi(Command) < 1 || stoi(Command) > Options.size() + 1)
+			{
+				cout << "Please enter a value between [1-" << Options.size() + 1 << "] ";
+				cout << endl << "> ";
+				cin >> Command;
+			}
+
+			switch (stoi(Command))
+			{
+			case 1:
+			{
+				Bwydlen.SelectionMenu();
+				break;
+			}
+			case 2:
+			{
+				Order TempOrder;
+				TempOrder.MakeOrder(DeliveryCost);
+				Orders.push_back(TempOrder);
+				TempOrder.Clear();
+				break;
+			}
+			case 3:
+			{
+				//employee menu
+				break;
+			}
+			case 4:
+			{
+				
+				break;
+			}
+			case 5:
+			{
+				WriteAllFiles();
+				break;
+			}
+			case 6:
+			{
+				ReadAllFiles();
+				break;
+			}
+			case 7:
+			{
+				Command = "exit";
+				break;
+			}
+			default:
+				break;
+			}
+		} while (Command != "exit");
 	}
 
 private:
