@@ -130,7 +130,7 @@ public:
 	friend ofstream& operator<<(ofstream& Filer, const Customer Cust)
 	{
 		Filer << Cust.CustID << "," << Cust.Name << ",";
-		Filer << Cust.Email << "," << Cust.PhoneNo << "," << Cust.Loyalty << endl;
+		Filer << Cust.Email << "," << Cust.PhoneNo << "," << Cust.Loyalty;
 		Filer << Cust.Home << endl;
 
 		return Filer;
@@ -1308,6 +1308,26 @@ public:
 		//read customers
 	}
 
+	void ReadCustomers()
+	{
+		ifstream Reader;
+		Customer TempCust;
+
+		Reader.open("Customers.txt");
+
+		if (Reader.is_open() != true)
+		{
+			CreateTempFiles(2);
+		}
+		else
+		{
+			while (Reader.eof() != true)
+			{
+				Reader >> TempCust;
+			}
+		}
+	}
+
 	void DisplayMenu()
 	{
 		Bwydlen.DisplayMenu();
@@ -1338,6 +1358,41 @@ public:
 		for (int i = 0; i < Customers.size(); i++)
 		{
 			cout << Customers[i];
+		}
+	}
+
+	void CreateTempFiles(int Option)
+	{
+		ofstream Writer;
+		
+		switch (Option)
+		{
+		case 1:
+		{
+			Writer.open("Employees.txt");
+			Writer.close();
+			break;
+		}
+		case 2:
+		{
+			Writer.open("Customers.txt");
+			Writer.close();
+			break;
+		}
+		case 3:
+		{
+			Writer.open("Orders.txt");
+			Writer.close();
+			break;
+		}
+		case 4:
+		{
+			Writer.open("Dishes.txt");
+			Writer.close();
+			break;
+		}
+		default:
+			break;
 		}
 	}
 

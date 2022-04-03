@@ -64,11 +64,10 @@ public:
 
 	//use different delimter for address, pls, I beg
 
-	friend ifstream& operator>>(ifstream& Obtainer, Address& Addr)
+	void ReadAddr(string Input)
 	{
 		vector <string> Segments;
-		string Input, Temp;
-		getline(Obtainer >> ws, Input);
+		string Temp;
 
 		for (int i = 0; i < Input.size(); i++)
 		{
@@ -85,14 +84,12 @@ public:
 		Segments.push_back(Temp);
 		Temp.clear();
 
-		Addr.HouseNo = Segments[0];
-		Addr.StreetName = Segments[1];
-		Addr.City = Segments[2];
-		Addr.County = Segments[3];
-		Addr.Postcode = Segments[4];
+		HouseNo = Segments[0];
+		StreetName = Segments[1];
+		City = Segments[2];
+		County = Segments[3];
+		Postcode = Segments[4];
 		Segments.clear();
-
-		return Obtainer;
 	}
 
 	friend ofstream& operator<<(ofstream& Filer, const Address Addr)
