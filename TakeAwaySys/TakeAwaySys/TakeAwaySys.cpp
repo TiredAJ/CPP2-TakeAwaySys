@@ -25,7 +25,54 @@ public:
 	
 	void CreateCustomer()
 	{
+		string Command;
 
+		do
+		{
+			MenuTitle = "Create Customer > ";
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			cout << "Please enter the customer's: " << endl;
+			cout << "(For optional* fields, enter [-1])" << endl;
+			cout << "name: ";
+			getline(cin >> ws, Name);
+			cout << "Email*: ";
+			getline(cin >> ws, Email);
+			cout << "Phone No*: ";
+			getline(cin >> ws, PhoneNo);
+
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Address");
+
+			Home.CreateAddress();
+
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirm Details");
+			
+			cout << Name << ", " << CustID << endl;
+			cout << Home;
+
+			if (Email != "-1")
+			{cout << "\t" << "Email: " << Email << endl;}
+
+			if (PhoneNo != "-1")
+			{cout << "\t" << "Phone No: " << PhoneNo << endl;}
+
+			AJT.Graphics.Line('-', 35);
+
+			cout << "Is this correct? [yes/no]" << endl << "> ";
+			cin >> Command;
+
+			while (Command != "yes" && Command != "no")
+			{
+				cout << "Please enter [yes] or [no]" << endl << "> ";
+				cin >> Command;
+			}
+
+			if (Command == "yes")
+			{
+				return;
+			}
+
+		} while (Command != "yes");		
 	}
 
 	void CreateCustomer(string Input)
@@ -51,6 +98,28 @@ public:
 		Email = "Undefined";
 		PhoneNo = "Undefined";
 		Loyalty = -1;
+	}
+
+	friend ostream& operator<<(ostream& OS, const Customer Cust)
+	{
+		AJT.Graphics.Line('-', 35);
+
+		OS << Cust.Name << ", " << Cust.CustID << endl;		
+		OS << Cust.Home;
+
+		if (Cust.Email != "-1")
+		{
+			OS << "\t" << "Email: " << Cust.Email << endl;
+		}
+
+		if (Cust.PhoneNo != "-1")
+		{
+			OS << "\t" << "Phone No: " << Cust.PhoneNo << endl;
+		}
+
+		AJT.Graphics.Line('-', 35);
+		
+		return OS;
 	}
 
 private:
@@ -266,6 +335,61 @@ private:
 	string Course;
 	string Popularity;
 	int Availability;
+};
+
+class Order
+{
+public:
+	Order()
+	{
+		Clear();
+	};
+
+	void AddItem(FoodItem AddedItem)
+	{
+
+	}
+
+	void SetDelivery(bool Input)
+	{
+		Delivery = Input;
+	}
+
+	void SetOpen(bool Input)
+	{
+		Open = Input;
+	}
+
+	void AddToTotal(double Input)
+	{
+		Total += Input;
+	}
+
+	//tf is this for?
+	void ReadCustomer(string Customer)
+	{
+
+	}
+
+	void Clear()
+	{
+		Basket.clear();
+		Cust.Clear();
+		OrderID.clear();
+		Open = true;
+		Delivery = true;
+		BasketPrice = -1;
+		Total = -1;
+	}
+
+private:
+	vector <FoodItem> Basket;
+	Customer Cust;
+	string OrderID;
+	bool Open;
+	bool Delivery;
+	double BasketPrice;
+	double Total;
 };
 
 class Menu
@@ -991,7 +1115,7 @@ public:
 		return;
 	}
 
-	void MakeOrder(double DeliveryCost)
+	Order CreateOrder(double DeliveryCost)
 	{
 		string Command; int Page;
 		Order TempOrder;
@@ -1041,60 +1165,13 @@ public:
 		} while (Command != "6");
 
 			//food selection loop (calls AddItem())
+
+		return TempOrder;
 	}
 
 private:
 	vector<vector<FoodItem>> Dishes;
 	vector <string> Cuisine;
-};
-
-class Order
-{
-public:
-	Order()
-	{
-		Clear();
-	};
-	
-	void AddItem(FoodItem AddedItem)
-	{
-
-	}
-
-	void SetDelivery(bool Input)
-	{Delivery = Input;}
-
-	void SetOpen(bool Input)
-	{Open = Input;}
-
-	void AddToTotal(double Input)
-	{Total += Input;}
-
-	//tf is this for?
-	void ReadCustomer(string Customer)
-	{
-
-	}
-
-	void Clear()
-	{
-		Basket.clear();
-		Cust.Clear();
-		OrderID.clear();
-		Open = true;
-		Delivery = true;
-		BasketPrice = -1;
-		Total = -1;
-	}
-
-private:
-	vector <FoodItem> Basket;
-	Customer Cust;
-	string OrderID;
-	bool Open;
-	bool Delivery;
-	double BasketPrice;
-	double Total;
 };
 
 class RestraurantSys
@@ -1118,21 +1195,18 @@ public:
 	void WriteAllFiles()
 	{
 		Bwydlen.WriteFile();
+
+		//write employees
+		//write orders
+		//write customers
 	}
 
 	void ReadAllFiles()
 	{
 		Bwydlen.ReadFile();
-	}
-
-	void ReadOrders()
-	{
-
-	}
-
-	void ReadEmployees()
-	{
-
+		//read employees
+		//read orders?
+		//read customers
 	}
 
 	void DisplayMenu()
@@ -1190,10 +1264,10 @@ public:
 			case 2:
 			{
 				//return as Order object?
-				Order TempOrder;
-				TempOrder.MakeOrder(DeliveryCost);
+				/*Order TempOrder;
+				TempOrder = Bwydlen.MakeOrder(DeliveryCost);
 				Orders.push_back(TempOrder);
-				TempOrder.Clear();
+				TempOrder.Clear();*/
 				break;
 			}
 			case 3:
@@ -1238,23 +1312,19 @@ private:
 
 int main()
 {
-	/*
-	* idea time
-	* what if we had a sperate selection menu /within/ Menu
-	* instead of having "linker" funtions connecting 
-	* Rsys to Bwydlen
-	* say hello to SelectionMenu()
-	*/
-
 	RestraurantSys RSys;
+	Customer TempCust;
+
+	TempCust.CreateCustomer();
+	cout << TempCust;
 
 	//RSys.TEMPCreateDish();
 	//RSys.DisplayMenu();
 
 	//RSys.WriteAllFiles();
 
-	RSys.ReadAllFiles();
-	RSys.MainMenu();
+	//RSys.ReadAllFiles();
+	//RSys.MainMenu();
 
 	//RSys.TEMPUpdatePop();
 	//RSys.TEMPUpdateAvail();

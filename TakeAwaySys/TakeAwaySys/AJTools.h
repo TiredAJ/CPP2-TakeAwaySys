@@ -356,7 +356,7 @@ private:
 		void Line(char Character, int Length)
 		{
 			string TempString;
-			cout << TempString.assign(Character, Length) << endl;
+			cout << TempString.assign(Length, Character) << endl;
 		}
 
 	private:
