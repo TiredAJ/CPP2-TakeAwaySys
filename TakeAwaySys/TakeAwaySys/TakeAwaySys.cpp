@@ -64,7 +64,7 @@ public:
 
 			AJT.Graphics.Line('-', 35);
 
-			cout << "Obtainer this correct? [yes/no]" << endl << "> ";
+			cout << "Is this correct? [yes/no]" << endl << "> ";
 			cin >> Command;
 
 			while (Command != "yes" && Command != "no")
@@ -79,14 +79,6 @@ public:
 			}
 
 		} while (Command != "yes");		
-	}
-
-	/*void EditCustomer()
-	{}*/
-
-	void NewOrder()
-	{
-
 	}
 
 	void Clear()
@@ -129,8 +121,8 @@ public:
 
 	friend ofstream& operator<<(ofstream& Filer, const Customer Cust)
 	{
-		Filer << Cust.CustID << "," << Cust.Name << ",";
-		Filer << Cust.Email << "," << Cust.PhoneNo << "," << Cust.Loyalty;
+		Filer << Cust.CustID << "+" << Cust.Name << "+";
+		Filer << Cust.Email << "+" << Cust.PhoneNo << "+" << Cust.Loyalty;
 		Filer << Cust.Home << endl;
 
 		return Filer;
@@ -144,7 +136,7 @@ public:
 
 		for (int i = 0; i < Input.size(); i++)
 		{
-			if (Input[i] != ',')
+			if (Input[i] != '+')
 			{
 				Temp += Input[i];
 			}
@@ -162,9 +154,9 @@ public:
 		Cust.Email = Segments[2];
 		Cust.PhoneNo = Segments[3];
 		Cust.Loyalty = stoi(Segments[4]);
-		Segments.clear();
+		Cust.Home.ReadAddr(Segments[5]);
 
-		Obtainer >> Cust.Home;
+		Segments.clear();
 
 		return Obtainer;
 	}
@@ -1571,12 +1563,19 @@ private:
 int main()
 {
 	RestraurantSys RSys;
+	Customer TempCust;
+
+	TempCust.CreateCustomer(0);
+	ofstream Writer;
+
+	Writer.open("Customers.txt");
+	Writer << TempCust;
 
 	//RSys.TEMPCreateDish();
 	//RSys.DisplayMenu();
 
 	//RSys.WriteAllFiles();
 
-	RSys.ReadAllFiles();
-	RSys.MainMenu();
+	//RSys.ReadAllFiles();
+	//RSys.MainMenu();
 }

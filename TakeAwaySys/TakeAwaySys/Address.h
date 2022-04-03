@@ -71,7 +71,7 @@ public:
 
 		for (int i = 0; i < Input.size(); i++)
 		{
-			if (Input[i] != '+')
+			if (Input[i] != ':')
 			{
 				Temp += Input[i];
 			}
@@ -94,9 +94,11 @@ public:
 
 	friend ofstream& operator<<(ofstream& Filer, const Address Addr)
 	{
-		Filer << Addr.HouseNo << "+" << Addr.StreetName << "+";
-		Filer << Addr.City << "+" << Addr.County << "+";
+		Filer << Addr.HouseNo << ":" << Addr.StreetName << ":";
+		Filer << Addr.City << ":" << Addr.County << ":";
 		Filer << Addr.Postcode << endl;
+
+		return Filer;
 	}
 
 private:
