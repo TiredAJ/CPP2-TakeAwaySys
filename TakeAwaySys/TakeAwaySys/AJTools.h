@@ -211,6 +211,10 @@ private:
 
 		}
 
+		//Expansion idea:
+		//where we have a title, how about a subtitle/banner underneath?
+		//could be used for little messages like "xyz file read" etc.
+
 	private:
 
 	};

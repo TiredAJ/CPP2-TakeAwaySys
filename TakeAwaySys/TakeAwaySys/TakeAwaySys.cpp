@@ -32,7 +32,7 @@ public:
 			MenuTitle = "Create Customer > ";
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
-			CustID = ("CID" + NoCustomers);
+			CustID = ("CID" + to_string(NoCustomers));
 
 			cout << "Please enter the customer's: " << endl;
 			cout << "(For optional* fields, enter [-1])" << endl;
@@ -88,7 +88,7 @@ public:
 		Home.Clear();
 		Email = "Undefined";
 		PhoneNo = "Undefined";
-		Loyalty = -1;
+		Loyalty = 0;
 	}
 
 	string GetName()
@@ -123,7 +123,7 @@ public:
 	{
 		Filer << Cust.CustID << "+" << Cust.Name << "+";
 		Filer << Cust.Email << "+" << Cust.PhoneNo << "+" << Cust.Loyalty;
-		Filer << Cust.Home << endl;
+		Filer << "+" << Cust.Home << endl;
 
 		return Filer;
 	}
@@ -162,7 +162,6 @@ public:
 	}
 
 private:
-
 	string CustID;
 	string Name;
 	Address Home;
@@ -1297,13 +1296,15 @@ public:
 		Bwydlen.ReadFile();
 		//read employees
 		//read orders?
-		//read customers
+		ReadCustomers();
 	}
 
 	void ReadCustomers()
 	{
 		ifstream Reader;
 		Customer TempCust;
+		int NoCusts;
+		string Command;
 
 		Reader.open("Customers.txt");
 
@@ -1313,10 +1314,32 @@ public:
 		}
 		else
 		{
-			while (Reader.eof() != true)
+			Reader >> NoCusts;
+
+			for (int i = 0; i < NoCusts; i++)
 			{
 				Reader >> TempCust;
+				Customers.push_back(TempCust);
+				TempCust.Clear();
 			}
+		}
+		Reader.close();
+
+		cout << "Files read, type [exit] to return" << endl << "> ";
+		cin >> Command;
+
+		return;
+	}
+
+	void WriteCustomers()
+	{
+		ofstream Writer("Customers.txt");
+
+		Writer << Customers.size();
+
+		for (int i = 0; i < Customers.size(); i++)
+		{
+			Writer << Customers[i];
 		}
 	}
 
@@ -1351,6 +1374,11 @@ public:
 		{
 			cout << Customers[i];
 		}
+
+		cout << "Enter [exit] to return to menu" << endl << "> ";
+		cin >> Command;
+
+		return;
 	}
 
 	void CreateTempFiles(int Option)
@@ -1535,7 +1563,7 @@ public:
 			}
 			case 3:
 			{
-				//search through customers
+				CustSearcher();
 				break;
 			}
 			case 4:
@@ -1563,13 +1591,6 @@ private:
 int main()
 {
 	RestraurantSys RSys;
-	Customer TempCust;
-
-	TempCust.CreateCustomer(0);
-	ofstream Writer;
-
-	Writer.open("Customers.txt");
-	Writer << TempCust;
 
 	//RSys.TEMPCreateDish();
 	//RSys.DisplayMenu();
@@ -1577,5 +1598,5 @@ int main()
 	//RSys.WriteAllFiles();
 
 	//RSys.ReadAllFiles();
-	//RSys.MainMenu();
+	RSys.MainMenu();
 }
