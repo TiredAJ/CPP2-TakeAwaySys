@@ -381,7 +381,6 @@ public:
 		cin >> Temp;
 	}
 
-	//here next
 	void NewDish()
 	{
 		vector <FoodItem> TempFoods;
@@ -992,22 +991,10 @@ public:
 		return;
 	}
 
-private:
-	vector<vector<FoodItem>> Dishes;
-	vector <string> Cuisine;
-};
-
-class Order
-{
-public:
-	Order()
-	{
-		Clear();
-	};
-
 	void MakeOrder(double DeliveryCost)
 	{
-		string Command;
+		string Command; int Page;
+		Order TempOrder;
 
 		MenuTitle = "Make order > ";
 
@@ -1027,23 +1014,61 @@ public:
 
 		if (Command == "pickup")
 		{
-			Delivery = false;
+			TempOrder.SetDelivery(false);
 		}
 		else
 		{
-			Delivery = true;
-			Total += DeliveryCost;
+			TempOrder.SetDelivery(true);
+			TempOrder.AddToTotal(DeliveryCost);
 		}
 
-		//pickup or delivery
+		Page = 0;
+		MenuTitle = "Select Dishes > ";
 
-		//food selection loop (calls AddItem())
+		do
+		{
+			for (int i = 0; i < Dishes[Page].size(); i++)
+			{
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + Dishes[Page][0].GetCuisine());
+
+				for (int j = 0; j < Dishes[Page].size(); j++)
+				{
+					cout << i + 1 << ") " << Dishes[Page][i] << endl;
+				}				
+			}
+			cout << "Please select";
+
+		} while (Command != "6");
+
+			//food selection loop (calls AddItem())
 	}
+
+private:
+	vector<vector<FoodItem>> Dishes;
+	vector <string> Cuisine;
+};
+
+class Order
+{
+public:
+	Order()
+	{
+		Clear();
+	};
 	
 	void AddItem(FoodItem AddedItem)
 	{
 
 	}
+
+	void SetDelivery(bool Input)
+	{Delivery = Input;}
+
+	void SetOpen(bool Input)
+	{Open = Input;}
+
+	void AddToTotal(double Input)
+	{Total += Input;}
 
 	//tf is this for?
 	void ReadCustomer(string Customer)
@@ -1164,6 +1189,7 @@ public:
 			}
 			case 2:
 			{
+				//return as Order object?
 				Order TempOrder;
 				TempOrder.MakeOrder(DeliveryCost);
 				Orders.push_back(TempOrder);
