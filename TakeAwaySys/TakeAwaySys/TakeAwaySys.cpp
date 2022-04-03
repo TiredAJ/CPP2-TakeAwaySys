@@ -23,7 +23,7 @@ public:
 		Clear();
 	}
 	
-	void CreateCustomer()
+	void CreateCustomer(int NoCustomers)
 	{
 		string Command;
 
@@ -31,6 +31,8 @@ public:
 		{
 			MenuTitle = "Create Customer > ";
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			CustID = ("CID" + NoCustomers);
 
 			cout << "Please enter the customer's: " << endl;
 			cout << "(For optional* fields, enter [-1])" << endl;
@@ -51,10 +53,14 @@ public:
 			cout << Home;
 
 			if (Email != "-1")
-			{cout << "\t" << "Email: " << Email << endl;}
+			{
+				cout << "\t" << "Email: " << Email << endl;
+			}
 
 			if (PhoneNo != "-1")
-			{cout << "\t" << "Phone No: " << PhoneNo << endl;}
+			{
+				cout << "\t" << "Phone No: " << PhoneNo << endl;
+			}
 
 			AJT.Graphics.Line('-', 35);
 
@@ -75,10 +81,8 @@ public:
 		} while (Command != "yes");		
 	}
 
-	void EditCustomer()
-	{
-
-	}
+	/*void EditCustomer()
+	{}*/
 
 	void NewOrder()
 	{
@@ -94,6 +98,12 @@ public:
 		PhoneNo = "Undefined";
 		Loyalty = -1;
 	}
+
+	string GetName()
+	{return Name;}
+
+	string GetID()
+	{return CustID;}
 
 	friend ostream& operator<<(ostream& OS, const Customer Cust)
 	{
@@ -1152,42 +1162,42 @@ public:
 		return;
 	}
 
-	Order CreateOrder(double DeliveryCost)
+	Order CreateOrder()
 	{
-		string Command; int Page;
+		string Command, Temp;
+		int Page, Outer, Inner;
 		Order TempOrder;
 
-		MenuTitle = "Make order > ";
-
-		AJT.SCH.ScreenCleanerTM(0, MenuTitle + " Select customer > ");
-		//customer select goes here
-
-		AJT.SCH.ScreenCleanerTM(0, MenuTitle + " collection options >");
-
-		cout << "[pickup] or [delivery]?" << endl << "> ";
-		cin >> Command;
-
-		while (Command != "pickup" && Command != "delivery")
-		{
-			cout << "Please choose either [pickup] or [delivery]" << endl << "> ";
-			cin >> Command;
-		}
-
-		if (Command == "pickup")
-		{
-			TempOrder.SetDelivery(false);
-		}
-		else
-		{
-			TempOrder.SetDelivery(true);
-			TempOrder.AddToTotal(DeliveryCost);
-		}
+		MenuTitle += "Select food > ";
 
 		Page = 0;
 		MenuTitle = "Select Dishes > ";
 
 		do
 		{
+			cout << "Would you like to search for an item? [yes/no]" << endl << "> ";
+			cin >> Command;
+
+			while (Command != "yes" && Command != "no")
+			{
+				cout << "Please enter either [yes] or [no]" << endl << "> ";
+				cin >> Command;
+			}
+
+			if (Command == "yes")
+			{
+				Temp = Searcher();
+				Outer = stoi(AJT.CMH.Remove(',', Temp, "left"));
+				Inner = stoi(AJT.CMH.Remove(',', Temp, "right"));
+
+				TempOrder.AddItem(Dishes[Outer][Inner]);
+			}
+			else
+			{
+
+			}
+
+
 			for (int i = 0; i < Dishes[Page].size(); i++)
 			{
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + Dishes[Page][0].GetCuisine());
@@ -1219,14 +1229,66 @@ public:
 
 	}
 	
-	void MakeOrder()
+	Order MakeOrder()
 	{
+		string Command; int Temp;
+		Customer TempCust;
+		Order CurrentOrder;
 
-	}
+		MenuTitle = "Make an order > ";
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Existing Customer?");
 
-	void EditOrder()
-	{
+		cout << "Is the order for an existing customer? [yes/no]" << endl << "> ";
+		cin >> Command;
 
+		while (Command != "yes" && Command != "no")
+		{
+			cout << "Please enter either [yes] or [no]" << endl << "> ";
+			cin >> Command;
+		}
+
+		if (Command == "yes")
+		{			
+			Temp = CustSearcher();
+			TempCust = Customers[Temp];
+		}
+		else if (Command == "no")
+		{
+			if (Customers.empty() == true)
+			{
+				TempCust.CreateCustomer(0);
+			}
+			else
+			{
+				TempCust.CreateCustomer(Customers.size());
+			}
+		}
+
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle + " collection options >");
+
+		cout << "[pickup] or [delivery]?" << endl << "> ";
+		cin >> Command;
+
+		while (Command != "pickup" && Command != "delivery")
+		{
+			cout << "Please choose either [pickup] or [delivery]" << endl << "> ";
+			cin >> Command;
+		}
+
+		if (Command == "pickup")
+		{
+			CurrentOrder.SetDelivery(false);
+		}
+		else
+		{
+			CurrentOrder.SetDelivery(true);
+			CurrentOrder.AddToTotal(DeliveryCost);
+		}
+
+		CurrentOrder = Bwydlen.CreateOrder();
+
+
+		return CurrentOrder;
 	}
 	
 	void WriteAllFiles()
@@ -1266,6 +1328,46 @@ public:
 		cin >> DeliveryCost;
 	}
 
+	void BrowseCustomers()
+	{
+		string Command;
+
+		MenuTitle = "Browse Customers > ";
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+		for (int i = 0; i < Customers.size(); i++)
+		{
+			cout << Customers[i];
+		}
+	}
+
+	int CustSearcher()
+	{
+		bool Found = false;
+		string Query;
+
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Search Customers > ");
+
+		cout << "Please enter either the CustID or their name:";
+		cout << endl << "> ";
+
+		getline(cin >> ws, Query);
+
+		for (int i = 0; i < Customers.size(); i++)
+		{
+			if (Customers[i].GetID() == Query)
+			{
+				Found = true;
+				return i;
+			}
+			else if (Customers[i].GetName() == Query)
+			{
+				Found = true;
+				return i;
+			}
+		}
+	}
+
 	void MainMenu()
 	{
 		vector <string> Options{
@@ -1300,11 +1402,7 @@ public:
 			}
 			case 2:
 			{
-				//return as Order object?
-				/*Order TempOrder;
-				TempOrder = Bwydlen.MakeOrder(DeliveryCost);
-				Orders.push_back(TempOrder);
-				TempOrder.Clear();*/
+				Orders.push_back(MakeOrder());
 				break;
 			}
 			case 3:
@@ -1314,20 +1412,86 @@ public:
 			}
 			case 4:
 			{
-				
+				CustomerMenu();
 				break;
 			}
 			case 5:
 			{
-				WriteAllFiles();
+				//change delivery cost
 				break;
 			}
 			case 6:
 			{
-				ReadAllFiles();
+				WriteAllFiles();
 				break;
 			}
 			case 7:
+			{
+				ReadAllFiles();
+				break;
+			}
+			case 8:
+			{
+				Command = "exit";
+				break;
+			}
+			default:
+				break;
+			}
+		} while (Command != "exit");
+	}
+
+	void CustomerMenu()
+	{
+		vector <string> Options{"View Customers","Create Customer","Edit Customer"};
+		string Command;
+
+		do
+		{
+			MenuTitle = "Customer Menu > ";
+
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			AJT.Graphics.DisplayOptions(Options, 1);
+
+			cin >> Command;
+
+			while (stoi(Command) < 1 || stoi(Command) > Options.size() + 1)
+			{
+				cout << "Please enter a value between [1-" << Options.size() + 1 << "] ";
+				cout << endl << "> ";
+				cin >> Command;
+			}
+
+			switch (stoi(Command))
+			{
+			case 1:
+			{
+				BrowseCustomers();
+				break;
+			}
+			case 2:
+			{
+				Customer TempCust;
+
+				if (Customers.empty() == true)
+				{
+					TempCust.CreateCustomer(0);
+				}
+				else
+				{
+					TempCust.CreateCustomer(Customers.size());
+				}
+				Customers.push_back(TempCust);
+				TempCust.Clear();
+				break;
+			}
+			case 3:
+			{
+				//search through customers
+				break;
+			}
+			case 4:
 			{
 				Command = "exit";
 				break;
@@ -1340,6 +1504,8 @@ public:
 
 private:
 	vector <Order> Orders;
+	vector <Employee> Employees;
+	vector <Customer> Customers;
 	//couldn't think of a better name for the menu object
 	Menu Bwydlen;
 	int MaxNoTakeaways;
@@ -1350,35 +1516,12 @@ private:
 int main()
 {
 	RestraurantSys RSys;
-	Customer TempCust;
-
-	TempCust.CreateCustomer();
-	cout << TempCust;
 
 	//RSys.TEMPCreateDish();
 	//RSys.DisplayMenu();
 
 	//RSys.WriteAllFiles();
 
-	//RSys.ReadAllFiles();
-	//RSys.MainMenu();
-
-	//RSys.TEMPUpdatePop();
-	//RSys.TEMPUpdateAvail();
-
-
-	/*Date TestDater1, TestDater2;
-
-	TestDater1.SetDateTime();
-
-	TestDater2.SetDateTime();
-
-	if (TestDater1 > TestDater2)
-	{
-		cout << TestDater1;
-	}
-	else
-	{
-		cout << TestDater2;
-	}*/
+	RSys.ReadAllFiles();
+	RSys.MainMenu();
 }

@@ -1,25 +1,4 @@
-﻿  Employee.cpp
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(67,3): error C2065: 'vector': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(67,11): error C2275: 'std::string': expected an expression instead of a type
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(67,19): error C2065: 'Segments': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(69,20): error C2676: binary '>>': 'std::ifstream' does not define this operator or a conversion to a type acceptable to the predefined operator
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(69,3): error C2672: 'getline': no matching overloaded function found
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(69,1): error C2780: 'std::basic_istream<_Elem,_Traits> &std::getline(std::basic_istream<_Elem,_Traits> &,std::basic_string<_Elem,_Traits,_Alloc> &,const _Elem)': expects 3 arguments - 2 provided
-C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.32.31302\include\string(75): message : see declaration of 'std::getline'
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(69,1): error C2780: 'std::basic_istream<_Elem,_Traits> &std::getline(std::basic_istream<_Elem,_Traits> &&,std::basic_string<_Elem,_Traits,_Alloc> &,const _Elem)': expects 3 arguments - 2 provided
-C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.32.31302\include\string(26): message : see declaration of 'std::getline'
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(79,5): error C2065: 'Segments': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(83,3): error C2065: 'Segments': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(86,18): error C2065: 'Segments': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(87,21): error C2065: 'Segments': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(88,15): error C2065: 'Segments': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(89,17): error C2065: 'Segments': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(90,19): error C2065: 'Segments': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(91,3): error C2065: 'Segments': undeclared identifier
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(98,9): error C2676: binary '<<': 'std::ofstream' does not define this operator or a conversion to a type acceptable to the predefined operator
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(99,9): error C2676: binary '<<': 'std::ofstream' does not define this operator or a conversion to a type acceptable to the predefined operator
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\Address.h(100,9): error C2676: binary '<<': 'std::ofstream' does not define this operator or a conversion to a type acceptable to the predefined operator
-  TakeAwaySys.cpp
+﻿  TakeAwaySys.cpp
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(34,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
@@ -36,12 +15,15 @@ E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(65,1): warni
               _Ty=int
           ]
 E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(89,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(308,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(494,29): warning C4101: 'Counter': unreferenced local variable
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(608,55): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(700,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(755,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(811,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(881,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(928,7): warning C4101: 'CuisineChoice': unreferenced local variable
-  Generating Code...
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\AJTools.h(305,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(504,29): warning C4101: 'Counter': unreferenced local variable
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(618,55): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(710,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(765,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(821,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(891,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(938,7): warning C4101: 'CuisineChoice': unreferenced local variable
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1263,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1483,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1369): warning C4715: 'RestraurantSys::CustSearcher': not all control paths return a value
+  TakeAwaySys.vcxproj -> E:\GitHub\TakeAwaySys\TakeAwaySys\TakeAwaySys\x64\Debug\TakeAwaySys.exe

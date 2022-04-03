@@ -166,29 +166,26 @@ private:
 					Temps.push_back(Temp);
 					Temp.clear();
 				}
-
 			}
 			Temps.push_back(Temp);
 
 			for (int j = 0; j < Temps.size(); j++)
 			{
-				if (Option == "left")		//removes first section
+				if (Option == "left" || Option == "Left")	//removes first section
 				{
 					if (j != 0)
 					{
 						Result += Temps[j];
 					}
 				}
-				else if (Option == "right")		//removes last section
+				else if (Option == "right" || Option == "Right") //removes last section
 				{
-					if (j != Temps.size())
+					if (j != Temps.size() -1)
 					{
 						Result += Temps[j];
 					}
 				}
-
 			}
-
 			return Result;
 		}
 
