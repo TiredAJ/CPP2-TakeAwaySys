@@ -80,7 +80,7 @@ public:
 	*/
 	void CreateDish(string CuisineSpec)
 	{
-		string Temp, MenuTitle;
+		string Temp;
 		string Details[3];
 		int Counter = 0;
 
@@ -116,7 +116,7 @@ public:
 		}
 		Details[Counter] = Temp;
 
-		Cuisine = Details[0] + "," + Details[1];
+		Cuisine = Details[1];
 		FoodID = Details[0] + Details[2];
 	}
 
@@ -210,9 +210,8 @@ public:
 	friend ofstream& operator<<(ofstream& FS, const FoodItem FI)
 	{
 		FS << FI.FoodID << "," << FI.Name << "," << FI.Price << ",";
-		FS << AJT.CMH.Remove(',', FI.Cuisine, "left");
-		FS << "," << FI.Course << "," << FI.Popularity;
-		FS << "," << FI.Availability << endl;
+		FS << FI.Cuisine << "," << FI.Course << ",";
+		FS << FI.Popularity << "," << FI.Availability << endl;
 
 		return FS;
 	}
@@ -366,6 +365,7 @@ public:
 
 	void WriteFile()
 	{
+		string Temp;
 		ofstream Writer;
 		Writer.open("Dishes.txt");
 
@@ -383,6 +383,9 @@ public:
 		}
 
 		Writer.close();
+
+		cout << "Dishes saved to file, type [exit] to return to menu" << endl;
+		cin >> Temp;
 	}
 
 	//here next
@@ -394,7 +397,7 @@ public:
 
 		MenuTitle = "New Dish >";
 
-		cout << MenuTitle << endl;
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 		
 		cout << "Would you like to add a new cuisine? [yes/no]" << endl << "> ";
 		cin >> Command;
@@ -449,10 +452,10 @@ public:
 				cin >> Command;
 			}
 
-			cout << "You've chosen:" << Cuisine[stod(Command) - 1];
+			cout << "You've chosen: " << Cuisine[stod(Command) - 1];
 			ChosenCuisine = stoi(Command) - 1;
 
-			AJT.SCH.ScreenCleanerTM(0, MenuTitle + (Cuisine[ChosenCuisine] + "\n"));
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle + Cuisine[ChosenCuisine]);
 
 			if (Dishes.size() == 0)
 			{
@@ -475,28 +478,34 @@ public:
 
 			cout << TempFood;
 
-			TempFoods.clear();
+			cout << "Is this correct? [yes/no] " << endl << "> ";
+			cin >> Command;
 
-			if (Dishes.size() == 0)
+			if (Command != "no")
 			{
-				TempFoods.push_back(TempFood);
-				Dishes.push_back(TempFoods);
-			}
-			else
-			{
-				if (Dishes.size() <= ChosenCuisine)
+				TempFoods.clear();
+
+				if (Dishes.size() == 0)
 				{
 					TempFoods.push_back(TempFood);
 					Dishes.push_back(TempFoods);
 				}
 				else
 				{
-					Dishes[ChosenCuisine].push_back(TempFood);
-				}				
-			}		
+					if (Dishes.size() <= ChosenCuisine)
+					{
+						TempFoods.push_back(TempFood);
+						Dishes.push_back(TempFoods);
+					}
+					else
+					{
+						Dishes[ChosenCuisine].push_back(TempFood);
+					}
+				}
 
-			cout << "Would you like to make another dish? [yes/no]" << endl;
-			cin >> Command;
+				cout << "Would you like to make another dish? [yes/no]" << endl;
+				cin >> Command;
+		}			
 			
 		} while (Command != "no" || Command == "yes");
 
@@ -788,11 +797,17 @@ public:
 
 			CuisineChoice = stoi(Input) - 1;
 
-			for (int i = 0; i < Dishes[CuisineChoice].size(); i++)
+			if (Dishes[CuisineChoice].empty() != true)
 			{
-				cout << Dishes[CuisineChoice][i];
+				for (int i = 0; i < Dishes[CuisineChoice].size(); i++)
+				{
+					cout << Dishes[CuisineChoice][i];
+				}
 			}
-
+			else
+			{
+				cout << "No dishes" << endl;
+			}
 		}
 		else
 		{
@@ -807,9 +822,16 @@ public:
 
 				cout << AJT.CMH.Remove(',', Cuisine[CurrentPg], "left") << endl;
 
-				for (int j = 0; j < Dishes[CurrentPg].size(); j++)
+				if (Dishes[CurrentPg].empty() != true)
 				{
-					cout << Dishes[CurrentPg][j];
+					for (int i = 0; i < Dishes[CurrentPg].size(); i++)
+					{
+						cout << Dishes[CurrentPg][i];
+					}
+				}
+				else
+				{
+					cout << endl << "*No dishes*" << endl;
 				}
 
 				cout << endl;
@@ -836,6 +858,7 @@ public:
 	void CreateCuisine()
 	{
 		string Input, Temp, Command;
+		vector <FoodItem> TempFoods;
 
 		MenuTitle += "New Cuisine > \n";
 		do
@@ -858,6 +881,8 @@ public:
 			
 			Temp += "," + Input;
 			Cuisine.push_back(Temp);
+
+			Dishes.push_back(TempFoods);
 
 			Input.clear();
 			Temp.clear();

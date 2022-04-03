@@ -1,8 +1,9 @@
 2
-2
+3
 ITA,Italian
 ITA0,Pasta,3.5,Italian,Main,med,5
-ITA1,Spaghetti,3,Italian,Main,high,5
+ITA1,Spaghetti,3.0,Italian,Main,med,20
+ITA2,Tagatelli,3.5,Italian,Main,high,25
 1
 FRN,French
 FRN0,Croque Monsieur,3.25,French,Introductory,med,50
