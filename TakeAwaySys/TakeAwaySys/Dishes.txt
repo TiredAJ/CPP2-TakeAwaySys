@@ -2,7 +2,7 @@
 3
 ITA,Italian
 ITA0,Pasta,3.5,Italian,Main,med,5
-ITA1,Spaghetti,3,Italian,Main,med,20
+ITA1,Spaghetti,3.0,Italian,Main,med,20
 ITA2,Tagatelli,3.5,Italian,Main,high,25
 1
 FRN,French
