@@ -1,15 +1,15 @@
 3
 3
 ITA,Italian
-ITA0+Pasta+3.5+Italian+Main+med+5
-ITA1+Spaghetti+3.0+Italian+Main+med+20
-ITA2+Tagatelli+3.5+Italian+Main+high+25
+ITA0+Pasta+3.5+Italian+Main+,med+5
+ITA1+Spaghetti+3+Italian+Main+,med+20
+ITA2+Tagatelli+3.5+Italian+Main+,high+25
 3
 FRN,French
-FRN0+Croque Monsieur+3.25+French+Introductory+med+50
-FRN1+Bisque+2.5+French+Soup+Low+10
-FRN2+Plate of Macarons+ 5+ French+ Dessert+ med+ 10
+FRN0+Croque Monsieur+3.25+French+Introductory+,med+50
+FRN1+Bisque+2.5+French+Soup+,Low+10
+FRN2+Plate of Macarons+5+ French+ Dessert+, med+10
 2
 MEX,Mexican
-MEX0+Chilaquiles+3.00+Mexican+Breakfast+high+30
-MEX1+Tamales+3.00+Mexican+Main+med+20
+MEX0+Chilaquiles+3+Mexican+Breakfast+,high+30
+MEX1+Tamales+3+Mexican+Main+,med+20
