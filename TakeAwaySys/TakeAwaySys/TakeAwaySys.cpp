@@ -312,9 +312,9 @@ public:
 
 	friend ofstream& operator<<(ofstream& Filer, const FoodItem FI)
 	{
-		Filer << FI.FoodID << "," << FI.Name << "," << FI.Price << ",";
-		Filer << FI.Cuisine << "," << FI.Course << ",";
-		Filer << FI.Popularity << "," << FI.Availability << endl;
+		Filer << FI.FoodID << "+" << FI.Name << "+" << FI.Price << "+";
+		Filer << FI.Cuisine << "+" << FI.Course << "+,";
+		Filer << FI.Popularity << "+" << FI.Availability << endl;
 
 		return Filer;
 	}
@@ -327,7 +327,7 @@ public:
 
 		for (int i = 0; i < Input.size(); i++)
 		{
-			if (Input[i] != ',')
+			if (Input[i] != '+')
 			{
 				Temp += Input[i];
 			}
@@ -400,7 +400,7 @@ public:
 	void SetDelivery(bool Input, double DeliveryCost)
 	{
 		Delivery = Input;
-		Total = DeliveryCost;
+		this->DeliveryCost = DeliveryCost;
 	}
 
 	void SetOpen(bool Input)
@@ -408,7 +408,7 @@ public:
 		Open = Input;
 	}
 
-	//tf Obtainer this for?
+	//tf is this for?
 	void ReadCustomer(string Customer)
 	{
 
@@ -422,7 +422,7 @@ public:
 		Open = true;
 		Delivery = true;
 		BasketPrice = 0;
-		Total = 0;
+		DeliveryCost = 0;
 	}
 
 	void SetID(int ID)
@@ -468,17 +468,60 @@ public:
 
 		if (OR.Delivery == true)
 		{
-			OS << " Total Price: " << CurrencySym << setprecision(2) << fixed << OR.Total + OR.BasketPrice << endl;
+			OS << " Total Price: " << CurrencySym << setprecision(2) << fixed << (OR.DeliveryCost + OR.BasketPrice);
+			OS << endl;
 		}
 		else
 		{
 			OS << " Total Price: " << CurrencySym << setprecision(2) << fixed << OR.BasketPrice << endl;
 		}
 
-
 		AJT.Graphics.Line('=', 45);
 
 		return OS;
+	}
+
+	friend ofstream& operator<<(ofstream& OS, Order OR)
+	{
+		OS << OR.OrderID << "," << OR.Basket.size() << ",:";
+
+		for (int i = 0; i < OR.Basket.size(); i++)
+		{
+			OS << OR.Basket[i] << ":";
+		}
+
+		OS << "+" << OR.Cust.GetID() << "+" << OR.Delivery << "+" << OR.Open << endl;
+
+		return OS;
+	}
+
+	friend ifstream& operator>>(ifstream& IS, Order OR)
+	{
+		vector <string> Segments;
+		string Line, Temp;
+
+		getline(IS >> ws, Line);
+
+		for (int i = 0; i < Line.size(); i++)
+		{
+			if (Line[i] != ',')
+			{
+				Temp += Line[i];
+			}
+			else if (Line[i] == ':')
+			{
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+			Segments.push_back(Temp);
+			Temp.clear();
+		}
+
+
+
 	}
 
 private:
@@ -488,7 +531,7 @@ private:
 	bool Open;
 	bool Delivery;
 	double BasketPrice;
-	double Total;
+	double DeliveryCost;
 };
 
 class Menu
@@ -571,7 +614,7 @@ public:
 
 			for (int j = 0; j < NoDishes; j++)
 			{
-				Reader >> TempFood;
+  				Reader >> TempFood;
 				TempFoods.push_back(TempFood);
 				TempFood.Clear();
 			}
@@ -693,7 +736,7 @@ public:
 
 			cout << TempFood;
 
-			cout << "Obtainer this correct? [yes/no] " << endl << "> ";
+			cout << "Is this correct? [yes/no] " << endl << "> ";
 			cin >> Command;
 
 			if (Command != "no")
@@ -950,7 +993,7 @@ public:
 
 				cout << Dishes[OuterVal][InnerVal];
 
-				cout << "Obtainer this the correct dish? [yes/no]" << endl << "> ";
+				cout << "Is this the correct dish? [yes/no]" << endl << "> ";
 				cin >> Command;
 
 				while (Command != "yes" && Command != "no")
@@ -1052,7 +1095,7 @@ public:
 
 				cout << endl << "Cuisine Name: " << Input << endl;
 				cout << "Cuisine Prefix: " << Temp << endl;
-				cout << "Obtainer this correct? [yes/no]" << endl;
+				cout << "Is this correct? [yes/no]" << endl;
 				cin >> Command;
 			} while (Command != "yes" && Command == "no");
 			
@@ -1307,7 +1350,7 @@ public:
 			cout << setprecision(2) << fixed << TempOrder.GetBasketPrice() << endl;
 		}
 
-		cout << "Type [exit] to return to menu" << endl << "> ";
+		cout << "Type [exit] to return to view order" << endl << "> ";
 		cin >> Command;
 
 		return TempOrder;
@@ -1323,7 +1366,7 @@ class RestraurantSys
 public:
 	RestraurantSys()
 	{
-
+		DeliveryCost = 2.5;
 	}
 	
 	Order MakeOrder()
@@ -1494,6 +1537,21 @@ public:
 		{
 			Writer << Customers[i];
 		}
+
+		Writer.close();
+	}
+
+	void WriteOrders()
+	{
+		ofstream Writer("Orders.txt");
+		Writer << Orders.size();
+
+		for (int i = 0; i < Orders.size(); i++)
+		{
+			Writer << Orders[i];
+		}
+
+		Writer.close();
 	}
 
 	void DisplayMenu()
@@ -1724,7 +1782,7 @@ public:
 			}
 			case 3:
 			{
-				//view orders
+				CloseOrder();
 				break;
 			}
 			case 4:
@@ -1824,7 +1882,7 @@ public:
 			}
 			case 3:
 			{
-				CustSearcher();
+				//CustSearcher();
 				break;
 			}
 			case 4:

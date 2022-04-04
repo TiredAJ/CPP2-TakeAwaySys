@@ -1,5 +1,1 @@
-Bisque, 2.5, French, Soup, low, 10
-Plate of Macarons, 5, French, Dessert, med, 10
-
-Chilaquiles, 3.00, Mexican, Breakfast, high, 30
-Tamales, 3.00, Mexican, Main, med, 20
+crepe, 1.50, French, Dessert, high, 15
