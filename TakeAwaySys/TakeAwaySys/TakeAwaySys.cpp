@@ -1324,6 +1324,9 @@ public:
 			}
 		}
 		Reader.close();
+		MenuTitle = "Read Files > ";
+
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
 		cout << "Files read, type [exit] to return" << endl << "> ";
 		cin >> Command;
@@ -1507,6 +1510,20 @@ public:
 			}
 			case 8:
 			{
+				cout << "Would you like to save your files first? [yes/no]" << endl << "> ";
+				cin >> Command;
+
+				while (Command != "yes" && Command != "no")
+				{
+					cout << "Please enter either [yes] or [no]" << endl << "> ";
+					cin >> Command;
+				}
+
+				if (Command == "yes")
+				{
+					WriteAllFiles();
+				}
+
 				Command = "exit";
 				break;
 			}
