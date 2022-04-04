@@ -383,9 +383,14 @@ public:
 		Clear();
 	};
 
+	Order(int ID)
+	{
+		OrderID = ID;
+	}
+
 	void AddItem(FoodItem AddedItem)
 	{
-
+		Basket.push_back(AddedItem);
 	}
 
 	void SetDelivery(bool Input)
@@ -1159,8 +1164,6 @@ public:
 		int Page, Outer, Inner;
 		Order TempOrder;
 
-		MenuTitle += "Select food > ";
-
 		Page = 0;
 		MenuTitle = "Select Dishes > ";
 
@@ -1185,24 +1188,36 @@ public:
 			}
 			else
 			{
-
-			}
-
-
-			for (int i = 0; i < Dishes[Page].size(); i++)
-			{
-				AJT.SCH.ScreenCleanerTM(0, MenuTitle + Dishes[Page][0].GetCuisine());
-
-				for (int j = 0; j < Dishes[Page].size(); j++)
+				for (int i = 0; i < Dishes[Page].size(); i++)
 				{
-					cout << i + 1 << ") " << Dishes[Page][i] << endl;
-				}				
+					AJT.SCH.ScreenCleanerTM(0, MenuTitle + Dishes[Page][0].GetCuisine());
+
+					for (int j = 0; j < Dishes[Page].size(); j++)
+					{
+						cout << i + 1 << ") " << Dishes[Page][i] << endl;
+					}
+				}
+
+				cout << "Please select [1-" << Dishes[Page].size() << "]";
+				cout << "Or type [page #] with the page you'd like to visit" << endl << "> ";
+				cin >> Command;
+
+				if (Command[0] == 'p')
+				{
+					Page = stoi(Command.substr(5));
+				}
+				else if (stoi(Command) > 0)
+				{
+					while (stoi(Command) < 0 && stoi(Command) > Dishes[Page].size() + 1)
+					{
+						cout << "Please enter either [page #] or an item number" << endl << "> ";
+						cin >> Command;
+					}
+					TempOrder.AddItem(Dishes[Page][stoi(Command)]);
+				}
 			}
-			cout << "Please select";
 
-		} while (Command != "6");
-
-			//food selection loop (calls AddItem())
+		} while (Command != to_string(Dishes[Page].size() + 1));
 
 		return TempOrder;
 	}
@@ -1241,7 +1256,16 @@ public:
 		if (Command == "yes")
 		{			
 			Temp = CustSearcher();
-			TempCust = Customers[Temp];
+
+			if (Temp == -1)
+			{
+				cout << "User could not be found" << endl;
+				return CurrentOrder;
+			}
+			else
+			{
+				TempCust = Customers[Temp];
+			}
 		}
 		else if (Command == "no")
 		{
@@ -1422,28 +1446,54 @@ public:
 	int CustSearcher()
 	{
 		bool Found = false;
-		string Query;
+		string Query, Command;
 
-		AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Search Customers > ");
-
-		cout << "Please enter either the CustID or their name:";
-		cout << endl << "> ";
-
-		getline(cin >> ws, Query);
-
-		for (int i = 0; i < Customers.size(); i++)
+		do
 		{
-			if (Customers[i].GetID() == Query)
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Search Customers > ");
+
+			cout << "Please enter either the CustID or their name:";
+			cout << endl << "> ";
+
+			getline(cin >> ws, Query);
+
+			for (int i = 0; i < Customers.size(); i++)
 			{
-				Found = true;
-				return i;
+				if (Customers[i].GetID() == Query)
+				{
+					Found = true;
+					return i;
+				}
+				else if (Customers[i].GetName() == Query)
+				{
+					Found = true;
+					return i;
+				}
 			}
-			else if (Customers[i].GetName() == Query)
+
+			if (Found == false)
 			{
-				Found = true;
-				return i;
+				cout << "The searched customer could not be found" << endl;
+				cout << "Would you like to try again? [yes/no]" << endl << "> ";
+				cin >> Command;
+
+				while (Command != "yes" && Command != "no")
+				{
+					cout << "Please enter [yes] or [no]" << endl << "> ";
+					cin >> Command;
+				}
+
+				if (Command == "yes")
+				{
+					Found = false;
+				}
+				else
+				{
+					return -1;
+				}
 			}
-		}
+		} while (Found == false);
+		
 	}
 
 	void MainMenu()
