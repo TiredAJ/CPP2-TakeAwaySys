@@ -12,27 +12,33 @@ public:
 
 	}
 
-	void CreateEmployee()
+	virtual void CreateEmployee()
 	{
 
 	}
 
+	//necesary?
 	void CreateEmployee(string Input)
 	{
 
 	}
 
-	void EditEmployee()
+	virtual void EditEmployee()
 	{
 
 	}
 
-	void ReadEmployee()
+	virtual friend ostream& operator<<(ostream& OS, const Employee Emp)
+	{
+	
+	}
+
+	virtual friend ofstream& operator<<(ofstream& Filer, const Employee Emp)
 	{
 
 	}
 
-	void WriteEmployee()
+	virtual friend ifstream& operator>>(ifstream& Obtainer, Employee Emp)
 	{
 
 	}

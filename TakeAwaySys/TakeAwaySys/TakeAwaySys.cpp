@@ -1361,12 +1361,31 @@ private:
 	vector <string> Cuisine;
 };
 
+class Chef:public Employee
+{
+public:
+	Chef();
+
+private:
+
+};
+
+class GeneralEmployee:public Employee
+{
+public:
+	GeneralEmployee();
+
+private:
+
+};
+
 class RestraurantSys
 {
 public:
 	RestraurantSys()
 	{
 		DeliveryCost = 2.5;
+		MaxNoTakeaways = 20;
 	}
 	
 	Order MakeOrder()
@@ -1498,11 +1517,34 @@ public:
 	void WriteAllFiles()
 	{
 		string Command;
+		ofstream Writer;
+
 		Bwydlen.WriteFile();
 
 		//write employees
-		//write orders
-		WriteCustomers();
+		//write misc
+
+		Writer.open("Orders.txt");
+		Writer << Orders.size();
+
+		for (int i = 0; i < Orders.size(); i++)
+		{
+			Writer << Orders[i];
+		}
+
+		Writer.close();
+		Writer.clear();
+
+		Writer.open("Customers.txt");
+
+		Writer << Customers.size();
+
+		for (int i = 0; i < Customers.size(); i++)
+		{
+			Writer << Customers[i];
+		}
+
+		Writer.close();
 
 		MenuTitle = "Write Files > ";
 
@@ -1515,25 +1557,15 @@ public:
 	void ReadAllFiles()
 	{
 		string Command;
-		Bwydlen.ReadFile();
-		//read employees
-		//read orders?
-		ReadCustomers();
-
-		MenuTitle = "Read Files > ";
-
-		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
-
-		cout << "Files read, type [exit] to return" << endl << "> ";
-		cin >> Command;
-	}
-
-	void ReadCustomers()
-	{
 		ifstream Reader;
 		Customer TempCust;
 		int NoCusts;
-		string Command;
+
+		Bwydlen.ReadFile();
+
+		//read employees
+		//read orders
+		//read Misc
 
 		Reader.open("Customers.txt");
 
@@ -1553,34 +1585,13 @@ public:
 			}
 		}
 		Reader.close();
-		return;
-	}
 
-	void WriteCustomers()
-	{
-		ofstream Writer("Customers.txt");
+		MenuTitle = "Read Files > ";
 
-		Writer << Customers.size();
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
-		for (int i = 0; i < Customers.size(); i++)
-		{
-			Writer << Customers[i];
-		}
-
-		Writer.close();
-	}
-
-	void WriteOrders()
-	{
-		ofstream Writer("Orders.txt");
-		Writer << Orders.size();
-
-		for (int i = 0; i < Orders.size(); i++)
-		{
-			Writer << Orders[i];
-		}
-
-		Writer.close();
+		cout << "Files read, type [exit] to return" << endl << "> ";
+		cin >> Command;
 	}
 
 	void DisplayMenu()
@@ -2001,7 +2012,7 @@ public:
 
 private:
 	vector <Order> Orders;
-	vector <Employee> Employees;
+	vector <Employee*> Employees;
 	vector <Customer> Customers;
 	//couldn't think of a better name for the menu object
 	Menu Bwydlen;
