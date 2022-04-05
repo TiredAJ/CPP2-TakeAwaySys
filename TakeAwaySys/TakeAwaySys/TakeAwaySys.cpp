@@ -1371,7 +1371,7 @@ public:
 	
 	Order MakeOrder()
 	{
-		string Command; int Temp;
+		string Command; int Temp; bool Valid;
 		Customer TempCust;
 		Order CurrentOrder;
 		
@@ -1417,14 +1417,43 @@ public:
 			
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + " collection options >");
 
-			cout << "[pickup] or [delivery]?" << endl << "> ";
-			cin >> Command;
-
-			while (Command != "pickup" && Command != "delivery")
+			do
 			{
-				cout << "Please choose either [pickup] or [delivery]" << endl << "> ";
+				cout << "[pickup] or [delivery]?" << endl << "> ";
 				cin >> Command;
-			}
+
+				while (Command != "pickup" && Command != "delivery")
+				{
+					cout << "Please choose either [pickup] or [delivery]" << endl << "> ";
+					cin >> Command;
+				}
+
+				if (Command == "pickup" && MaxNoTakeaways < 1)
+				{
+					cout << "Max number of takeaways reached" << endl;
+					cout << "Would you like to change the order type? [yes/no]" << endl << "> ";
+					cin >> Command;
+
+					while (Command != "yes" && Command != "no")
+					{
+						cout << "Please enter either [yes] or [no]" << endl << "> ";
+						cin >> Command;
+					}
+
+					if (Command == "yes")
+					{
+						Valid = false;
+					}
+					else
+					{
+						CurrentOrder.Clear();
+						CurrentOrder.SetID(-1);
+
+						return CurrentOrder;
+					}
+				}
+			} while (Valid == false);
+			
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + " Select Foods");
 
@@ -1746,11 +1775,12 @@ public:
 	void MainMenu()
 	{
 		vector <string> Options{
-			"View Menu sub-Menu","Make New Order","Close Order","View Employee Menu",
-			"View Customer sub-Menu", "Change Delivery Cost", "Save All Files",
-			"Read All Files"
+			"View Menu sub-Menu","Make New Order","Close Order","View Employee sub-Menu",
+			"View Customer sub-Menu", "Misc sub-menu",
 		};
 		string Command;
+		Order TempOrder;
+
 		do
 		{
 			MenuTitle = "Main Menu > ";
@@ -1777,7 +1807,12 @@ public:
 			}
 			case 2:
 			{
-				Orders.push_back(MakeOrder());
+				TempOrder = MakeOrder();
+
+				if (TempOrder.GetID() != "-1")
+				{
+					Orders.push_back(TempOrder);
+				}				
 				break;
 			}
 			case 3:
@@ -1797,20 +1832,10 @@ public:
 			}
 			case 6:
 			{
-				//change delivery cost
+				MiscMenu();
 				break;
 			}
 			case 7:
-			{
-				WriteAllFiles();
-				break;
-			}
-			case 8:
-			{
-				ReadAllFiles();
-				break;
-			}
-			case 9:
 			{
 				cout << "Would you like to save your files first? [yes/no]" << endl << "> ";
 				cin >> Command;
@@ -1893,6 +1918,84 @@ public:
 			default:
 				break;
 			}
+		} while (Command != "exit");
+	}
+
+	void MiscMenu()
+	{
+		vector <string> Options{
+			"Change Delivery Cost", "Change Maximum Takeaway Orders","Save All Files",
+			"Read All Files"
+		};
+		string Command;
+
+		do
+		{
+			MenuTitle = "Misc Sub-Menu > ";
+
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			AJT.Graphics.DisplayOptions(Options, 1);
+
+			cin >> Command;
+
+			while (stoi(Command) < 1 && stoi(Command) > Options.size()+1)
+			{
+				cout << "Please enter between [1-" << Options.size() + 1 << "]";
+				cout << endl << "> ";
+				cin >> Command;
+			}
+
+			switch (stoi(Command))
+			{
+			case 1:
+			{
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Change delivery cost");
+
+				cout << "Current Delivery price: " << CurrencySym;
+				cout << setprecision(2) << fixed << DeliveryCost << endl;
+				cout << "Please enter a new price: " << CurrencySym;
+				getline(cin >> ws, Command);
+
+				DeliveryCost = stod(Command);
+				break;
+			}
+			case 2:
+			{
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Change No. orders");
+
+				cout << "Current number of max orders: " << MaxNoTakeaways << endl;
+				cout << "Please enter new max: ";
+				cin >> Command;
+
+				while (stoi(Command) <= 1)
+				{
+					cout << "Please enter a value greater than 1: ";
+					cin >> Command;
+
+					MaxNoTakeaways = stoi(Command);
+				}
+
+				break;
+			}
+			case 3:
+			{
+				WriteAllFiles();
+				break;
+			}
+			case 4:
+			{
+				ReadAllFiles();
+				break;
+			}
+			case 5:
+			{
+				return;
+			}
+			default:
+				break;
+			}
+
 		} while (Command != "exit");
 	}
 
