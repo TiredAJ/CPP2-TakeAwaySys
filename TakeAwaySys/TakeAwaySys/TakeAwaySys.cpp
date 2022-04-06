@@ -1367,22 +1367,30 @@ public:
 	Chef()
 	{}
 
-	virtual void CreateEmployee()
+	virtual void CreateEmployee(int Index)
 	{
-		cout << "Please enter a name: " << endl;
+		cout << "Please enter:" << endl << "name: ";
 		getline(cin >> ws, Name);
-		cout << "Please enter an ID: " << endl;
-		cin >> EmpID;
+
+		cout << "Phone No.: ";
+		getline(cin >> ws, PhoneNo);
+
+		EmpID = "Emp" + to_string(Index);
+
 		cout << "Please enter a cuisine speciality: " << endl;
 		getline(cin >> ws, Speciality);
 
-		//Addrs.CreateAddress();
+		Addrs.CreateAddress();
 	}
 
-	void Display()
+	virtual void Display()
 	{
-		cout << EmpID << endl << "\t" << Name << endl << "\t" << PhoneNo;
-		cout << "\t" << Speciality << endl;// << Emp.Addrs << endl;
+		cout << EmpID << endl << "Name: " << Name << endl;
+		cout << "Phone No.: " << PhoneNo << endl;
+		cout << "Speciality: " << Speciality << endl;
+		cout << "Home" << endl << Addrs;
+
+		AJT.Graphics.Line('-', 45);
 	}
 
 private:
@@ -1399,20 +1407,26 @@ public:
 	GeneralEmployee()
 	{};
 
-	virtual void CreateEmployee()
+	virtual void CreateEmployee(int Index)
 	{
-		cout << "Please enter a name: " << endl;
+		cout << "Please enter:" << endl << "name: ";
 		getline(cin >> ws, Name);
-		cout << "Please enter an ID: " << endl;
-		cin >> EmpID;
 
-		//Addrs.CreateAddress();
+		cout << "Phone No.:";
+		getline(cin >> ws, PhoneNo);
+
+		EmpID = "Emp" + to_string(Index);
+
+		Addrs.CreateAddress();
 	}
 
-	void Display()
+	virtual void Display()
 	{
-		cout << EmpID << endl << "\t" << Name << endl << "\t" << PhoneNo;
-		cout << endl;// << Emp.Addrs << endl;
+		cout << EmpID << endl << "Name: " << Name << endl;
+		cout << "Phone No.: " << PhoneNo << endl << "Home: ";
+		cout << endl << Addrs << endl;
+
+		AJT.Graphics.Line('-', 45);
 	}
 
 private:
@@ -2048,7 +2062,7 @@ public:
 			AJT.Graphics.DisplayOptions(Options, 1);
 			cin >> Command;
 
-			Command = AJT.VC.YNCheck(Command);
+			Command = AJT.VC.NumRangeCheck(Command, 1, (Options.size()+1));
 		
 			switch (stoi(Command))
 			{
@@ -2074,7 +2088,7 @@ public:
 				{
 					AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee");
 
-					cout << "Is the new employee a chef? [yes/no]" << endl << endl;
+					cout << "Is the new employee a chef? [yes/no]" << endl;
 					cin >> Command;
 
 					Command = AJT.VC.YNCheck(Command);
@@ -2090,42 +2104,47 @@ public:
 
 					if (Command == "yes")
 					{
-						AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > Confirmation");
-						
-						Employees.push_back(new Chef);
+						do
+						{
+							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > New Chef");
 
-						Employees[CurrentIndex]->CreateEmployee();
-						Employees[CurrentIndex]->Display();
+							Employees.push_back(new Chef);
+							Employees[CurrentIndex]->CreateEmployee(CurrentIndex);
 
-						cout << "Is this correct? [yes/no]" << endl << "> ";
-						cin >> Command;
+							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > Confirmation");
+							Employees[CurrentIndex]->Display();
 
-						Command = AJT.VC.YNCheck(Command);
+							cout << "Is this correct? [yes/no]" << endl << "> ";
+							cin >> Command;
+
+							Command = AJT.VC.YNCheck(Command);
+						} while (Command == "no");						
 
 						if (Command == "yes")
 						{
-							Command = "exit";
 							break;
-						}
-						
+						}						
 					}
 					else
 					{
-						AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > Confirmation");
+						do
+						{
+							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > New Employee");
 
-						Employees.push_back(new GeneralEmployee);
+							Employees.push_back(new GeneralEmployee);
+							Employees[CurrentIndex]->CreateEmployee(CurrentIndex);
 
-						Employees[CurrentIndex]->CreateEmployee();
-						Employees[CurrentIndex]->Display();
+							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > Confirmation");
+							Employees[CurrentIndex]->Display();
 
-						cout << "Is this correct? [yes/no]" << endl << "> ";
-						cin >> Command;
+							cout << "Is this correct? [yes/no]" << endl << "> ";
+							cin >> Command;
 
-						Command = AJT.VC.YNCheck(Command);
+							Command = AJT.VC.YNCheck(Command);
+						} while (Command == "no");
 
 						if (Command == "yes")
-						{
-							Command = "exit";
+						{							
 							break;
 						}
 					}

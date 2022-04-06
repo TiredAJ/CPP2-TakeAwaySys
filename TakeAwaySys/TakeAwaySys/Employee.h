@@ -12,14 +12,26 @@ public:
 
 	}
 
-	virtual void CreateEmployee()
+	virtual void CreateEmployee(int Index)
 	{
-		cout << "Please enter a name: " << endl;
+		cout << "Please enter:" << endl << "name: " << endl;
 		getline(cin >> ws, Name);
-		cout << "Please enter an ID: " << endl;
-		cin >> EmpID;
+
+		cout << "Phone No.:" << endl;
+		getline(cin >> ws, PhoneNo);
+
+		EmpID = "Emp" + to_string(Index);
 
 		Addrs.CreateAddress();
+	}
+
+	virtual void Display()
+	{
+		cout << EmpID << endl << "Name: " << Name << endl;
+		cout << "Phone No.: " << PhoneNo << endl << "Home: ";
+		cout << endl << Addrs << endl;
+
+		//AJT.Graphics.Line('-', 45);
 	}
 
 	virtual void Clear()
@@ -27,12 +39,6 @@ public:
 		Name.clear();
 		EmpID.clear();
 		Addrs.Clear();
-	}
-
-	virtual void Display()
-	{
-		cout << EmpID << endl << "\t" << Name << endl << "\t" << PhoneNo;
-		cout << endl;// << Emp.Addrs << endl;
 	}
 
 protected:

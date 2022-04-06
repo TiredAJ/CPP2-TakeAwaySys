@@ -393,6 +393,19 @@ private:
 
 			return Input;
 		}
+
+		string NumRangeCheck(string Input, int LowerBound, int UpperBound)
+		{
+			while (stoi(Input) < LowerBound && stoi(Input) > UpperBound)
+			{
+				cout << "Please enter a value between [" << LowerBound;
+				cout << "] and [" << UpperBound << "]" << endl;
+				cin >> Input;
+			}
+
+			return Input;
+		}
+
 	};
 
 public:
