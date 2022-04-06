@@ -533,6 +533,8 @@ public:
 			Segments.push_back(Temp);
 			Temp.clear();
 		}
+
+		return IS;
 	}
 
 private:
@@ -1599,7 +1601,7 @@ public:
 
 	Order MakeOrder()
 	{
-		string Command; int Temp; bool Valid;
+		string Command; int Temp; bool Valid = false;
 		Customer TempCust;
 		Order CurrentOrder;
 
@@ -1752,16 +1754,33 @@ public:
 	}
 
 	void ReadAllFiles()
-	{
+	{//kinda function-junction?
 		string Command;
 		ifstream Reader;
 		Customer TempCust;
-		int NoCusts;
-
+		Order TempOrder;
+		int NoCusts, NoOrders;
+		
 		Bwydlen.ReadFile();
 
-		//read employees
-		//read orders
+		ReadEmployees();
+
+		Reader.open("Orders.txt");
+
+		Reader >> NoOrders;
+
+		for (int i = 0; i < NoOrders; i++)
+		{
+			Reader >> TempOrder;
+
+			Orders.push_back(TempOrder);
+
+			TempOrder.Clear();
+		}
+
+		Reader.close();
+		Reader.clear();
+
 		//read Misc
 
 		Reader.open("Customers.txt");
@@ -2497,6 +2516,8 @@ public:
 
 		Writer.close();
 	}
+
+
 
 private:
 	vector <Order> Orders;

@@ -1,5 +1,4 @@
-﻿  Employee.cpp
-  TakeAwaySys.cpp
+﻿  TakeAwaySys.cpp
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(34,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
@@ -18,20 +17,19 @@ E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(65,1): warning C4267: '
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(89,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(308,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(444,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(610,29): warning C4101: 'Counter': unreferenced local variable
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(719,55): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(811,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(866,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(922,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(994,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1037,7): warning C4101: 'CuisineChoice': unreferenced local variable
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1638,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1696,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2098,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2217,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2257,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2347,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2405,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1914): warning C4715: 'RestraurantSys::CustSearcher': not all control paths return a value
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(612,29): warning C4101: 'Counter': unreferenced local variable
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(721,55): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(813,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(868,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(924,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(996,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1039,7): warning C4101: 'CuisineChoice': unreferenced local variable
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1640,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1698,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2117,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2236,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2276,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2366,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2424,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1933): warning C4715: 'RestraurantSys::CustSearcher': not all control paths return a value
   TakeAwaySys.vcxproj -> E:\GitHub\TakeAwaySys2\TakeAwaySys\x64\Debug\TakeAwaySys.exe
