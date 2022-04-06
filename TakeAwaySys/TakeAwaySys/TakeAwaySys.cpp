@@ -121,9 +121,10 @@ public:
 
 	friend ofstream& operator<<(ofstream& Filer, const Customer Cust)
 	{
-		Filer << Cust.CustID << "+" << Cust.Name << "+";
-		Filer << Cust.Email << "+" << Cust.PhoneNo << "+" << Cust.Loyalty;
-		Filer << "+" << Cust.Home << endl;
+		Filer << Cust.CustID << "+" << Cust.Name << "+" << Cust.Email;
+		Filer << "+" << Cust.PhoneNo << "+" << Cust.Loyalty;
+		Filer << "+";
+		Filer << Cust.Home << endl;
 
 		return Filer;
 	}
@@ -1283,7 +1284,11 @@ public:
 			cout << "Would you like to search for an item? [yes/no/exit]" << endl << "> ";
 			cin >> Command;
 
-			Command = AJT.VC.YNCheck(Command);
+			while (Command != "yes" && Command != "no" && Command != "exit")
+			{
+				cout << "Please enter [yes], [no] or [exit]" << endl << "> ";
+				cin >> Command;
+			}
 
 			if (Command == "yes")
 			{
@@ -1674,8 +1679,12 @@ public:
 						return CurrentOrder;
 					}
 				}
-			} while (Valid == false);
+				else
+				{
+					Valid = true;
+				}
 
+			} while (Valid == false);
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + " Select Foods");
 
