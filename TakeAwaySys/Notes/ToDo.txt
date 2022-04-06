@@ -1,0 +1,8 @@
+to do:
+ - delete customers
+ - max no of orders
+ - availability
+ - loyalty
+ - employees
+ - report
+ - check menu fluidity

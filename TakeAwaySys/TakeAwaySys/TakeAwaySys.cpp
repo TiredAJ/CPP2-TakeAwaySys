@@ -69,12 +69,6 @@ public:
 
 			Command = AJT.VC.YNCheck(Command);
 
-			/*while (Command != "yes" && Command != "no")
-			{
-				cout << "Please enter [yes] or [no]" << endl << "> ";
-				cin >> Command;
-			}*/
-
 			if (Command == "yes")
 			{
 				return;
@@ -424,12 +418,6 @@ public:
 		Open = Input;
 	}
 
-	//tf is this for?
-	void ReadCustomer(string Customer)
-	{
-
-	}
-
 	void Clear()
 	{
 		Basket.clear();
@@ -545,9 +533,6 @@ public:
 			Segments.push_back(Temp);
 			Temp.clear();
 		}
-
-
-
 	}
 
 private:
@@ -687,13 +672,7 @@ public:
 		cin >> Command;
 
 		Command = AJT.VC.YNCheck(Command);
-
-		/*while (Command != "yes" && Command != "no")
-		{
-			cout << "Please enter [yes] or [no]" << endl << "> ";
-			cin >> Command;
-		}*/
-
+		
 		if (Command == "yes")
 		{
 			MenuTitle = "New Dish > ";
@@ -1027,12 +1006,6 @@ public:
 
 				Command = AJT.VC.YNCheck(Command);
 
-				/*while (Command != "yes" && Command != "no")
-				{
-					cout << "Please enter [yes] or [no]" << endl << "> ";
-					cin >> Command;
-				}*/
-
 				if (Command == "yes")
 				{
 					Dishes[OuterVal][InnerVal].SetID("-1");
@@ -1310,12 +1283,6 @@ public:
 
 			Command = AJT.VC.YNCheck(Command);
 
-			/*while (Command != "yes" && Command != "no" && Command != "exit")
-			{
-				cout << "Please enter either [yes] or [no]" << endl << "> ";
-				cin >> Command;
-			}*/
-
 			if (Command == "yes")
 			{
 				Temp = Searcher();
@@ -1372,12 +1339,6 @@ public:
 
 		Command = AJT.VC.YNCheck(Command);
 
-		/*while (Command != "yes" && Command != "no")
-		{
-			cout << "Please enter either [yes] or [no]" << endl << "> ";
-			cin >> Command;
-		}*/
-
 		if (Command == "yes")
 		{
 			for (int i = 0; i < TempOrder.GetBasketSize(); i++)
@@ -1403,19 +1364,62 @@ private:
 class Chef :public Employee
 {
 public:
-	Chef();
+	Chef()
+	{}
+
+	virtual void CreateEmployee()
+	{
+		cout << "Please enter a name: " << endl;
+		getline(cin >> ws, Name);
+		cout << "Please enter an ID: " << endl;
+		cin >> EmpID;
+		cout << "Please enter a cuisine speciality: " << endl;
+		getline(cin >> ws, Speciality);
+
+		//Addrs.CreateAddress();
+	}
+
+	void Display()
+	{
+		cout << EmpID << endl << "\t" << Name << endl << "\t" << PhoneNo;
+		cout << "\t" << Speciality << endl;// << Emp.Addrs << endl;
+	}
 
 private:
-
+	string EmpID;
+	string Name;
+	string PhoneNo;
+	string Speciality;
+	Address Addrs;
 };
 
 class GeneralEmployee :public Employee
 {
 public:
-	GeneralEmployee();
+	GeneralEmployee()
+	{};
+
+	virtual void CreateEmployee()
+	{
+		cout << "Please enter a name: " << endl;
+		getline(cin >> ws, Name);
+		cout << "Please enter an ID: " << endl;
+		cin >> EmpID;
+
+		//Addrs.CreateAddress();
+	}
+
+	void Display()
+	{
+		cout << EmpID << endl << "\t" << Name << endl << "\t" << PhoneNo;
+		cout << endl;// << Emp.Addrs << endl;
+	}
 
 private:
-
+	string EmpID;
+	string Name;
+	string PhoneNo;
+	Address Addrs;
 };
 
 class RestraurantSys
@@ -1442,12 +1446,6 @@ public:
 			cin >> Command;
 
 			Command = AJT.VC.YNCheck(Command);
-
-			/*while (Command != "yes" && Command != "no")
-			{
-				cout << "Please enter either [yes] or [no]" << endl << "> ";
-				cin >> Command;
-			}*/
 
 			if (Command == "yes")
 			{
@@ -1496,12 +1494,6 @@ public:
 
 					Command = AJT.VC.YNCheck(Command);
 
-					/*while (Command != "yes" && Command != "no")
-					{
-						cout << "Please enter either [yes] or [no]" << endl << "> ";
-						cin >> Command;
-					}*/
-
 					if (Command == "yes")
 					{
 						Valid = false;
@@ -1543,12 +1535,6 @@ public:
 			cin >> Command;
 
 			Command = AJT.VC.YNCheck(Command);
-
-			/*while (Command != "yes" && Command != "no")
-			{
-				cout << "Please enter either [yes] or [no]" << endl << "> ";
-				cin >> Command;
-			}*/
 
 			if (Command == "yes")
 			{
@@ -1748,12 +1734,6 @@ public:
 
 				Command = AJT.VC.YNCheck(Command);
 
-				/*while (Command != "yes" && Command != "no")
-				{
-					cout << "Please enter [yes] or [no]" << endl << "> ";
-					cin >> Command;
-				}*/
-
 				if (Command == "yes")
 				{
 					Found = false;
@@ -1801,12 +1781,6 @@ public:
 				cin >> Command;
 
 				Command = AJT.VC.YNCheck(Command);
-
-				/*while (Command != "yes" && Command != "no")
-				{
-					cout << "Please enter either [yes] or [no]" << endl << "> ";
-					cin >> Command;
-				}*/
 
 				if (Command == "yes")
 				{
@@ -1882,7 +1856,7 @@ public:
 			}
 			case 4:
 			{
-				//employee menu
+				EmployeeMenu();
 				break;
 			}
 			case 5:
@@ -1901,12 +1875,6 @@ public:
 				cin >> Command;
 
 				Command = AJT.VC.YNCheck(Command);
-
-				/*while (Command != "yes" && Command != "no")
-				{
-					cout << "Please enter either [yes] or [no]" << endl << "> ";
-					cin >> Command;
-				}*/
 
 				if (Command == "yes")
 				{
@@ -2056,6 +2024,135 @@ public:
 			}
 			default:
 				break;
+			}
+
+		} while (Command != "exit");
+	}
+
+	void EmployeeMenu()
+	{
+		vector <string> Options{
+			"View Emplyees", "Create Employee", "Edit Employee", "Delete Employee"
+		};
+		string Command;
+		Chef TempChef;
+		GeneralEmployee GenEmp;
+		int CurrentIndex;
+
+		MenuTitle = "Employee Menu > ";
+
+		do
+		{
+			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+			AJT.Graphics.DisplayOptions(Options, 1);
+			cin >> Command;
+
+			Command = AJT.VC.YNCheck(Command);
+		
+			switch (stoi(Command))
+			{
+			case 1:
+			{
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "View Employees");
+
+				for (auto X : Employees)
+				{
+					X->Display();
+				}
+
+				cout << "Type [return] to return to menu" << endl << "> ";
+				cin >> Command;
+
+				Command = AJT.VC.CustCheck(Command, "return");
+
+				break;
+			}
+			case 2:
+			{
+				do
+				{
+					AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee");
+
+					cout << "Is the new employee a chef? [yes/no]" << endl << endl;
+					cin >> Command;
+
+					Command = AJT.VC.YNCheck(Command);
+
+					if (Employees.empty() == true)
+					{
+						CurrentIndex = 0;
+					}
+					else
+					{
+						CurrentIndex = Employees.size();
+					}					
+
+					if (Command == "yes")
+					{
+						AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > Confirmation");
+						
+						Employees.push_back(new Chef);
+
+						Employees[CurrentIndex]->CreateEmployee();
+						Employees[CurrentIndex]->Display();
+
+						cout << "Is this correct? [yes/no]" << endl << "> ";
+						cin >> Command;
+
+						Command = AJT.VC.YNCheck(Command);
+
+						if (Command == "yes")
+						{
+							Command = "exit";
+							break;
+						}
+						
+					}
+					else
+					{
+						AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > Confirmation");
+
+						Employees.push_back(new GeneralEmployee);
+
+						Employees[CurrentIndex]->CreateEmployee();
+						Employees[CurrentIndex]->Display();
+
+						cout << "Is this correct? [yes/no]" << endl << "> ";
+						cin >> Command;
+
+						Command = AJT.VC.YNCheck(Command);
+
+						if (Command == "yes")
+						{
+							Command = "exit";
+							break;
+						}
+					}
+
+					if (Command == "yes")
+					{
+						cout << "Would you like to make another employee [yes/no]";
+						cout << endl << "> ";
+						cin >> Command;
+
+						Command = AJT.VC.YNCheck(Command);
+
+						if (Command == "no")
+						{
+							break;
+						}
+					}					
+
+				} while (Command != "exit");
+
+				break;
+			}
+			default:
+			{
+				cout << "ERROR::Switch outta bounds" << endl;
+				break;
+			}
 			}
 
 		} while (Command != "exit");

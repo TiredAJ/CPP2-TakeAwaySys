@@ -361,6 +361,7 @@ private:
 
 	private:
 		vector <Table> Tables;
+		_CommaRemover GCR;
 	};
 	
 	class _ValidityChecker
@@ -376,6 +377,17 @@ private:
 			while (Input != "yes" && Input != "no")
 			{
 				cout << "Please enter [yes] or [no]" << endl << "> ";
+				cin >> Input;
+			}
+
+			return Input;
+		}
+
+		string CustCheck(string Input, string Control)
+		{
+			while (Input != Control)
+			{
+				cout << "Please enter [" << Control << "]" << endl << "> ";
 				cin >> Input;
 			}
 

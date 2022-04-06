@@ -12,29 +12,27 @@ public:
 
 	}
 
-	void CreateEmployee()
+	virtual void CreateEmployee()
 	{
+		cout << "Please enter a name: " << endl;
+		getline(cin >> ws, Name);
+		cout << "Please enter an ID: " << endl;
+		cin >> EmpID;
 
+		Addrs.CreateAddress();
 	}
 
-	void CreateEmployee(string Input)
+	virtual void Clear()
 	{
-
+		Name.clear();
+		EmpID.clear();
+		Addrs.Clear();
 	}
 
-	void EditEmployee()
+	virtual void Display()
 	{
-
-	}
-
-	void ReadEmployee()
-	{
-
-	}
-
-	void WriteEmployee()
-	{
-
+		cout << EmpID << endl << "\t" << Name << endl << "\t" << PhoneNo;
+		cout << endl;// << Emp.Addrs << endl;
 	}
 
 protected:
