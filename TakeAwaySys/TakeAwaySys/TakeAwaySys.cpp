@@ -1715,7 +1715,7 @@ public:
 
 			if (Command == "yes")
 			{
-				Orders.push_back(CurrentOrder);
+				return CurrentOrder;
 			}
 		} while (Command == "no");
 
@@ -2525,8 +2525,6 @@ public:
 
 		Writer.close();
 	}
-
-
 
 private:
 	vector <Order> Orders;
