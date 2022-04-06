@@ -30,21 +30,6 @@ public:
 		getline(cin >> ws, Postcode);
 	}
 
-	void CreateAddress(string Input)
-	{
-
-	}
-
-	void EditAddress()
-	{
-
-	}
-
-	void DeleteAddress()
-	{
-
-	}
-
 	void Clear()
 	{
 		HouseNo = "-1";
@@ -99,6 +84,38 @@ public:
 		Filer << Addr.Postcode << endl;
 
 		return Filer;
+	}
+
+	friend ifstream& operator>>(ifstream& Obtainer, Address Addr)
+	{
+		vector <string> Segments;
+		string Temp, Block;
+
+		getline(Obtainer >> ws, Block);
+
+		for (int i = 0; i < Block.size(); i++)
+		{
+			if (Block[i] != ':')
+			{
+				Temp += Block[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
+		Addr.HouseNo = Segments[0];
+		Addr.StreetName = Segments[1];
+		Addr.City = Segments[2];
+		Addr.County = Segments[3];
+		Addr.Postcode = Segments[4];
+		Segments.clear();
+
+		return Obtainer;
 	}
 
 private:

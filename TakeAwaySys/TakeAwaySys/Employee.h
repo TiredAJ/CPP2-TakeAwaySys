@@ -63,6 +63,47 @@ public:
 		return Position;
 	}
 
+	virtual void Read(ifstream& Reader)
+	{
+		string Temp, Block;
+		vector <string> Segments;
+
+		getline(Reader >> ws, Block);
+
+		for (int i = 0; i < Block.size(); i++)
+		{
+			if (Block[i] == ',')
+			{
+				Temp += Block[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+			Segments.push_back(Temp);
+			Temp.clear();
+
+			EmpID = Segments[0];
+			Name = Segments[1];
+			PhoneNo = Segments[2];
+			Position = Segments[3];
+			
+			Reader >> Addrs;
+
+			Segments.clear();
+		}
+	}
+
+	virtual void Write(ofstream& Writer)
+	{
+		string Data;
+
+		Data = EmpID + "," + Name + "," + PhoneNo + "," + Position + ",";
+
+		Writer << Data << endl << Addrs << endl;
+	}
+
 protected:
 	string EmpID;
 	string Name;

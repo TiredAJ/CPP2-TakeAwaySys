@@ -1422,6 +1422,49 @@ public:
 	virtual string GetPosition()
 	{return Position;}
 
+	virtual void Read(ifstream& Reader)
+	{
+		string Temp, Block;
+		vector <string> Segments;
+
+		getline(Reader >> ws, Block);
+
+		for (int i = 0; i < Block.size(); i++)
+		{
+			if (Block[i] == ',')
+			{
+				Temp += Block[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+			Segments.push_back(Temp);
+			Temp.clear();
+
+			EmpID = Segments[0];
+			Name = Segments[1];
+			PhoneNo = Segments[2];
+			Position = Segments[3];
+			Speciality = Segments[4];
+
+			Reader >> Addrs;
+
+			Segments.clear();
+		}
+	}
+
+	virtual void Write(ofstream& Writer)
+	{
+		string Data;
+
+		Data = "1 " + EmpID + "," + Name + "," + PhoneNo + "," + Position;
+		Data += "," + Speciality + ",";
+
+		Writer << Data << endl << Addrs << endl;
+	}
+
 private:
 	string EmpID;
 	string Name;
@@ -1492,6 +1535,47 @@ public:
 	virtual string GetPosition()
 	{
 		return Position;
+	}
+
+	virtual void Read(ifstream& Reader)
+	{
+		string Temp, Block;
+		vector <string> Segments;
+
+		getline(Reader >> ws, Block);
+
+		for (int i = 0; i < Block.size(); i++)
+		{
+			if (Block[i] == ',')
+			{
+				Temp += Block[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+			Segments.push_back(Temp);
+			Temp.clear();
+
+			EmpID = Segments[0];
+			Name = Segments[1];
+			PhoneNo = Segments[2];
+			Position = Segments[3];
+
+			Reader >> Addrs;
+
+			Segments.clear();
+		}
+	}
+
+	virtual void Write(ofstream& Writer)
+	{
+		string Data;
+
+		Data = "0 " + EmpID + "," + Name + "," + PhoneNo + "," + Position + ",";
+
+		Writer << Data  << endl << Addrs;
 	}
 
 private:
@@ -2134,6 +2218,7 @@ public:
 			{
 			case 1:
 			{
+				ReadEmployees();
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "View Employees");
 
 				for (auto X : Employees)
@@ -2344,6 +2429,7 @@ public:
 			}
 			case 5:
 			{
+				WriteEmployees();
 				return;
 				break;
 			}
@@ -2355,6 +2441,63 @@ public:
 			}
 
 		} while (Command != "exit");
+	}
+
+	void ReadEmployees()
+	{
+		ifstream Reader;
+		int NoEmps, EmpType;
+		string Input;
+		Chef TempChef;
+		GeneralEmployee TempGen;
+
+		Employees.clear();
+
+		Reader.open("Customers.txt");
+
+		Reader >> NoEmps;
+
+		for (int i = 0; i < NoEmps; i++)
+		{
+			Reader >> EmpType;
+
+			if (EmpType == 0)
+			{
+				Employees.push_back(new Chef);
+
+				getline(Reader >> ws, Input);
+
+				Employees[i]->Read(Reader);
+			}
+			else if (EmpType == 1)
+			{
+				Employees.push_back(new GeneralEmployee);
+
+				getline(Reader >> ws, Input);
+
+				Employees[i]->Read(Reader);
+			}
+			else
+			{
+				cout << "ERROR::Issue with the Employees file" << endl;
+			}
+		}
+		Reader.close();
+	}
+
+	void WriteEmployees()
+	{
+		ofstream Writer;
+		Writer.open("Employees.txt");
+
+		Writer << Employees.size();
+
+		for (auto X : Employees)
+		{
+			X->Write(Writer);
+		}
+
+		Writer.close();
 	}
 
 private:
