@@ -223,7 +223,6 @@ private:
 	public:
 		_Graphics()
 		{}
-		~_Graphics();
 
 		void TableSetup(string TableName, char PrimaryBorder, char SecondaryBorder, char OuterBorder)
 		{
@@ -335,6 +334,21 @@ private:
 		vector <Table> Tables;
 	};
 	
+	class _ValidityChecker
+	{
+	public:
+		string YNCheck(string Input)
+		{
+			while (Input != "yes" && Input != "no")
+			{
+				cout << "Please enter [yes] or [no]" << endl << "> ";
+				cin >> Input;
+			}
+
+			return Input;
+		}
+	};
+
 public:
 	AJTools()
 	{}
@@ -342,4 +356,5 @@ public:
 	_Graphics Graphics;		//Graphics handler
 	_CommaRemover CMH;		//CommaRemover handler
 	_ScrClnTM SCH;	//ScreenCleaner Handler
+	_ValidityChecker VC;
 };

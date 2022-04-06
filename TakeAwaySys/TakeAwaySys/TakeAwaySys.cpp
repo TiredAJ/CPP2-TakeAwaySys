@@ -479,29 +479,29 @@ public:
 		cout << "Would you like to add a new cuisine? [yes/no]" << endl << "> ";
 		cin >> Command;
 
-		while (Command != "yes" && Command != "no")
+		Command = AJT.VC.YNCheck(Command);
+
+		/*while (Command != "yes" && Command != "no")
 		{
 			cout << "Please enter [yes] or [no]" << endl << "> ";
 			cin >> Command;
-		}
+		}*/
 
 		if (Command == "yes")
 		{
-				MenuTitle = "New Dish > ";
+			MenuTitle = "New Dish > ";
 
-				CreateCuisine();
+			CreateCuisine();
 				
-			do
+			cout << "Would you like to add a new dish? [yes/no]" << endl;
+			cin >> Command;
+
+			Command = AJT.VC.YNCheck(Command);
+
+			if (Command == "no")
 			{
-				cout << "Would you like to add a new dish? [yes/no]" << endl;
-				cin >> Command;
-
-				if (Command == "no")
-				{
-					return;
-				}
-
-			} while (Command != "yes" && Command != "no");
+				return;
+			}
 		}
 
 		MenuTitle += "New Cuisine \n";
@@ -563,11 +563,13 @@ public:
 		cout << "Would you like to browse a specific cuisine? [yes/no]: ";
 		cin >> Command;
 
-		while (Command != "yes" && Command != "no")
+		Command = AJT.VC.YNCheck(Command);
+
+		/*while (Command != "yes" && Command != "no")
 		{
 			cout << "Please enter [yes] or [no]: ";
 			cin >> Command;
-		}
+		}*/
 
 		if (Command == "yes")
 		{
