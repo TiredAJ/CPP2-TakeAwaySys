@@ -48,6 +48,14 @@ public:
 	}
 
 	//use different delimter for address, pls, I beg
+	friend ofstream& operator<<(ofstream& Filer, const Address Addr)
+	{
+		Filer << Addr.HouseNo << ":" << Addr.StreetName << ":";
+		Filer << Addr.City << ":" << Addr.County << ":";
+		Filer << Addr.Postcode << endl;
+
+		return Filer;
+	}
 
 	void ReadAddr(string Input)
 	{
@@ -76,16 +84,7 @@ public:
 		Postcode = Segments[4];
 		Segments.clear();
 	}
-
-	friend ofstream& operator<<(ofstream& Filer, const Address Addr)
-	{
-		Filer << Addr.HouseNo << ":" << Addr.StreetName << ":";
-		Filer << Addr.City << ":" << Addr.County << ":";
-		Filer << Addr.Postcode << endl;
-
-		return Filer;
-	}
-
+	
 	friend ifstream& operator>>(ifstream& Obtainer, Address Addr)
 	{
 		vector <string> Segments;

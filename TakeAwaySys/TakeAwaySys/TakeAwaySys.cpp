@@ -1460,9 +1460,10 @@ public:
 		string Data;
 
 		Data = "1 " + EmpID + "," + Name + "," + PhoneNo + "," + Position;
-		Data += "," + Speciality + ",";
+		Data += "," + Speciality;
 
-		Writer << Data << endl << Addrs << endl;
+		Writer << Data << endl;
+		Writer << Addrs << endl;
 	}
 
 private:
@@ -1573,9 +1574,10 @@ public:
 	{
 		string Data;
 
-		Data = "0 " + EmpID + "," + Name + "," + PhoneNo + "," + Position + ",";
+		Data = "0 " + EmpID + "," + Name + "," + PhoneNo + "," + Position;
 
-		Writer << Data  << endl << Addrs;
+		Writer << Data << endl;
+		Writer << Addrs;
 	}
 
 private:
@@ -2453,7 +2455,7 @@ public:
 
 		Employees.clear();
 
-		Reader.open("Customers.txt");
+		Reader.open("Employees.txt");
 
 		Reader >> NoEmps;
 
@@ -2461,19 +2463,15 @@ public:
 		{
 			Reader >> EmpType;
 
-			if (EmpType == 0)
+			if (EmpType == 1)
 			{
 				Employees.push_back(new Chef);
 
-				getline(Reader >> ws, Input);
-
 				Employees[i]->Read(Reader);
 			}
-			else if (EmpType == 1)
+			else if (EmpType == 0)
 			{
 				Employees.push_back(new GeneralEmployee);
-
-				getline(Reader >> ws, Input);
 
 				Employees[i]->Read(Reader);
 			}
@@ -2490,7 +2488,7 @@ public:
 		ofstream Writer;
 		Writer.open("Employees.txt");
 
-		Writer << Employees.size();
+		Writer << Employees.size() << endl;
 
 		for (auto X : Employees)
 		{
