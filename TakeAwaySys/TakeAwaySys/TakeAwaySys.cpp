@@ -1369,6 +1369,8 @@ public:
 
 	virtual void CreateEmployee(int Index)
 	{
+		Clear();
+
 		cout << "Please enter:" << endl << "name: ";
 		getline(cin >> ws, Name);
 
@@ -1377,8 +1379,10 @@ public:
 
 		EmpID = "Emp" + to_string(Index);
 
-		cout << "Please enter a cuisine speciality: " << endl;
+		cout << "Please enter a cuisine speciality: ";
 		getline(cin >> ws, Speciality);
+
+		cout << endl;
 
 		Addrs.CreateAddress();
 	}
@@ -1386,11 +1390,35 @@ public:
 	virtual void Display()
 	{
 		cout << EmpID << endl << "Name: " << Name << endl;
-		cout << "Phone No.: " << PhoneNo << endl;
-		cout << "Speciality: " << Speciality << endl;
-		cout << "Home" << endl << Addrs;
+		cout << "\tPhone No.: " << PhoneNo << endl << "\tPosition: ";
+		cout << Position << endl << "\tSpeciality: " << Speciality << endl;
+		cout << "Home: " << endl << Addrs;
 
 		AJT.Graphics.Line('-', 45);
+	}
+
+	virtual void SetPosition(string Input)
+	{
+		Position = Input;
+	}
+
+	virtual string GetID()
+	{
+		return EmpID;
+	}
+
+	virtual void Clear()
+	{
+		Name.clear();
+		EmpID.clear();
+		PhoneNo.clear();
+		Speciality.clear();
+		Addrs.Clear();
+	}
+
+	virtual void SetID(string Input)
+	{
+		EmpID = Input;
 	}
 
 private:
@@ -1409,13 +1437,20 @@ public:
 
 	virtual void CreateEmployee(int Index)
 	{
+		Clear();
+
 		cout << "Please enter:" << endl << "name: ";
 		getline(cin >> ws, Name);
 
 		cout << "Phone No.:";
 		getline(cin >> ws, PhoneNo);
 
+		cout << "Position: ";
+		getline(cin >> ws, Position);
+
 		EmpID = "Emp" + to_string(Index);
+
+		cout << endl;
 
 		Addrs.CreateAddress();
 	}
@@ -1423,10 +1458,33 @@ public:
 	virtual void Display()
 	{
 		cout << EmpID << endl << "Name: " << Name << endl;
-		cout << "Phone No.: " << PhoneNo << endl << "Home: ";
-		cout << endl << Addrs << endl;
+		cout << "\tPhone No.: " << PhoneNo << endl << "\tPosition: ";
+		cout << Position << endl << "Home: " << endl << Addrs;
 
 		AJT.Graphics.Line('-', 45);
+	}
+
+	virtual void SetPosition(string Input)
+	{
+		Position = Input;
+	}
+
+	virtual string GetID()
+	{
+		return EmpID;
+	}
+
+	virtual void Clear()
+	{
+		Name.clear();
+		EmpID.clear();
+		PhoneNo.clear();
+		Addrs.Clear();
+	}
+
+	virtual void SetID(string Input)
+	{
+		EmpID = Input;
 	}
 
 private:
@@ -2052,11 +2110,11 @@ public:
 		Chef TempChef;
 		GeneralEmployee GenEmp;
 		int CurrentIndex;
-
-		MenuTitle = "Employee Menu > ";
-
+		
 		do
 		{
+			MenuTitle = "Employee Menu > ";
+
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
 			AJT.Graphics.DisplayOptions(Options, 1);
@@ -2086,7 +2144,9 @@ public:
 			{
 				do
 				{
-					AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee");
+					MenuTitle = "Employee Menu > Create Employee > ";
+
+					AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
 					cout << "Is the new employee a chef? [yes/no]" << endl;
 					cin >> Command;
@@ -2100,41 +2160,20 @@ public:
 					else
 					{
 						CurrentIndex = Employees.size();
-					}					
+					}
 
 					if (Command == "yes")
 					{
+						Employees.push_back(new Chef);
+						
 						do
 						{
-							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > New Chef");
+							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "New Chef > ");
 
-							Employees.push_back(new Chef);
 							Employees[CurrentIndex]->CreateEmployee(CurrentIndex);
+							Employees[CurrentIndex]->SetPosition("Chef");
 
-							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > Confirmation");
-							Employees[CurrentIndex]->Display();
-
-							cout << "Is this correct? [yes/no]" << endl << "> ";
-							cin >> Command;
-
-							Command = AJT.VC.YNCheck(Command);
-						} while (Command == "no");						
-
-						if (Command == "yes")
-						{
-							break;
-						}						
-					}
-					else
-					{
-						do
-						{
-							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > New Employee");
-
-							Employees.push_back(new GeneralEmployee);
-							Employees[CurrentIndex]->CreateEmployee(CurrentIndex);
-
-							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Employee > Confirmation");
+							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirmation > ");
 							Employees[CurrentIndex]->Display();
 
 							cout << "Is this correct? [yes/no]" << endl << "> ";
@@ -2144,7 +2183,31 @@ public:
 						} while (Command == "no");
 
 						if (Command == "yes")
-						{							
+						{
+							break;
+						}
+					}
+					else
+					{
+						Employees.push_back(new GeneralEmployee);
+
+						do
+						{
+							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "New Employee > ");
+							
+							Employees[CurrentIndex]->CreateEmployee(CurrentIndex);
+
+							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirmation > ");
+							Employees[CurrentIndex]->Display();
+
+							cout << "Is this correct? [yes/no]" << endl << "> ";
+							cin >> Command;
+
+							Command = AJT.VC.YNCheck(Command);
+						} while (Command == "no");
+
+						if (Command == "yes")
+						{
 							break;
 						}
 					}
@@ -2161,9 +2224,47 @@ public:
 						{
 							break;
 						}
-					}					
-
+					}
 				} while (Command != "exit");
+				break;
+			}
+			case 3:
+			{//edit employee
+				int ChosenIndex;
+
+				MenuTitle = "Employee Menu > Delete Employee > ";
+
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "\n");
+
+				for (int i = 0; i < Employees.size(); i++)
+				{
+					cout << i + 1 << ") ";
+					Employees[i]->Display();
+				}
+
+				cout << "Please enter the Employee you'd like to delete [1-";
+				cout << Employees.size() << "]" << endl << "> ";
+				cin >> Command;
+
+				ChosenIndex = AJT.VC.NumRangeCheck(Command, 1, Employees.size());
+
+				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirmation > ");
+
+				Employees[stoi(Command)]->Display();
+
+				cout << "Is this correct? [yes/no]" << endl << "> ";
+
+				Command = AJT.VC.YNCheck(Command);
+
+				if (Command = "yes")
+				{
+					Employees[ChosenIndex].
+				}
+
+				break;
+			}
+			case 4:
+			{//delete employee
 
 				break;
 			}
@@ -2192,11 +2293,5 @@ int main()
 {
 	RestraurantSys RSys;
 
-	//RSys.TEMPCreateDish();
-	//RSys.DisplayMenu();
-
-	//RSys.WriteAllFiles();
-
-	//RSys.ReadAllFiles();
 	RSys.MainMenu();
 }
