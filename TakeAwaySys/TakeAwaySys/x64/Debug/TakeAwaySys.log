@@ -35,6 +35,6 @@ E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(89,1): warning C4267: '
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(529,54): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(531,66): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(533,46): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(584,21): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(586,21): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
   Generating Code...
   TakeAwaySys.vcxproj -> E:\GitHub\TakeAwaySys2\TakeAwaySys\x64\Debug\TakeAwaySys.exe
