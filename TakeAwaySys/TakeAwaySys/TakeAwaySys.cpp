@@ -1379,7 +1379,7 @@ public:
 
 		EmpID = "Emp" + to_string(Index);
 
-		cout << "Please enter a cuisine speciality: ";
+		cout << "Cuisine speciality: ";
 		getline(cin >> ws, Speciality);
 
 		cout << endl;
@@ -1417,14 +1417,16 @@ public:
 	}
 
 	virtual void SetID(string Input)
-	{
-		EmpID = Input;
-	}
+	{EmpID = Input;}
+
+	virtual string GetPosition()
+	{return Position;}
 
 private:
 	string EmpID;
 	string Name;
 	string PhoneNo;
+	string Position;
 	string Speciality;
 	Address Addrs;
 };
@@ -1487,10 +1489,16 @@ public:
 		EmpID = Input;
 	}
 
+	virtual string GetPosition()
+	{
+		return Position;
+	}
+
 private:
 	string EmpID;
 	string Name;
 	string PhoneNo;
+	string Position;
 	Address Addrs;
 };
 
@@ -2231,6 +2239,67 @@ public:
 			case 3:
 			{//edit employee
 				int ChosenIndex;
+				string Temp;
+
+				do
+				{
+					MenuTitle = "Employee Menu > Edit Employee > ";
+
+					AJT.SCH.ScreenCleanerTM(0, MenuTitle + "\n");
+
+					for (int i = 0; i < Employees.size(); i++)
+					{
+						cout << i + 1 << ") ";
+						Employees[i]->Display();
+					}
+
+					cout << "Please enter the Employee you'd like to Edit [1-";
+					cout << Employees.size() << "]" << endl << "> ";
+					cin >> Command;
+
+					ChosenIndex = stoi(AJT.VC.NumRangeCheck(Command, 1, Employees.size())) - 1;
+
+					AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirmation > ");
+
+					Employees[ChosenIndex]->Display();
+
+					cout << "Is this correct? [yes/no]" << endl << "> ";
+					cin >> Command;
+
+					Command = AJT.VC.YNCheck(Command);
+
+					if (Command == "yes")
+					{
+						cout << endl;
+
+						Temp = Employees[ChosenIndex]->GetID();
+
+						Temp = Temp.substr(3);
+
+						Employees[ChosenIndex]->CreateEmployee(stoi(Temp));
+					}
+
+					AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirmation > ");
+
+					Employees[ChosenIndex]->Display();
+
+					cout << "Is this correct? [yes/no]" << endl << "> ";
+					cin >> Command;
+
+					Command = AJT.VC.YNCheck(Command);
+
+					if (Command == "yes")
+					{
+						break;
+					}
+				} while (Command != "leave");
+				
+				break;
+			}
+			case 4:
+			{//delete employee
+				int ChosenIndex;
+				vector <Employee*> TempEmployees;
 
 				MenuTitle = "Employee Menu > Delete Employee > ";
 
@@ -2246,26 +2315,36 @@ public:
 				cout << Employees.size() << "]" << endl << "> ";
 				cin >> Command;
 
-				ChosenIndex = AJT.VC.NumRangeCheck(Command, 1, Employees.size());
+				ChosenIndex = stoi(AJT.VC.NumRangeCheck(Command, 1, Employees.size())) -1;
 
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirmation > ");
 
-				Employees[stoi(Command)]->Display();
+				Employees[ChosenIndex]->Display();
 
 				cout << "Is this correct? [yes/no]" << endl << "> ";
+				cin >> Command;
 
 				Command = AJT.VC.YNCheck(Command);
 
-				if (Command = "yes")
+				if (Command == "yes")
 				{
-					Employees[ChosenIndex].
+					Employees[ChosenIndex]->SetID("-1");
 				}
 
+				for (int i = 0; i < Employees.size(); i++)
+				{
+					if (Employees[i]->GetID() != "-1")
+					{
+						TempEmployees.push_back(Employees[i]);
+					}
+				}
+
+				Employees = TempEmployees;
 				break;
 			}
-			case 4:
-			{//delete employee
-
+			case 5:
+			{
+				return;
 				break;
 			}
 			default:

@@ -58,6 +58,11 @@ public:
 	virtual void SetID(string Input)
 	{EmpID = Input;}
 
+	virtual string GetPosition()
+	{
+		return Position;
+	}
+
 protected:
 	string EmpID;
 	string Name;
