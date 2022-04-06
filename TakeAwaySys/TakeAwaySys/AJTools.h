@@ -10,139 +10,139 @@ class AJTools
 {
 private:
 	class Table
-	{
-	public:
-		Table()
-		{}
-
-		Table(string Name, char PrimBorder, char SecBorder, char OuterBorder)
 		{
-			TableName = Name;
-			PrimaryBorder = PrimaryBorder;
-			SecondaryBorder = SecBorder;
-			this->OuterBorder = OuterBorder;
-		}
+		public:
+			Table()
+			{}
 
-		string GetName()
-		{
-			return TableName;
-		}
-
-		void AddHeader(string Header)
-		{
-			Headers.push_back(Header);
-			FieldWidths.push_back(Header.size());
-		}
-
-		void AddRecord(string Record)
-		{
-			string TempStr;
-			vector <string> TempFields;
-
-			for (int i = 0; i < Record.length(); i++)
+			Table(string Name, char PrimBorder, char SecBorder, char OuterBorder)
 			{
-				if (Record[i] != ',')
-				{
-					TempStr += Record[i];
-				}
-				else
-				{
-					TempFields.push_back(TempStr);
+				TableName = Name;
+				PrimaryBorder = PrimaryBorder;
+				SecondaryBorder = SecBorder;
+				this->OuterBorder = OuterBorder;
+			}
 
-					if (TempStr.size() > FieldWidths[NoFields])
+			string GetName()
+			{
+				return TableName;
+			}
+
+			void AddHeader(string Header)
+			{
+				Headers.push_back(Header);
+				FieldWidths.push_back(Header.size());
+			}
+
+			void AddRecord(string Record)
+			{
+				string TempStr;
+				vector <string> TempFields;
+
+				for (int i = 0; i < Record.length(); i++)
+				{
+					if (Record[i] != ',')
 					{
-						FieldWidths[NoFields] = TempStr.size();
-						NoFields++;
+						TempStr += Record[i];
 					}
-
-					TempStr.clear();
-				}
-			}
-			TempFields.push_back(TempStr);
-
-			if (TempStr.size() > FieldWidths[NoFields])
-			{
-				FieldWidths[NoFields] = TempStr.size();
-				NoFields++;
-			}
-
-			TempStr.clear();
-			Records.push_back(TempFields);
-		}
-
-		void Display()
-		{
-			//vector <vector <string>> TempRecords;
-			int FieldWidth = 0;
-
-			FieldWidth += 3;
-			//int TableInnerWidth = (FieldWidth * Headers.size()) + (Headers.size() - 1);
-
-			int TableWidth;
-
-			for (int i = 0; i < FieldWidths.size(); i++)
-			{
-				TableWidth += FieldWidths[i];
-			}
-
-			int TableInnerWidth = TableWidth + 2;
-			int TableLength = (Records.size() * 2) + 3;
-			int RecordCount = 0;
-			string FormatString;
-
-			for (int i = 0; i <= TableLength; i++)
-			{
-				if (i == 0 || i == TableLength)
-				{
-					cout << endl << FormatString.assign(TableWidth, OuterBorder);
-				}
-				else if (i == 1)
-				{
-					cout << endl << OuterBorder;
-					for (int j = 0; j < Headers.size(); j++)
+					else
 					{
-						cout << left << " " << setw(FieldWidth - 1) << Headers[j] << OuterBorder;
+						TempFields.push_back(TempStr);
+
+						if (TempStr.size() > FieldWidths[NoFields])
+						{
+							FieldWidths[NoFields] = TempStr.size();
+							NoFields++;
+						}
+
+						TempStr.clear();
 					}
 				}
-				else if (i == 2)
-				{
-					cout << endl << OuterBorder << FormatString.assign(TableInnerWidth, PrimaryBorder);
-					cout << OuterBorder;
-				}
-				else if (i > 3 && (i % 2 == 0))
-				{//records					
-					cout << endl << OuterBorder;
-					int FieldCount = 0;
+				TempFields.push_back(TempStr);
 
-					for (int k = 0; k < Records[RecordCount].size(); k++)
+				if (TempStr.size() > FieldWidths[NoFields])
+				{
+					FieldWidths[NoFields] = TempStr.size();
+					NoFields++;
+				}
+
+				TempStr.clear();
+				Records.push_back(TempFields);
+			}
+
+			void Display()
+			{
+				//vector <vector <string>> TempRecords;
+				int FieldWidth = 0;
+
+				FieldWidth += 3;
+				//int TableInnerWidth = (FieldWidth * Headers.size()) + (Headers.size() - 1);
+
+				int TableWidth;
+
+				for (int i = 0; i < FieldWidths.size(); i++)
+				{
+					TableWidth += FieldWidths[i];
+				}
+
+				int TableInnerWidth = TableWidth + 2;
+				int TableLength = (Records.size() * 2) + 3;
+				int RecordCount = 0;
+				string FormatString;
+
+				for (int i = 0; i <= TableLength; i++)
+				{
+					if (i == 0 || i == TableLength)
 					{
-						cout << " " << setw(FieldWidths[FieldCount]) << Records[RecordCount][k] << OuterBorder;
+						cout << endl << FormatString.assign(TableWidth, OuterBorder);
 					}
-					RecordCount++;
-					FieldCount++;
+					else if (i == 1)
+					{
+						cout << endl << OuterBorder;
+						for (int j = 0; j < Headers.size(); j++)
+						{
+							cout << left << " " << setw(FieldWidth - 1) << Headers[j] << OuterBorder;
+						}
+					}
+					else if (i == 2)
+					{
+						cout << endl << OuterBorder << FormatString.assign(TableInnerWidth, PrimaryBorder);
+						cout << OuterBorder;
+					}
+					else if (i > 3 && (i % 2 == 0))
+					{//records					
+						cout << endl << OuterBorder;
+						int FieldCount = 0;
+
+						for (int k = 0; k < Records[RecordCount].size(); k++)
+						{
+							cout << " " << setw(FieldWidths[FieldCount]) << Records[RecordCount][k] << OuterBorder;
+						}
+						RecordCount++;
+						FieldCount++;
+					}
+					else if (i > 3 && (i % 2 == 1))
+					{//record separators
+						cout << endl << OuterBorder;
+						cout << FormatString.assign(TableInnerWidth, SecondaryBorder) << OuterBorder;
+					}
+
 				}
-				else if (i > 3 && (i % 2 == 1))
-				{//record separators
-					cout << endl << OuterBorder;
-					cout << FormatString.assign(TableInnerWidth, SecondaryBorder) << OuterBorder;
-				}
+			}
+
+			void ToFile(string FileLoc)
+			{
 
 			}
-		}
 
-		void ToFile(string FileLoc)
-		{
-
-		}
-
-	private:
-		string TableName = "Default";
-		char PrimaryBorder = '='; char SecondaryBorder = '-'; char OuterBorder = '*';
-		vector <string> Headers;
-		vector <vector <string>> Records;	//Records stored as CSVs
-		vector <int> FieldWidths;
-		int NoFields;
-	};
+		private:
+			string TableName = "Default";
+			char PrimaryBorder = '='; char SecondaryBorder = '-'; char OuterBorder = '*';
+			vector <string> Headers;
+			vector <vector <string>> Records;	//Records stored as CSVs
+			vector <int> FieldWidths;
+			int NoFields;
+		};
 
 	class _CommaRemover
 	{
@@ -300,28 +300,57 @@ private:
 				}
 			}
 		}
-
+		
 		void DisplayOptions(vector <string> Input, int Option)
 		{
-			for (int i = 0; i < Input.size(); i++)
-			{
-				cout << i + 1 << ") " << Input[i] << endl;
-			}
+			int NoOptions;
+
+			NoOptions = Input.size();
 
 			switch (Option)
 			{
+			case 0:
+			{
+				for (int i = 0; i < Input.size(); i++)
+				{
+					cout << i + 1 << ") " << Input[i] << endl;
+				}
+				break;
+			}
 			case 1:
 			{
-				cout << Input.size() + 1 << "Cancel" << endl;
+				for (int i = 0; i < Input.size(); i++)
+				{
+					cout << i + 1 << ") " << Input[i] << endl;
+				}
+				cout << Input.size() + 1 << ") Exit" << endl << endl;
+				NoOptions++;
+				break;
+			}
+			case 2:
+			{
+				for (int i = 0; i < Input.size(); i++)
+				{
+					cout << i + 1 << ") " << GCR.Remove(',', Input[i], "left") << endl;
+				}
+				break;
+			}
+			case 3:
+			{
+				for (int i = 0; i < Input.size(); i++)
+				{
+					cout << i + 1 << ") " << GCR.Remove(',', Input[i], "right") << endl;
+				}
 				break;
 			}
 			default:
 			{
+
 				break;
 			}
 			}
 
-			cout << "Please choose an option [1-" << Input.size() << "]" << endl;
+			cout << "Please choose an option [1-" << NoOptions << "]" << endl;
 		}
 
 		void Line(char Character, int Length)
@@ -337,6 +366,11 @@ private:
 	class _ValidityChecker
 	{
 	public:
+		_ValidityChecker()
+		{
+
+		}
+
 		string YNCheck(string Input)
 		{
 			while (Input != "yes" && Input != "no")

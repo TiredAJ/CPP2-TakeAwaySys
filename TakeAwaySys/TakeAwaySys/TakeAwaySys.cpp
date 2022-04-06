@@ -67,11 +67,13 @@ public:
 			cout << "Is this correct? [yes/no]" << endl << "> ";
 			cin >> Command;
 
-			while (Command != "yes" && Command != "no")
+			Command = AJT.VC.YNCheck(Command);
+
+			/*while (Command != "yes" && Command != "no")
 			{
 				cout << "Please enter [yes] or [no]" << endl << "> ";
 				cin >> Command;
-			}
+			}*/
 
 			if (Command == "yes")
 			{
@@ -684,11 +686,13 @@ public:
 		cout << "Would you like to add a new cuisine? [yes/no]" << endl << "> ";
 		cin >> Command;
 
-		while (Command != "yes" && Command != "no")
+		Command = AJT.VC.YNCheck(Command);
+
+		/*while (Command != "yes" && Command != "no")
 		{
 			cout << "Please enter [yes] or [no]" << endl << "> ";
 			cin >> Command;
-		}
+		}*/
 
 		if (Command == "yes")
 		{
@@ -696,17 +700,16 @@ public:
 
 			CreateCuisine();
 
-			do
+			cout << "Would you like to add a new dish? [yes/no]" << endl;
+			cin >> Command;
+
+			Command = AJT.VC.YNCheck(Command);
+
+			if (Command == "no")
 			{
-				cout << "Would you like to add a new dish? [yes/no]" << endl;
-				cin >> Command;
+				return;
+			}
 
-				if (Command == "no")
-				{
-					return;
-				}
-
-			} while (Command != "yes" && Command != "no");
 		}
 
 		Input.clear();
@@ -1022,11 +1025,13 @@ public:
 				cout << "Is this the correct dish? [yes/no]" << endl << "> ";
 				cin >> Command;
 
-				while (Command != "yes" && Command != "no")
+				Command = AJT.VC.YNCheck(Command);
+
+				/*while (Command != "yes" && Command != "no")
 				{
 					cout << "Please enter [yes] or [no]" << endl << "> ";
 					cin >> Command;
-				}
+				}*/
 
 				if (Command == "yes")
 				{
@@ -1303,11 +1308,13 @@ public:
 			cout << "Would you like to search for an item? [yes/no/exit]" << endl << "> ";
 			cin >> Command;
 
-			while (Command != "yes" && Command != "no" && Command != "exit")
+			Command = AJT.VC.YNCheck(Command);
+
+			/*while (Command != "yes" && Command != "no" && Command != "exit")
 			{
 				cout << "Please enter either [yes] or [no]" << endl << "> ";
 				cin >> Command;
-			}
+			}*/
 
 			if (Command == "yes")
 			{
@@ -1363,11 +1370,13 @@ public:
 		cout << "Would you like to view the basket? [yes/no]" << endl << "> ";
 		cin >> Command;
 
-		while (Command != "yes" && Command != "no")
+		Command = AJT.VC.YNCheck(Command);
+
+		/*while (Command != "yes" && Command != "no")
 		{
 			cout << "Please enter either [yes] or [no]" << endl << "> ";
 			cin >> Command;
-		}
+		}*/
 
 		if (Command == "yes")
 		{
@@ -1432,11 +1441,13 @@ public:
 			cout << "Is the order for an existing customer? [yes/no]" << endl << "> ";
 			cin >> Command;
 
-			while (Command != "yes" && Command != "no")
+			Command = AJT.VC.YNCheck(Command);
+
+			/*while (Command != "yes" && Command != "no")
 			{
 				cout << "Please enter either [yes] or [no]" << endl << "> ";
 				cin >> Command;
-			}
+			}*/
 
 			if (Command == "yes")
 			{
@@ -1483,11 +1494,13 @@ public:
 					cout << "Would you like to change the order type? [yes/no]" << endl << "> ";
 					cin >> Command;
 
-					while (Command != "yes" && Command != "no")
+					Command = AJT.VC.YNCheck(Command);
+
+					/*while (Command != "yes" && Command != "no")
 					{
 						cout << "Please enter either [yes] or [no]" << endl << "> ";
 						cin >> Command;
-					}
+					}*/
 
 					if (Command == "yes")
 					{
@@ -1529,11 +1542,13 @@ public:
 			cout << endl << "Is this correct? [yes/no]" << endl << "> ";
 			cin >> Command;
 
-			while (Command != "yes" && Command != "no")
+			Command = AJT.VC.YNCheck(Command);
+
+			/*while (Command != "yes" && Command != "no")
 			{
 				cout << "Please enter either [yes] or [no]" << endl << "> ";
 				cin >> Command;
-			}
+			}*/
 
 			if (Command == "yes")
 			{
@@ -1731,11 +1746,13 @@ public:
 				cout << "Would you like to try again? [yes/no]" << endl << "> ";
 				cin >> Command;
 
-				while (Command != "yes" && Command != "no")
+				Command = AJT.VC.YNCheck(Command);
+
+				/*while (Command != "yes" && Command != "no")
 				{
 					cout << "Please enter [yes] or [no]" << endl << "> ";
 					cin >> Command;
-				}
+				}*/
 
 				if (Command == "yes")
 				{
@@ -1783,11 +1800,13 @@ public:
 				cout << endl << "Is this the correct order? [yes/no]" << endl << "> ";
 				cin >> Command;
 
-				while (Command != "yes" && Command != "no")
+				Command = AJT.VC.YNCheck(Command);
+
+				/*while (Command != "yes" && Command != "no")
 				{
 					cout << "Please enter either [yes] or [no]" << endl << "> ";
 					cin >> Command;
-				}
+				}*/
 
 				if (Command == "yes")
 				{
@@ -1881,11 +1900,13 @@ public:
 				cout << "Would you like to save your files first? [yes/no]" << endl << "> ";
 				cin >> Command;
 
-				while (Command != "yes" && Command != "no")
+				Command = AJT.VC.YNCheck(Command);
+
+				/*while (Command != "yes" && Command != "no")
 				{
 					cout << "Please enter either [yes] or [no]" << endl << "> ";
 					cin >> Command;
-				}
+				}*/
 
 				if (Command == "yes")
 				{
