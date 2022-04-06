@@ -1431,7 +1431,7 @@ public:
 
 		for (int i = 0; i < Block.size(); i++)
 		{
-			if (Block[i] == ',')
+			if (Block[i] != ',')
 			{
 				Temp += Block[i];
 			}
@@ -1440,19 +1440,19 @@ public:
 				Segments.push_back(Temp);
 				Temp.clear();
 			}
-			Segments.push_back(Temp);
-			Temp.clear();
-
-			EmpID = Segments[0];
-			Name = Segments[1];
-			PhoneNo = Segments[2];
-			Position = Segments[3];
-			Speciality = Segments[4];
-
-			Reader >> Addrs;
-
-			Segments.clear();
 		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
+		EmpID = Segments[0];
+		Name = Segments[1];
+		PhoneNo = Segments[2];
+		Position = Segments[3];
+		Speciality = Segments[4];
+
+		Reader >> Addrs;
+
+		Segments.clear();
 	}
 
 	virtual void Write(ofstream& Writer)
@@ -1463,7 +1463,7 @@ public:
 		Data += "," + Speciality;
 
 		Writer << Data << endl;
-		Writer << Addrs << endl;
+		Writer << Addrs;
 	}
 
 private:
@@ -1547,7 +1547,7 @@ public:
 
 		for (int i = 0; i < Block.size(); i++)
 		{
-			if (Block[i] == ',')
+			if (Block[i] != ',')
 			{
 				Temp += Block[i];
 			}
@@ -1555,19 +1555,19 @@ public:
 			{
 				Segments.push_back(Temp);
 				Temp.clear();
-			}
-			Segments.push_back(Temp);
-			Temp.clear();
-
-			EmpID = Segments[0];
-			Name = Segments[1];
-			PhoneNo = Segments[2];
-			Position = Segments[3];
-
-			Reader >> Addrs;
-
-			Segments.clear();
+			}			
 		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
+		EmpID = Segments[0];
+		Name = Segments[1];
+		PhoneNo = Segments[2];
+		Position = Segments[3];
+
+		Reader >> Addrs;
+
+		Segments.clear();
 	}
 
 	virtual void Write(ofstream& Writer)

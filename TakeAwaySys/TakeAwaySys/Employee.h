@@ -72,7 +72,7 @@ public:
 
 		for (int i = 0; i < Block.size(); i++)
 		{
-			if (Block[i] == ',')
+			if (Block[i] != ',')
 			{
 				Temp += Block[i];
 			}

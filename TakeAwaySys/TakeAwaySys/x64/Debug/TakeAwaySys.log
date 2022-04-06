@@ -1,4 +1,5 @@
-﻿  TakeAwaySys.cpp
+﻿  Employee.cpp
+  TakeAwaySys.cpp
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(34,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
@@ -31,5 +32,6 @@ E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2217,1): warning 
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2257,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2347,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2405,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
 E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1914): warning C4715: 'RestraurantSys::CustSearcher': not all control paths return a value
   TakeAwaySys.vcxproj -> E:\GitHub\TakeAwaySys2\TakeAwaySys\x64\Debug\TakeAwaySys.exe

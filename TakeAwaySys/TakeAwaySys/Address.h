@@ -85,7 +85,7 @@ public:
 		Segments.clear();
 	}
 	
-	friend ifstream& operator>>(ifstream& Obtainer, Address Addr)
+	friend ifstream& operator>>(ifstream& Obtainer, Address& Addr)
 	{
 		vector <string> Segments;
 		string Temp, Block;
