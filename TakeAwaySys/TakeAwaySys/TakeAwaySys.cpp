@@ -1,4 +1,4 @@
-//Consolas - 20pt
+/*Consolas - 20pt*/
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -232,6 +232,28 @@ public:
 
 		Cuisine = Details[1];
 		FoodID = Details[0] + Details[2];
+	}
+
+	void ReadDish(string Block)
+	{
+		string Temp;
+		vector <string> Segments;
+
+		for (int i = 0; i < Block.size(); i++)
+		{
+			if (Block[i] != '+')
+			{
+				Temp += Block[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
 	}
 
 	void UpdatePop()
@@ -515,13 +537,12 @@ public:
 	friend ofstream& operator<<(ofstream& Filer, Order OR)
 	{/*overloaded Writer object*/
 		Filer << OR.OrderID << "," << OR.Basket.size() << ",";
+		Filer << OR.Cust.GetID() << "," << OR.Delivery << "," << OR.Open << endl;
 
 		for (int i = 0; i < OR.Basket.size(); i++)
 		{
 			Filer << OR.Basket[i] << ":";
-		}
-
-		Filer << "," << OR.Cust.GetID() << "," << OR.Delivery << "," << OR.Open << endl;
+		}		
 
 		return Filer;
 	}
@@ -531,6 +552,7 @@ public:
 	{/*overloaded reader object*/
 		vector <string> Segments;
 		string Line, Temp;
+		int BasketSize;
 
 		getline(Obtainer >> ws, Line);
 
@@ -544,10 +566,41 @@ public:
 			{
 				Segments.push_back(Temp);
 				Temp.clear();
-			}
-			Segments.push_back(Temp);
-			Temp.clear();
+			}			
 		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
+		OR.OrderID = Segments[0];
+		BasketSize = stoi(Segments[1]);
+		OR.CustID = Segments[2];
+		Segments[3];
+
+		if (Segments[3] == "true")
+		{OR.Delivery = true;}
+		else
+		{OR.Delivery = false;}
+
+		Segments.clear();
+		Temp.clear();
+		getline(Obtainer >> ws, Line);
+
+		for (int i = 0; i < Line.size(); i++)
+		{
+			if (Line[i] != ':')
+			{
+				Temp += Line[i];
+			}
+			else
+			{
+				Segments.push_back(Temp);
+				Temp.clear();
+			}
+		}
+		Segments.push_back(Temp);
+		Temp.clear();
+
+
 
 		return Obtainer;
 	}
@@ -556,6 +609,7 @@ private:
 	vector <FoodItem> Basket;
 	Customer Cust;
 	string OrderID;
+	string CustID;
 	bool Open;
 	bool Delivery;
 	double BasketPrice;
@@ -2213,7 +2267,6 @@ public:
 		} while (Command != "exit");
 	}
 
-	//needs to be saved to file
 	void MiscMenu()
 	{/*miscellaneous menu */
 		vector <string> Options{
@@ -2317,7 +2370,6 @@ public:
 			{
 			case 1:
 			{
-				//ReadEmployees();
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "View Employees");
 
 				for (auto X : Employees)
@@ -2643,7 +2695,7 @@ private:
 	vector <Order> Orders;
 	vector <Employee*> Employees;
 	vector <Customer> Customers;
-	//couldn't think of a better name for the menu object
+	/*couldn't think of a better name for the menu object*/
 	Menu Bwydlen;
 	int MaxNoTakeaways;
 	int NoTakeaways;
