@@ -5,15 +5,14 @@
 using namespace std;
 
 class Employee
-{
+{/*base class for employee types*/
 public:
 	Employee()
-	{
-
-	}
+	{}
 
 	virtual void CreateEmployee(int Index)
-	{
+	{/*allows the creation of a new employee. Index is used to 
+	 determine the numerical value of their ID*/
 		Clear();
 
 		cout << "Please enter:" << endl << "name: " << endl;
@@ -33,7 +32,7 @@ public:
 	}
 
 	virtual void Display()
-	{
+	{/*for displaying details*/
 		cout << EmpID << endl << "Name: " << Name << endl;
 		cout << "\tPhone No.: " << PhoneNo << endl << "\tPosition: ";
 		cout << Position << endl << "Home: " << endl << Addrs << endl;
@@ -42,7 +41,7 @@ public:
 	}
 
 	virtual void Clear()
-	{
+	{/*clears an employee*/
 		Name.clear();
 		EmpID.clear();
 		PhoneNo.clear();
@@ -50,7 +49,9 @@ public:
 	}
 
 	virtual void SetPosition(string Input)
-	{Position = Input;}
+	{/*specifically sets the position of an employee*/
+		Position = Input;
+	}
 
 	virtual string GetID()
 	{return EmpID;}
@@ -64,7 +65,7 @@ public:
 	}
 
 	virtual void Read(ifstream& Reader)
-	{
+	{/*uses a passed in Reader object to fill the details of the employee*/
 		string Temp, Block;
 		vector <string> Segments;
 
@@ -96,7 +97,7 @@ public:
 	}
 
 	virtual void Write(ofstream& Writer)
-	{
+	{/*same as Read(), but with the Writer object*/
 		string Data;
 
 		Data = EmpID + "," + Name + "," + PhoneNo + "," + Position + ",";

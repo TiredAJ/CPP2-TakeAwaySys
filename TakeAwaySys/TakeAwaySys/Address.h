@@ -8,15 +8,14 @@
 using namespace std;
 
 class Address
-{
+{/*Address is a simple object that handles the addresses of 
+ employees and customers*/
 public:
 	Address()
-	{
-
-	}
+	{}
 
 	void CreateAddress()
-	{
+	{/*Allows user to fill the address*/
 		cout << "Please enter: " << endl;
 		cout << "House No/name: ";
 		getline(cin >> ws, HouseNo);
@@ -31,7 +30,7 @@ public:
 	}
 
 	void Clear()
-	{
+	{/*clears address*/
 		HouseNo = "-1";
 		StreetName = "Undefined";
 		City = "Undefined";
@@ -40,16 +39,17 @@ public:
 	}
 
 	friend ostream& operator<<(ostream& OS, const Address Addr)
-	{
+	{/*overloaded operator for outputting to the terminal*/
 		OS << "\t" << Addr.HouseNo << endl << "\t" << Addr.StreetName << endl;
 		OS << "\t" << Addr.City << endl << "\t" << Addr.County << endl;
 		OS << "\t" << Addr.Postcode << endl;
 		return OS;
 	}
 
-	//use different delimter for address, pls, I beg
+	/*An unorthodox delimiter was used for address as commas were used
+	elsewhere up the chain*/
 	friend ofstream& operator<<(ofstream& Filer, const Address Addr)
-	{
+	{/*overloaded operator for outputting to a file*/
 		Filer << Addr.HouseNo << ":" << Addr.StreetName << ":";
 		Filer << Addr.City << ":" << Addr.County << ":";
 		Filer << Addr.Postcode << endl;
@@ -58,7 +58,7 @@ public:
 	}
 
 	void ReadAddr(string Input)
-	{
+	{/*splits an inputted string into an address*/
 		vector <string> Segments;
 		string Temp;
 
@@ -86,7 +86,7 @@ public:
 	}
 	
 	friend ifstream& operator>>(ifstream& Obtainer, Address& Addr)
-	{
+	{/*overloaded operator for reading from a file*/
 		vector <string> Segments;
 		string Temp, Block;
 
