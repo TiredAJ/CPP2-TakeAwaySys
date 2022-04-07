@@ -12,7 +12,9 @@ using namespace std;
 
 AJTools AJT;
 
+/*allows the pound symbol to be accessed throughout the program*/
 const string CurrencySym = "\x9C";
+/*exclusive non-constant global variable for persistent titles*/
 string MenuTitle;
 
 class Customer
@@ -24,18 +26,20 @@ public:
 	}
 
 	void CreateCustomer(int NoCustomers)
-	{
+	{/*allows for the creatrion of a customer, NoCustomers is used to assign
+	 the numerical part of the Customer's ID*/
 		string Command;
 
 		do
 		{
+			/*first use of persistent titling,*/
 			MenuTitle = "Create Customer > ";
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
 			CustID = ("CID" + to_string(NoCustomers));
 
 			cout << "Please enter the customer's: " << endl;
-			cout << "(For optional* fields, enter [-1])" << endl;
+			cout << "(Optional* fields, enter [-1] to skip)" << endl;
 			cout << "name: ";
 			getline(cin >> ws, Name);
 			cout << "Email*: ";
@@ -45,6 +49,7 @@ public:
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Create Address");
 
+			/*creates the home address for the customer*/
 			Home.CreateAddress();
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirm Details");
@@ -52,6 +57,7 @@ public:
 			cout << Name << ", " << CustID << endl;
 			cout << Home;
 
+			/*checks if Email and PhoneNo should be displayed*/
 			if (Email != "-1")
 			{
 				cout << "\t" << "Email: " << Email << endl;
@@ -62,11 +68,13 @@ public:
 				cout << "\t" << "Phone No: " << PhoneNo << endl;
 			}
 
+			/*use of .Line() to generate a line of dashes*/
 			AJT.Graphics.Line('-', 35);
 
 			cout << "Is this correct? [yes/no]" << endl << "> ";
 			cin >> Command;
 
+			/*validity checker*/
 			Command = AJT.VC.YNCheck(Command);
 
 			if (Command == "yes")
@@ -78,7 +86,7 @@ public:
 	}
 
 	void Clear()
-	{
+	{/*Clears the customer object*/
 		CustID = "-1";
 		Name = "Unnamed";
 		Home.Clear();
@@ -98,12 +106,13 @@ public:
 	}
 
 	friend ostream& operator<<(ostream& OS, const Customer Cust)
-	{
+	{/*overloaded operator for outputting to the terminal*/
 		AJT.Graphics.Line('-', 35);
 
 		OS << Cust.Name << ", " << Cust.CustID << endl;
 		OS << Cust.Home;
 
+		/*checks again if Email and PhoneNo should be displayed*/
 		if (Cust.Email != "-1")
 		{
 			OS << "\t" << "Email: " << Cust.Email << endl;
@@ -120,7 +129,8 @@ public:
 	}
 
 	friend ofstream& operator<<(ofstream& Filer, const Customer Cust)
-	{
+	{/*overloaded for writing to a file. The + sign is used as a delimiter
+	 as commas are used by orders*/
 		Filer << Cust.CustID << "+" << Cust.Name << "+" << Cust.Email;
 		Filer << "+" << Cust.PhoneNo << "+" << Cust.Loyalty;
 		Filer << "+";
@@ -130,7 +140,7 @@ public:
 	}
 
 	friend ifstream& operator>>(ifstream& Obtainer, Customer& Cust)
-	{
+	{/*overloaded for reading from a file*/
 		vector <string> Segments;
 		string Input, Temp;
 		getline(Obtainer >> ws, Input);
@@ -172,7 +182,7 @@ private:
 };
 
 class FoodItem
-{
+{/*class for food objects*/
 public:
 	FoodItem()
 	{
@@ -180,7 +190,8 @@ public:
 	}
 
 	void CreateDish(string CuisineSpec)
-	{
+	{/*allows for the creation of a dish. CuisineSpec holds the cuisine's
+	 prefix (for FoodID), the cuisine and what value the ID should be*/
 		string Temp;
 		string Details[3];
 		int Counter = 0;
@@ -196,12 +207,14 @@ public:
 		cout << "Course: ";
 		getline(cin >> ws, Course);
 
+		/*allows for a temporary popularity*/
 		cout << "Expected popularity [low/med/high]: ";
 		cin >> Popularity;
 
 		cout << "Availability*: ";
 		cin >> Availability;
 
+		/*Splits CuisineSpec into it's base components*/
 		for (int i = 0; i < CuisineSpec.size(); i++)
 		{
 			if (CuisineSpec[i] != ',')
@@ -222,7 +235,8 @@ public:
 	}
 
 	void UpdatePop()
-	{
+	{/*allows the user (likely the chef, or by proxy) to update the popualrity
+	 of any existing dish*/
 		string Input;
 		MenuTitle = "Update Popularity > " + Name;
 		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
@@ -231,6 +245,7 @@ public:
 		cout << "Updated [low/med/high]: ";
 		cin >> Input;
 
+		/*potential for a VC option with more than 2 controls*/
 		while (Input != "high" && Input != "med" && Input != "low")
 		{
 			cout << "Please enter either [low][med] or [high]: ";
@@ -243,7 +258,8 @@ public:
 	}
 
 	void UpdateAvail()
-	{
+	{/*similar thing, but allows for the user to update the availability
+	 of a dish either after restocking or resetting the next day*/
 		string Input;
 		MenuTitle = "Update Availability > " + Name;
 		AJT.SCH.ScreenCleanerTM(0, MenuTitle + "\n");
@@ -263,13 +279,8 @@ public:
 		return;
 	}
 
-	void UpdatePrice()
-	{
-
-	}
-
 	void Clear()
-	{
+	{/*clears a food object*/
 		Name = "Default";
 		Price = -1.00;
 		Cuisine = "Default";
@@ -309,7 +320,8 @@ public:
 	}
 
 	FoodItem& operator=(const FoodItem& FI2)
-	{
+	{/*overloaded assignment operator, not strictly necessary, 
+	 but wanted to make sure*/
 		this->FoodID = FI2.FoodID;
 		this->Name = FI2.Name;
 		this->Price = FI2.Price;
@@ -322,7 +334,8 @@ public:
 	}
 
 	friend ofstream& operator<<(ofstream& Filer, const FoodItem FI)
-	{
+	{/*overloaded file writer object. + symbol used as Order 
+	 mainly uses commas*/
 		Filer << FI.FoodID << "+" << FI.Name << "+" << FI.Price << "+";
 		Filer << FI.Cuisine << "+" << FI.Course << "+,";
 		Filer << FI.Popularity << "+" << FI.Availability << endl;
@@ -331,7 +344,7 @@ public:
 	}
 
 	friend ifstream& operator>>(ifstream& Obtainer, FoodItem& FI)
-	{
+	{/*overloaded file reader object*/
 		vector <string> Segments;
 		string Input, Temp;
 		getline(Obtainer >> ws, Input);
@@ -351,6 +364,7 @@ public:
 		Segments.push_back(Temp);
 		Temp.clear();
 
+		/*assigns elements of the vector to fields of the food object*/
 		FI.FoodID = Segments[0];
 		FI.Name = Segments[1];
 		FI.Price = stod(Segments[2]);
@@ -365,9 +379,8 @@ public:
 	}
 
 	friend ostream& operator<<(ostream& OS, const FoodItem FI)
-	{
-		//MenuTitle = "Menu > Dish > " + FI.Name;
-
+	{/*Overloaded ostream operator for outputting to the terminal
+	 tabs are used to neaten output*/
 		OS << FI.Name << endl << "\tID:" << FI.FoodID << endl;
 		OS << "\tCuisine: " << FI.Cuisine << endl;
 		OS << "\tPrice: " << CurrencySym << setprecision(2) << fixed << FI.Price;
@@ -390,37 +403,40 @@ private:
 };
 
 class Order
-{
+{/*Order object ties customers to food items*/
 public:
 	Order()
-	{
+	{/*ensures new object is empty*/
 		Clear();
 	};
 
-	Order(int ID)
+	/*Order(int ID)
 	{
 		OrderID = ID;
-	}
+	}*/
 
 	void AddItem(FoodItem AddedItem)
-	{
+	{/*adds a chosen FoodItem to basket*/
 		Basket.push_back(AddedItem);
+		/*updates the price of the basket*/
 		BasketPrice += AddedItem.GetPrice();
 	}
 
 	void SetDelivery(bool Input, double DeliveryCost)
-	{
+	{/*sets whether order is a delivery or for pickup*/
 		Delivery = Input;
+		/*updates delivery cost*/
 		this->DeliveryCost = DeliveryCost;
 	}
 
 	void SetOpen(bool Input)
-	{
+	{/*determines the open/closed state of an order 
+	 (ie, if it's been picked up)*/
 		Open = Input;
 	}
 
 	void Clear()
-	{
+	{/*clears the order*/
 		Basket.clear();
 		Cust.Clear();
 		OrderID.clear();
@@ -461,7 +477,7 @@ public:
 	}
 
 	friend ostream& operator<<(ostream& OS, const Order OR)
-	{
+	{/*overloaded output to the terminal*/
 		OS << OR.OrderID << endl;
 		OS << OR.Cust << endl;
 
@@ -496,35 +512,33 @@ public:
 		return OS;
 	}
 
-	friend ofstream& operator<<(ofstream& OS, Order OR)
-	{
-		OS << OR.OrderID << "," << OR.Basket.size() << ",:";
+	friend ofstream& operator<<(ofstream& Filer, Order OR)
+	{/*overloaded Writer object*/
+		Filer << OR.OrderID << "," << OR.Basket.size() << ",";
 
 		for (int i = 0; i < OR.Basket.size(); i++)
 		{
-			OS << OR.Basket[i] << ":";
+			Filer << OR.Basket[i] << ":";
 		}
 
-		OS << "+" << OR.Cust.GetID() << "+" << OR.Delivery << "+" << OR.Open << endl;
+		Filer << "," << OR.Cust.GetID() << "," << OR.Delivery << "," << OR.Open << endl;
 
-		return OS;
+		return Filer;
 	}
 
-	friend ifstream& operator>>(ifstream& IS, Order OR)
-	{
+	//need to work on this
+	friend ifstream& operator>>(ifstream& Obtainer, Order OR)
+	{/*overloaded reader object*/
 		vector <string> Segments;
 		string Line, Temp;
 
-		getline(IS >> ws, Line);
+		getline(Obtainer >> ws, Line);
 
 		for (int i = 0; i < Line.size(); i++)
 		{
 			if (Line[i] != ',')
 			{
 				Temp += Line[i];
-			}
-			else if (Line[i] == ':')
-			{
 			}
 			else
 			{
@@ -535,7 +549,7 @@ public:
 			Temp.clear();
 		}
 
-		return IS;
+		return Obtainer;
 	}
 
 private:
@@ -549,20 +563,15 @@ private:
 };
 
 class Menu
-{
-	/*
-	* so, to delete a dish, I was thinking we set the ID to -1
-	* then in the delete function, when copying things to the temp
-	* vector, we ignore any with an ID of -1
-	*/
+{/*not to confused with a menu of options, 
+ this menu holds the different available food items*/
 public:
 	Menu()
-	{
-
-	}
+	{}
 
 	string Searcher()
-	{
+	{/*looks for the queried food item, and returns it's location in both 
+	 the main and sub-vectors of Dishes<>*/
 		bool Found = false;
 		string Query;
 
@@ -576,9 +585,9 @@ public:
 		getline(cin >> ws, Query);
 
 		for (int i = 0; i < Dishes.size(); i++)
-		{
+		{/*searching the outer vector*/
 			for (int j = 0; j < Dishes[i].size(); j++)
-			{
+			{/*Searching the sub-vectors*/
 				if (Dishes[i][j].GetName() == Query)
 				{
 					Found = true;
@@ -591,64 +600,38 @@ public:
 				}
 			}
 		}
-
+		/*not found clause*/
 		if (Found == true)
-		{
+		{/*shouldn't happen, but just in case*/
 			cout << "ERROR::object found, but not returned (Searcher())" << endl;
 			abort();
 		}
 		else
-		{
-			cout << "We could not find the item you were looking for, apologies" << endl;
+		{/*main error message*/
+			cout << "Searcher could not find the item you were looking for, apologies" << endl;
 			return("-1");
 		}
-
 	}
 
 	void ReadFile()
-	{
-		ifstream Reader;
-		FoodItem TempFood;
-		vector <FoodItem> TempFoods;
-		int NoCuisines, NoDishes, Counter;
-		string Temp;
-
-		Reader.open("Dishes.txt");
-
-		Reader >> NoCuisines;
-
-		for (int i = 0; i < NoCuisines; i++)
-		{
-			Reader >> NoDishes;
-			Reader >> Temp;
-
-			Cuisine.push_back(Temp);
-			Temp.clear();
-			TempFoods.clear();
-
-			for (int j = 0; j < NoDishes; j++)
-			{
-				Reader >> TempFood;
-				TempFoods.push_back(TempFood);
-				TempFood.Clear();
-			}
-			Dishes.push_back(TempFoods);
-		}
-	}
-
 	void WriteFile()
-	{
+	{/*writes dishes to the file*/
 		string Temp;
 		ofstream Writer;
 		Writer.open("Dishes.txt");
 
+		/*writes the number of cuisines*/
 		Writer << Cuisine.size() << endl;
 
 		for (int i = 0; i < Cuisine.size(); i++)
 		{
+			/*writes the number of dishes in each cuisine*/
 			Writer << Dishes[i].size() << endl;
+
+			/*writes the details of the cuisine*/
 			Writer << Cuisine[i] << endl;
 
+			/*writes every dish in a cuisine*/
 			for (int j = 0; j < Dishes[i].size(); j++)
 			{
 				Writer << Dishes[i][j];
@@ -662,7 +645,7 @@ public:
 	}
 
 	void NewDish()
-	{
+	{/*allows the user to create a new dish*/
 		vector <FoodItem> TempFoods;
 		string Command, Input;
 		int ChosenCuisine;
