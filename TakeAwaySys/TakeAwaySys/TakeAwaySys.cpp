@@ -254,6 +254,13 @@ public:
 		Segments.push_back(Temp);
 		Temp.clear();
 
+		FoodID = Segments[0];
+		Name = Segments[1];
+		Price = stod(Segments[2]);
+		Cuisine = Segments[3];
+		Course = Segments[4];
+		Popularity = Segments[5];
+		Availability = stoi(Segments[6]);
 	}
 
 	void UpdatePop()
@@ -339,6 +346,28 @@ public:
 	double GetPrice()
 	{
 		return Price;
+	}
+
+	int GetAvail()
+	{return Availability;}
+
+	/*added is called when an item is added to a basket*/
+	void Added()
+	{Availability--;}
+
+	/*removed is called when a basket is cleared*/
+	void Removed()
+	{Availability++;}
+
+	void Display()
+	{
+		cout << Name << endl << "\tID:" << FoodID << endl;
+		cout << "\tCuisine: " << Cuisine << endl;
+		cout << "\tPrice: " << CurrencySym << setprecision(2) << fixed << Price;
+		cout << endl << "\tCourse: " << Course << endl;
+		cout << "\tPopularity: " << Popularity << endl;
+		cout << "\tAvailability: " << Availability << endl;
+		AJT.Graphics.Line('-', 45);
 	}
 
 	FoodItem& operator=(const FoodItem& FI2)
@@ -437,9 +466,10 @@ public:
 		OrderID = ID;
 	}*/
 
-	void AddItem(FoodItem AddedItem)
+	void AddItem(FoodItem& AddedItem)
 	{/*adds a chosen FoodItem to basket*/
-		Basket.push_back(AddedItem);
+		Basket.push_back(&AddedItem);
+
 		/*updates the price of the basket*/
 		BasketPrice += AddedItem.GetPrice();
 	}
@@ -493,9 +523,106 @@ public:
 		return BasketPrice;
 	}
 
-	FoodItem GetBasketItem(int Index)
+	void GetBasketItem(int Index)
 	{
-		return Basket[Index];
+		Basket[Index]->Display();
+	}
+
+	void BasketItemMin(int Index)
+	{
+		cout << Basket[Index]->GetName();
+	}
+
+	void ReturnItems()
+	{
+		/*resets the dishes in the basket*/
+		for (int i = 0; i < Basket.size(); i++)
+		{
+			Basket[i]->Removed();
+		}
+	}
+
+	string GetCustID()
+	{
+		return Cust.GetID();
+	}
+
+	double GetPrice()
+	{
+		return BasketPrice + DeliveryCost;
+	}
+
+	vector <FoodItem*> GetBasket()
+	{
+		return Basket;
+	}
+
+	string PopCuisine()
+	{
+		string CurrentPop;
+		vector <int> Count;
+		int Temp;
+
+		for (int i = 0; i < Basket.size(); i++)
+		{
+			Temp = 0;
+
+			for (int j = 0; j < Basket.size(); j++)
+			{
+				if (Basket[i]->GetCuisine() == Basket[j]->GetCuisine())
+				{
+					Temp++;
+				}
+			}
+			Count.push_back(Temp);
+		}
+
+		int Max = -1, MaxIndex = 0;
+
+		for (int i = 0; i < Count.size(); i++)
+		{
+			if (Count[i] > Max)
+			{
+				Max = Count[i];
+				MaxIndex = i;
+			}
+		}
+
+		return Basket[MaxIndex]->GetCuisine();
+	}
+
+	string PopDish()
+	{
+		string CurrentPop;
+		vector <int> Count;
+		int Temp;
+
+		for (int i = 0; i < Basket.size(); i++)
+		{
+			Temp = 0;
+
+			for (int j = 0; j < Basket.size(); j++)
+			{
+				if (Basket[i]->GetID() == Basket[j]->GetID())
+				{
+					Temp++;
+				}
+			}
+			Count.push_back(Temp);
+		}
+
+		int Max = -1, MaxIndex;
+
+		for (int i = 0; i < Count.size(); i++)
+		{
+			if (Count[i] > Max)
+			{
+				Max = Count[i];
+				MaxIndex = i;
+			}
+		}
+
+		return Basket[MaxIndex]->GetName();
 	}
 
 	friend ostream& operator<<(ostream& OS, const Order OR)
@@ -514,7 +641,7 @@ public:
 
 		for (int i = 0; i < OR.Basket.size(); i++)
 		{
-			OS << OR.Basket[i];
+			cout << "\t" << OR.Basket[i]->GetName() << endl;
 		}
 
 		OS << "Basket Price: " << CurrencySym << setprecision(2) << fixed << OR.BasketPrice << endl;
@@ -574,12 +701,16 @@ public:
 		OR.OrderID = Segments[0];
 		BasketSize = stoi(Segments[1]);
 		OR.CustID = Segments[2];
-		Segments[3];
 
-		if (Segments[3] == "true")
+		if (Segments[3] == "1")
 		{OR.Delivery = true;}
 		else
 		{OR.Delivery = false;}
+
+		if (Segments[4] == "1")
+		{OR.Open = true;}
+		else
+		{OR.Open = false;}
 
 		Segments.clear();
 		Temp.clear();
@@ -600,13 +731,19 @@ public:
 		Segments.push_back(Temp);
 		Temp.clear();
 
+		FoodItem TempFood;
 
+		for (int i = 0; i < BasketSize; i++)
+		{
+			TempFood.ReadDish(Segments[i]);
+			OR.AddItem(TempFood);
+		}
 
 		return Obtainer;
 	}
 
 private:
-	vector <FoodItem> Basket;
+	vector <FoodItem*> Basket;
 	Customer Cust;
 	string OrderID;
 	string CustID;
@@ -668,7 +805,6 @@ public:
 	}
 
 	void ReadFile()
-
 	{/*Reads in dishes from the Dishes file*/
 		ifstream Reader;
 		FoodItem TempFood;
@@ -733,9 +869,6 @@ public:
 		}
 
 		Writer.close();
-
-		cout << "Dishes saved to file, type [exit] to return to menu" << endl;
-		cin >> Temp;
 	}
 
 	void NewDish()
@@ -1401,9 +1534,23 @@ public:
 				Outer = stoi(AJT.CMH.Remove(',', Temp, "left"));
 				Inner = stoi(AJT.CMH.Remove(',', Temp, "right"));
 
-				TempOrder.AddItem(Dishes[Outer][Inner]);
+				if (Dishes[Outer][Inner].GetAvail() < 1)
+				{
+					cout << "Availability for " << Dishes[Outer][Inner].GetName();
+					cout << " is too low. Please choose another item or increase ";
+					cout << "availability" << endl;
+					cout << "type [return] to add another item" << endl << "> ";
+					cin >> Command;
+
+					Command = AJT.VC.CustCheck(Command, "return");
+				}
+				else
+				{
+					Dishes[Page][stoi(Command) - 1].Added();
+					TempOrder.AddItem(Dishes[Outer][Inner]);
+				}				
 			}
-			else if (Command == "exit")
+			else if (Command == "next")
 			{/*returns to menu*/
 				break;
 			}
@@ -1437,10 +1584,25 @@ public:
 					{/*or they can enter the index of the FoodItem*/
 						Command = AJT.VC.NumRangeCheck(Command, 0, Dishes[Page].size() + 1);
 						
-						TempOrder.AddItem(Dishes[Page][stoi(Command) - 1]);
+						if (Dishes[Page][stoi(Command) - 1].GetAvail() < 1)
+						{
+							cout << "Availability for ";
+							cout << Dishes[Page][stoi(Command) - 1].GetName();
+							cout << " is too low. Please choose another item or increase ";
+							cout << "availability" << endl;
+							cout << "type [return] to add another item" << endl << "> ";
+							cin >> Command;
+
+							Command = AJT.VC.CustCheck(Command, "return");
+						}
+						else
+						{
+							Dishes[Page][stoi(Command) - 1].Added();
+							TempOrder.AddItem(Dishes[Page][stoi(Command) - 1]);
+						}						
 					}
 
-				} while (Command != "exit");
+				} while (Command != "next");
 			}
 		} while (Command != to_string(Dishes[Page].size() + 1));
 
@@ -1454,7 +1616,7 @@ public:
 		{/*displays the basket*/
 			for (int i = 0; i < TempOrder.GetBasketSize(); i++)
 			{
-				cout << TempOrder.GetBasketItem(i);
+				TempOrder.BasketItemMin(i);
 			}
 			/*displays the basket's total price*/
 			cout << "Basket Total: " << CurrencySym;
@@ -1835,7 +1997,12 @@ public:
 
 			if (Command == "yes")
 			{
+				NoOrders++;
 				return CurrentOrder;
+			}
+			else
+			{
+				CurrentOrder.ReturnItems();
 			}
 			/*restarts the process if the order is incorrect*/
 		} while (Command == "no");
@@ -1850,9 +2017,9 @@ public:
 		Bwydlen.WriteFile();
 
 		WriteEmployees();
-		//write misc
+		WriteMisc();
 
-		Writer.open("Orders.txt");
+		/*(Writer.open("Orders.txt");
 		Writer << Orders.size();
 
 		for (int i = 0; i < Orders.size(); i++)
@@ -1861,7 +2028,7 @@ public:
 		}
 
 		Writer.close();
-		Writer.clear();
+		Writer.clear();*/
 
 		Writer.open("Customers.txt");
 
@@ -1896,7 +2063,7 @@ public:
 
 		ReadEmployees();
 
-		Reader.open("Orders.txt");
+		/*Reader.open("Orders.txt");
 
 		Reader >> NoOrders;
 
@@ -1910,9 +2077,9 @@ public:
 		}
 
 		Reader.close();
-		Reader.clear();
+		Reader.clear();*/
 
-		//read Misc
+		ReadMisc();
 
 		Reader.open("Customers.txt");
 
@@ -2130,7 +2297,7 @@ public:
 	{/*The mani menut of the program & functionjunction*/
 		vector <string> Options{
 			"View Menu sub-Menu","Make New Order","Close Order","View Employee sub-Menu",
-			"View Customer sub-Menu", "Misc sub-menu",
+			"View Customer sub-Menu", "Misc sub-menu","Generate Report",
 		};
 		string Command;
 		Order TempOrder;
@@ -2186,6 +2353,11 @@ public:
 				break;
 			}
 			case 7:
+			{
+				GenerateReport();
+				break;
+			}
+			case 8:
 			{/*prompts user to save files before exiting*/
 				cout << "Would you like to save your files first? [yes/no]" << endl << "> ";
 				cin >> Command;
@@ -2682,13 +2854,231 @@ public:
 	}
 
 	void ReadMisc()
-	{
+	{/*reads the misc File*/
 		ifstream Reader;
 		Reader.open("Misc.txt");
 
 		Reader >> MaxNoTakeaways >> NoTakeaways >> DeliveryCost;
 
 		Reader.close();
+	}
+
+	void GenerateReport()
+	{
+		string Loyals[3], Block, Temp;
+		string Cuisine, Dish, FileName, Command;
+		int Counter = 0;
+		double Revenue;
+
+		Block = CalculateLoyalty();
+
+		for (int i = 0; i < Block.size(); i++)
+		{
+			if (Block[i] != ',')
+			{
+				Temp += Block[i];
+			}
+			else
+			{
+				Loyals[Counter] = Temp;
+				Temp.clear();
+				Counter++;
+			}
+		}
+		Loyals[Counter] = Temp;
+		Temp.clear();
+		Counter++;
+
+		Revenue = CalculateRevenue();
+
+		Cuisine = PopularCusine();
+
+		Dish = PopularDish();
+		
+		MenuTitle = "Generate Report > ";
+
+		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
+
+		cout << "Please enter a nane for the report: " << endl << "> ";
+		getline(cin >> ws, FileName);
+
+		FileName += ".txt";
+
+		ofstream Writer;
+		Writer.open(FileName);
+
+		Writer << "Daily Report" << endl;
+		Writer << endl << "No. of orders booked: " << NoOrders;
+		Writer << endl << "Most popular cuisine: " << Cuisine;
+		Writer << endl << "Most Popular Dish: " << Dish;
+		Writer << endl << "Top customers: " << endl;
+
+		if (Loyals[0] != "-1")
+		{Writer << "\t1) " << Loyals[0] << endl;}
+
+		if (Loyals[1] != "-1")
+		{Writer << "\t2)" << Loyals[1] << endl;}
+
+		if (Loyals[2] != "-1")
+		{Writer << "\t3)" << Loyals[2] << endl;}
+		
+		Writer << endl << endl;
+		Writer << "Total Income: £" << Revenue;
+
+		Writer.close();
+
+		cout << FileName << " successfully created" << endl;
+		cout << "Enter [return] to return to menu" << endl << "> ";
+		cin >> Command;
+
+		Command = AJT.VC.CustCheck(Command, "return");
+	}
+
+	double CalculateRevenue()
+	{
+		double Temp = 0 ;
+
+		for (int i = 0; i < Orders.size(); i++)
+		{
+			Temp += Orders[i].GetPrice();
+		}
+
+		return Temp;
+	}
+
+	string CalculateLoyalty()
+	{
+		int Count;
+		int LoyalCount[3] = { 0,0,0 };
+		string Temp, Data, Loyals[3] = {"-1","-1","-1"};
+
+		for (int i = 0; i < Customers.size(); i++)
+		{
+			Count = 0;
+			for (int j = 0; j < Orders.size(); j++)
+			{
+				if (Orders[j].GetCustID() == Customers[i].GetID())
+				{
+					Count++;
+				}
+			}
+
+			if (Count > LoyalCount[0])
+			{
+				LoyalCount[2] = LoyalCount[1];
+				Loyals[2] = Loyals[1];
+
+				LoyalCount[1] = LoyalCount[0];
+				Loyals[1] = Loyals[0];
+
+				LoyalCount[0] = Count;
+				Temp = (Customers[i].GetName() + " [" + Customers[i].GetID() + "] ");
+				Loyals[0] = Temp;
+			}
+			else if (Count > LoyalCount[1])
+			{
+				LoyalCount[2] = LoyalCount[1];
+				Loyals[2] = Loyals[1];
+
+				LoyalCount[1] = Count;
+				Temp = (Customers[i].GetName() + " [" + Customers[i].GetID() + "] ");
+				Loyals[1] = Temp;
+			}
+			else if (Count > LoyalCount[2])
+			{
+				LoyalCount[2] = Count;
+				Temp = (Customers[i].GetName() + " [" + Customers[i].GetID() + "] ");
+				Loyals[2] = Temp;
+			}
+		}
+
+		Data = Loyals[0] + ",";	//most
+		Data += Loyals[1] + ",";
+		Data += Loyals[2];		//least
+
+		return Data;
+	}
+
+	string PopularCusine()
+	{
+		vector <FoodItem*> AllDishes;
+		vector <FoodItem*> TempVect;
+		string CurrentPop;
+		vector <int> Count;
+		int Temp = 0;
+
+		for (int i = 0; i < Orders.size(); i++)
+		{
+			TempVect = Orders[i].GetBasket();
+			AllDishes.insert(AllDishes.end(), TempVect.begin(), TempVect.end());
+		}
+
+		for (int i = 0; i < AllDishes.size(); i++)
+		{
+			Temp = 0;
+			for (int j = 0; j < AllDishes.size(); j++)
+			{
+				if (AllDishes[i]->GetCuisine() == AllDishes[j]->GetCuisine())
+				{
+					Temp++;
+				}
+			}
+			Count.push_back(Temp);
+		}
+
+		int Max = -1, MaxIndex;
+
+		for (int i = 0; i < Count.size(); i++)
+		{
+			if (Count[i] > Max)
+			{
+				Max = Count[i];
+				MaxIndex = i;
+			}
+		}
+
+		return AllDishes[MaxIndex]->GetCuisine();
+	}
+
+	string PopularDish()
+	{
+		vector <FoodItem*> AllDishes;
+		vector <FoodItem*> TempVect;
+		string CurrentPop;
+		vector <int> Count;
+		int Temp = 0 ;
+
+		for (int i = 0; i < Orders.size(); i++)
+		{
+			TempVect = Orders[i].GetBasket();
+			AllDishes.insert(AllDishes.end(), TempVect.begin(), TempVect.end());
+		}
+
+		for (int i = 0; i < AllDishes.size(); i++)
+		{
+			Temp = 0;
+			for (int j = 0; j < AllDishes.size(); j++)
+			{
+				if (AllDishes[i]->GetID() == AllDishes[j]->GetID())
+				{
+					Temp++;
+				}
+			}
+			Count.push_back(Temp);
+		}
+
+		int Max = -1, MaxIndex;
+
+		for (int i = 0; i < Count.size(); i++)
+		{
+			if (Count[i] > Max)
+			{
+				Max = Count[i];
+				MaxIndex = i;
+			}
+		}
+
+		return AllDishes[MaxIndex]->GetName();
 	}
 
 private:
@@ -2699,6 +3089,7 @@ private:
 	Menu Bwydlen;
 	int MaxNoTakeaways;
 	int NoTakeaways;
+	int NoOrders = 0;
 	double DeliveryCost;
 };
 
