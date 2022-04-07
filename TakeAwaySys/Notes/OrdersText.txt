@@ -8,8 +8,7 @@ CID0
 pickup
 no
 1
-1
-1
+2
 2
 exit
 next

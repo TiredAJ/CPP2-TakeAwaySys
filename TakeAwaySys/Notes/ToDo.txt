@@ -1,7 +1,7 @@
 to do:
  - max no of orders 	./
  - availability		./
- - loyalty
+ - loyalty				./
  - employees			./
- - report
- - misc file
+ - report				./
+ - misc file			./

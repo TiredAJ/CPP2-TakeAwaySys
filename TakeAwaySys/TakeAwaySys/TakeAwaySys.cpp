@@ -553,76 +553,8 @@ public:
 	}
 
 	vector <FoodItem*> GetBasket()
-	{
+	{/*returns the basket as a vector*/
 		return Basket;
-	}
-
-	string PopCuisine()
-	{
-		string CurrentPop;
-		vector <int> Count;
-		int Temp;
-
-		for (int i = 0; i < Basket.size(); i++)
-		{
-			Temp = 0;
-
-			for (int j = 0; j < Basket.size(); j++)
-			{
-				if (Basket[i]->GetCuisine() == Basket[j]->GetCuisine())
-				{
-					Temp++;
-				}
-			}
-			Count.push_back(Temp);
-		}
-
-		int Max = -1, MaxIndex = 0;
-
-		for (int i = 0; i < Count.size(); i++)
-		{
-			if (Count[i] > Max)
-			{
-				Max = Count[i];
-				MaxIndex = i;
-			}
-		}
-
-		return Basket[MaxIndex]->GetCuisine();
-	}
-
-	string PopDish()
-	{
-		string CurrentPop;
-		vector <int> Count;
-		int Temp;
-
-		for (int i = 0; i < Basket.size(); i++)
-		{
-			Temp = 0;
-
-			for (int j = 0; j < Basket.size(); j++)
-			{
-				if (Basket[i]->GetID() == Basket[j]->GetID())
-				{
-					Temp++;
-				}
-			}
-			Count.push_back(Temp);
-		}
-
-		int Max = -1, MaxIndex;
-
-		for (int i = 0; i < Count.size(); i++)
-		{
-			if (Count[i] > Max)
-			{
-				Max = Count[i];
-				MaxIndex = i;
-			}
-		}
-
-		return Basket[MaxIndex]->GetName();
 	}
 
 	friend ostream& operator<<(ostream& OS, const Order OR)
@@ -2844,7 +2776,7 @@ public:
 	}
 
 	void WriteMisc()
-	{
+	{/*Writes the misc file*/
 		ofstream Writer;
 		Writer.open("Misc.txt");
 
@@ -2864,14 +2796,16 @@ public:
 	}
 
 	void GenerateReport()
-	{
+	{/*generates the daily report*/
 		string Loyals[3], Block, Temp;
 		string Cuisine, Dish, FileName, Command;
 		int Counter = 0;
 		double Revenue;
 
+		/*Calculates the top 3 customers in terms of orders*/
 		Block = CalculateLoyalty();
 
+		/*splits block into 3 customers*/
 		for (int i = 0; i < Block.size(); i++)
 		{
 			if (Block[i] != ',')
@@ -2889,10 +2823,13 @@ public:
 		Temp.clear();
 		Counter++;
 
+		/*calculates the revenue from all orders*/
 		Revenue = CalculateRevenue();
 
+		/*calulates and returns the most popular cuisine*/
 		Cuisine = PopularCusine();
 
+		/*calulates and returns the most popular cuisine*/
 		Dish = PopularDish();
 		
 		MenuTitle = "Generate Report > ";
@@ -2904,6 +2841,7 @@ public:
 
 		FileName += ".txt";
 
+		/*writes the report*/
 		ofstream Writer;
 		Writer.open(FileName);
 
@@ -2938,6 +2876,7 @@ public:
 	{
 		double Temp = 0 ;
 
+		/*loops through every Order and obtains their total bill*/
 		for (int i = 0; i < Orders.size(); i++)
 		{
 			Temp += Orders[i].GetPrice();
@@ -2952,6 +2891,7 @@ public:
 		int LoyalCount[3] = { 0,0,0 };
 		string Temp, Data, Loyals[3] = {"-1","-1","-1"};
 
+		/*counts the occurences of each customer*/
 		for (int i = 0; i < Customers.size(); i++)
 		{
 			Count = 0;
@@ -2963,6 +2903,8 @@ public:
 				}
 			}
 
+			/*pushes back entries in Loyals[] and LoyalCount[] if Count is larger
+			than a specific index*/
 			if (Count > LoyalCount[0])
 			{
 				LoyalCount[2] = LoyalCount[1];
@@ -2992,6 +2934,7 @@ public:
 			}
 		}
 
+		/*takes each index and turns it into a signle variable*/
 		Data = Loyals[0] + ",";	//most
 		Data += Loyals[1] + ",";
 		Data += Loyals[2];		//least
@@ -3007,12 +2950,14 @@ public:
 		vector <int> Count;
 		int Temp = 0;
 
+		/*adds the basket of every order into one vector*/
 		for (int i = 0; i < Orders.size(); i++)
 		{
 			TempVect = Orders[i].GetBasket();
 			AllDishes.insert(AllDishes.end(), TempVect.begin(), TempVect.end());
 		}
 
+		/*counts the occurence of each cuisine within all orders*/		
 		for (int i = 0; i < AllDishes.size(); i++)
 		{
 			Temp = 0;
@@ -3028,6 +2973,7 @@ public:
 
 		int Max = -1, MaxIndex;
 
+		/*sorts out which occurence is the greatest*/
 		for (int i = 0; i < Count.size(); i++)
 		{
 			if (Count[i] > Max)
@@ -3036,7 +2982,7 @@ public:
 				MaxIndex = i;
 			}
 		}
-
+		
 		return AllDishes[MaxIndex]->GetCuisine();
 	}
 
@@ -3048,12 +2994,14 @@ public:
 		vector <int> Count;
 		int Temp = 0 ;
 
+		/*adds the basket of every order into one vector*/
 		for (int i = 0; i < Orders.size(); i++)
 		{
 			TempVect = Orders[i].GetBasket();
 			AllDishes.insert(AllDishes.end(), TempVect.begin(), TempVect.end());
 		}
 
+		/*counts the occurence of each dish in all orders*/
 		for (int i = 0; i < AllDishes.size(); i++)
 		{
 			Temp = 0;
@@ -3069,6 +3017,7 @@ public:
 
 		int Max = -1, MaxIndex;
 
+		/*sorts out which occurence is the greatest*/
 		for (int i = 0; i < Count.size(); i++)
 		{
 			if (Count[i] > Max)
@@ -3094,7 +3043,7 @@ private:
 };
 
 int main()
-{/*barren main*/
+{/* main*/
 	RestraurantSys RSys;
 
 	/*calls the main menu*/
