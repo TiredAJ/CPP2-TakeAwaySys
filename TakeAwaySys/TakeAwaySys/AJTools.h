@@ -392,6 +392,8 @@ private:
 		_ValidityChecker()
 		{}
 
+		/*I could do the functions by refecence instead of value, but I think
+		it's easier to read the command manually assigned*/
 		string YNCheck(string Input)
 		{/*simply checks if input is a yes or a no. Loops if false*/
 			while (Input != "yes" && Input != "no")

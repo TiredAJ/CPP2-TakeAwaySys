@@ -614,6 +614,46 @@ public:
 	}
 
 	void ReadFile()
+
+	{/*Reads in dishes from the Dishes file*/
+		ifstream Reader;
+		FoodItem TempFood;
+		vector <FoodItem> TempFoods;
+		int NoCuisines, NoDishes, Counter;
+		string Temp;
+
+		Reader.open("Dishes.txt");
+
+		/*obtains how many cuisines there are*/
+		Reader >> NoCuisines;
+
+		for (int i = 0; i < NoCuisines; i++)
+		{
+			/*obtains the number of dishes in a cuisine*/
+			Reader >> NoDishes;
+
+			/*gets the cuisine*/
+			Reader >> Temp;
+
+			/*adds it to the vector of cuisines*/
+			Cuisine.push_back(Temp);
+			Temp.clear();
+			TempFoods.clear();
+
+			/*nabs each item of food and adds it to a temporary vector*/
+			for (int j = 0; j < NoDishes; j++)
+			{
+				Reader >> TempFood;
+				TempFoods.push_back(TempFood);
+				TempFood.Clear();
+			}
+
+			/*the vector is then pushed back to the Dishes vector
+			with this, each subvector is a cuisine*/
+			Dishes.push_back(TempFoods);
+		}
+	}
+
 	void WriteFile()
 	{/*writes dishes to the file*/
 		string Temp;
@@ -654,6 +694,7 @@ public:
 
 		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
+		/*checks if the new dish requires a new cuisine*/
 		cout << "Would you like to add a new cuisine? [yes/no]" << endl << "> ";
 		cin >> Command;
 
@@ -665,6 +706,7 @@ public:
 
 			CreateCuisine();
 
+			/*allows the user to opt-out*/
 			cout << "Would you like to add a new dish? [yes/no]" << endl;
 			cin >> Command;
 
@@ -674,7 +716,6 @@ public:
 			{
 				return;
 			}
-
 		}
 
 		Input.clear();
@@ -685,6 +726,7 @@ public:
 			MenuTitle = "New Dish > ";
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Choose Cuisine" + "\n");
 
+			/*checks if there are saved cuisines*/
 			if (Cuisine.size() == 0)
 			{
 				cout << "There are no cuisines available, please make a new cuisine first" << endl;
@@ -693,9 +735,11 @@ public:
 
 			FoodItem TempFood;
 
+			/*allows the user to choose an existing cuisine*/
 			AJT.Graphics.DisplayOptions(Cuisine, 0);
 			cin >> Command;
 
+			//replace with VC?
 			while (stoi(Command) > Cuisine.size() + 1 || stoi(Command) < 1)
 			{
 				cout << "Please choose a cuisine[1-" << Cuisine.size() + 1 << "]" << endl;
@@ -707,6 +751,7 @@ public:
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + Cuisine[ChosenCuisine]);
 
+			/*checks if the cuisine is empty*/
 			if (Dishes.size() == 0)
 			{
 				TempFood.CreateDish(Cuisine[ChosenCuisine] + ",0");
@@ -723,13 +768,15 @@ public:
 				}
 			}
 
-
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + " Display Dish");
 
 			cout << TempFood;
 
+			/*allows user to restart*/
 			cout << "Is this correct? [yes/no] " << endl << "> ";
 			cin >> Command;
+
+			Command = AJT.VC.YNCheck(Command);
 
 			if (Command != "no")
 			{
@@ -737,6 +784,8 @@ public:
 
 				if (Dishes.size() == 0)
 				{
+					/*adds dish to the temporary vector
+					temporary vector is then added to Dishes*/
 					TempFoods.push_back(TempFood);
 					Dishes.push_back(TempFoods);
 				}
@@ -744,11 +793,14 @@ public:
 				{
 					if (Dishes.size() <= ChosenCuisine)
 					{
+						/*adds dish to the temporary vector
+						temporary vector is then added to Dishes*/
 						TempFoods.push_back(TempFood);
 						Dishes.push_back(TempFoods);
 					}
 					else
 					{
+						/*adds new dish to the specific cuisine in Dishes*/
 						Dishes[ChosenCuisine].push_back(TempFood);
 					}
 				}
@@ -763,7 +815,7 @@ public:
 	}
 
 	void UpdatePop()
-	{
+	{/*UpdatePop allows for the user to update the popularity of a dish*/
 		//index in the outer, inner vectors + location of comma
 		int OuterVal, InnerVal, Mid;
 		string Temp, Command;
@@ -775,10 +827,12 @@ public:
 
 			MenuTitle = "Update Popularity > ";
 
+			/*uses Searcher to retrieve the location of the dish within
+			Dishes*/
 			Temp = Searcher();
 
 			if (Temp == "-1")
-			{
+			{/*not found clause*/
 				cout << "Item could not be found, Return to menu? [yes/no]" << endl;
 				cin >> Command;
 
@@ -793,7 +847,8 @@ public:
 				}
 			}
 			else
-			{
+			{/*splits the returned value into it's position on the 
+			 main and sub-vectors*/
 				Mid = Temp.find(',');
 				OuterVal = stoi(Temp.substr(0, Mid));
 				InnerVal = stoi(Temp.substr(Mid + 1));
@@ -802,24 +857,30 @@ public:
 
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
+				/*calls UpdatePop for the specific dish*/
 				Dishes[OuterVal][InnerVal].UpdatePop();
 
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + " > Details");
 
+				/*shows the new popularity*/
 				cout << "Updated: ";
 				cout << Dishes[OuterVal][InnerVal];
+
+				cout << "Type [return] to return to menu" << endl << "> ";
+				cin >> Command;
+
+				Command = AJT.VC.CustCheck(Command, "return");
 
 				return;
 			}
 		} while (Active == true);
-
+		/*just in case*/
 		cout << "ERROR::Program escaped the loop" << endl;
 		abort();
-
 	}
 
 	void UpdateAvail()
-	{
+	{/*similar to UpdatePop, but for availability*/
 		int OuterVal, InnerVal, Mid;
 		string Temp, Command;
 		bool Active = true;
@@ -864,15 +925,22 @@ public:
 				cout << "Updated: ";
 				cout << Dishes[OuterVal][InnerVal];
 
+				cout << "Type [return] to return to menu" << endl << "> ";
+				cin >> Command;
+
+				Command = AJT.VC.CustCheck(Command, "return");
+
 				return;
 			}
-
-
+			cout << "ERROR::program escaped the loop (UpdateAvail)" << endl;
+			abort();
 		} while (Active == true);
 	}
 
 	void EditDish()
-	{
+	{/*allows the user to edit a dish by displaying the previous 
+	 values, then allowing the user to make a new dish to replace
+	 it*/
 		int OuterVal, InnerVal, Mid;
 		string Temp, Command;
 		bool Active = true;
@@ -913,39 +981,32 @@ public:
 
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + Dishes[OuterVal][InnerVal].GetName());
 
+				/*displays the current details of the dish*/
 				cout << "Current Details: " << endl;
 				cout << Dishes[OuterVal][InnerVal] << endl;
 
+				/*creates a new dish*/
 				TempDish.CreateDish(Cuisine[OuterVal] + "," + to_string(Dishes[OuterVal].size()));
 
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Updated Details");
 
 				cout << TempDish;
 
+				/*new dish overwrites previous*/
 				Dishes[OuterVal][InnerVal] = TempDish;
 
-				do
-				{
-					cout << "Return to menu? [yes/no]" << endl << "> ";
-					cin >> Command;
+				cout << "Type [return] to return to menu" << endl << "> ";
+				cin >> Command;
 
-					if (Command == "yes")
-					{
-						return;
-					}
-
-				} while (true);
-
+				Command = AJT.VC.CustCheck(Command, "return");
 
 				return;
 			}
-
-
 		} while (Active == true);
 	}
 
 	void DeleteDish()
-	{
+	{/*allows the user to delete a dish*/
 		int OuterVal, InnerVal, Mid;
 		string Temp, Command;
 		bool Active = true;
@@ -994,35 +1055,40 @@ public:
 
 				if (Command == "yes")
 				{
+					/*sets the dish's ID to -1, which gets picked
+					up in the for-loop below*/
 					Dishes[OuterVal][InnerVal].SetID("-1");
 
+					/*a temporary vector hold the dishes of a cuisine*/
 					for (int i = 0; i < Dishes[OuterVal].size(); i++)
 					{
+						/*ignores any dishes with an ID of -1*/
 						if (Dishes[OuterVal][i].GetID() != "-1")
 						{
 							TempFoods.push_back(Dishes[OuterVal][i]);
 						}
 					}
+					/*overwrites previous cuisine sub-vector*/
 					Dishes[OuterVal] = TempFoods;
 				}
 				else
 				{
 					return;
 				}
-
 				return;
 			}
-
-
 		} while (Active == true);
 	}
 
 	void DisplayMenu()
-	{
+	{/*displays the menu to the user. The menu is split into pages, 
+	 with a page for each cuisine*/
 		string Command, Input;
 		int CuisineChoice, CurrentPg;
 
 		Command.clear();
+
+		/*holds the current page*/
 		CurrentPg = 0;
 
 		MenuTitle = "Menu Browse > Page ";
@@ -1033,6 +1099,7 @@ public:
 
 			cout << AJT.CMH.Remove(',', Cuisine[CurrentPg], "left") << endl;
 
+			/*displays every dish of a cuisine*/
 			if (Dishes[CurrentPg].empty() != true)
 			{
 				for (int i = 0; i < Dishes[CurrentPg].size(); i++)
@@ -1042,10 +1109,13 @@ public:
 			}
 			else
 			{
+				/*displays if there aren't any dishes in a specific cuisine*/
 				cout << endl << "*No dishes*" << endl;
 			}
 
 			cout << endl;
+
+			/*allows the user to change which page, or cuisine they're viewing*/
 			cout << "Which page would you like to visit?" << endl << "[1-";
 			cout << Cuisine.size() << "] or [exit] to leave" << endl << "> ";
 			cin >> Command;
@@ -1055,12 +1125,7 @@ public:
 				return;
 			}
 
-			while (stoi(Command) > Cuisine.size() || stoi(Command) < 1)
-			{
-				cout << "Please enter a value between [1-" << Cuisine.size();
-				cout << "] or type [exit] to leave" << endl << "> ";
-				cin >> Command;
-			}
+			Command = AJT.VC.NumRangeCheck(Command, 1, Cuisine.size());
 
 			CurrentPg = stoi(Command) - 1;
 
@@ -1068,7 +1133,7 @@ public:
 	}
 
 	void CreateCuisine()
-	{
+	{/*allows the user to create a cuisine/create a new sub vector in Dishes*/
 		string Input, Temp, Command;
 		vector <FoodItem> TempFoods;
 
@@ -1082,6 +1147,7 @@ public:
 				cout << "Cuisine Name: ";
 				cin >> Input;
 
+				/*cuisine prefix is used for FoodID*/
 				cout << "Cuisine Prefix: ";
 				cin >> Temp;
 
@@ -1091,9 +1157,12 @@ public:
 				cin >> Command;
 			} while (Command != "yes" && Command == "no");
 
+			/*Temp holds the prefix and name together, separated by a comma*/
 			Temp += "," + Input;
 			Cuisine.push_back(Temp);
 
+			/*TempFoods is a blank vector, but assigns a space for dishes
+			of the new cusine*/
 			Dishes.push_back(TempFoods);
 
 			Input.clear();
@@ -1102,15 +1171,20 @@ public:
 			cout << endl << "Would you like to make another cuisine? [yes/no]" << endl;
 			cin >> Command;
 
+			Command = AJT.VC.YNCheck(Command);
+
 		} while (Command == "yes" && Command != "no");
 
 		MenuTitle.clear();
 	}
 
 	void EditDetailsMenu()
-	{
+	{/*function-junction that handles the sub-menu for 
+	 manipulating FoodItem objects*/
 		string Command; int Choice;
-		vector <string> Options{ "Edit Item","Edit Popularity","Edit Availability","Delete Item" };
+		vector <string> Options{ 
+			"Edit Item","Edit Popularity","Edit Availability","Delete Item" 
+		};
 
 		MenuTitle = "Edit Details Menu > ";
 
@@ -1118,6 +1192,7 @@ public:
 		{
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
+			/*displays the menu options*/
 			AJT.Graphics.DisplayOptions(Options, 1);
 			cin >> Command;
 
@@ -1126,15 +1201,11 @@ public:
 				return;
 			}
 
-			while (stoi(Command) < 1 || stoi(Command) > Options.size() + 1)
-			{
-				cout << "Please enter a value between [1-" << Options.size() + 1 << "]";
-				cout << endl << "> ";
-				cin >> Command;
-			}
+			Command = AJT.VC.NumRangeCheck(Command, 1, Options.size() + 1);
 
 			Choice = stoi(Command);
 
+			/*junction part of the function junction*/
 			switch (Choice)
 			{
 			case 1:
@@ -1164,6 +1235,7 @@ public:
 			}
 			default:
 			{
+				/*just in case*/
 				cout << "ERROR::Outside Switch Case boundaries" << endl;
 				abort();
 				break;
@@ -1171,12 +1243,11 @@ public:
 			}
 
 		} while (Command != "exit");
-
 		return;
 	}
 
 	void SelectionMenu()
-	{
+	{/*function-junction for higher-level FoodItem stuff*/
 		string Command; int Choice;
 		vector <string> Options{
 			"Browse Menu", "Edit Item", "Add Dish", "Add Cuisine",
@@ -1189,6 +1260,7 @@ public:
 		{
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
+			/*displays options*/
 			AJT.Graphics.DisplayOptions(Options, 1);
 			cin >> Command;
 
@@ -1197,12 +1269,7 @@ public:
 				return;
 			}
 
-			while (stoi(Command) < 1 || stoi(Command) > Options.size() + 2)
-			{
-				cout << "Please enter a value between [1-" << Options.size() + 2 << "]";
-				cout << endl << "> ";
-				cin >> Command;
-			}
+			Command = AJT.VC.NumRangeCheck(Command, 1, Options.size() + 2);
 
 			Choice = stoi(Command);
 
@@ -1215,6 +1282,7 @@ public:
 			}
 			case 2:
 			{
+				/*calls sub-sub-menu*/
 				EditDetailsMenu();
 				break;
 			}
@@ -1247,12 +1315,11 @@ public:
 			}
 
 		} while (Command != "exit");
-
 		return;
 	}
 
 	Order CreateOrder()
-	{
+	{/*allows user to create a new order*/
 		string Command, Temp;
 		int Page, Outer, Inner;
 		Order TempOrder;
@@ -1264,17 +1331,18 @@ public:
 		{
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
-			cout << "Would you like to search for an item? [yes/no/exit]" << endl << "> ";
+			cout << "Would you like to search for an item? [yes/no/next]" << endl;
+			cout << "[next] will allow you to proceed" << endl << "> ";
 			cin >> Command;
 
-			while (Command != "yes" && Command != "no" && Command != "exit")
+			while (Command != "yes" && Command != "no" && Command != "next")
 			{
-				cout << "Please enter [yes], [no] or [exit]" << endl << "> ";
+				cout << "Please enter [yes], [no] or [next]" << endl << "> ";
 				cin >> Command;
 			}
 
 			if (Command == "yes")
-			{
+			{/*allows the user to enter the FoodItem's name or ID*/
 				Temp = Searcher();
 				Outer = stoi(AJT.CMH.Remove(',', Temp, "left"));
 				Inner = stoi(AJT.CMH.Remove(',', Temp, "right"));
@@ -1282,11 +1350,11 @@ public:
 				TempOrder.AddItem(Dishes[Outer][Inner]);
 			}
 			else if (Command == "exit")
-			{
+			{/*returns to menu*/
 				break;
 			}
 			else
-			{
+			{/*allows the user to browse the menu alike DisplayMenu()*/
 				do
 				{
 					AJT.SCH.ScreenCleanerTM(0, MenuTitle + Dishes[Page][0].GetCuisine());
@@ -1303,20 +1371,18 @@ public:
 					getline(cin >> ws, Command);
 
 					if (Command[0] == 'p')
-					{
-						Page = stoi(Command.substr(5)) - 1;
+					{/*the user can either enter "page" followed by the page
+					 they'd like to visit*/
+						Page = stoi(AJT.VC.NumRangeCheck(Command.substr(5), 1, Cuisine.size())) - 1;
 					}
 					else if (Command == "exit")
-					{
+					{/*jumps out*/
 						break;
 					}
 					else if (stoi(Command) > 0)
-					{
-						while (stoi(Command) < 0 && stoi(Command) > Dishes[Page].size() + 1)
-						{
-							cout << "Please enter either [page #] or an item number" << endl << "> ";
-							cin >> Command;
-						}
+					{/*or they can enter the index of the FoodItem*/
+						Command = AJT.VC.NumRangeCheck(Command, 0, Dishes[Page].size() + 1);
+						
 						TempOrder.AddItem(Dishes[Page][stoi(Command) - 1]);
 					}
 
@@ -1324,18 +1390,19 @@ public:
 			}
 		} while (Command != to_string(Dishes[Page].size() + 1));
 
+		/*Allows the user to quick-view the basket*/
 		cout << "Would you like to view the basket? [yes/no]" << endl << "> ";
 		cin >> Command;
 
 		Command = AJT.VC.YNCheck(Command);
 
 		if (Command == "yes")
-		{
+		{/*displays the basket*/
 			for (int i = 0; i < TempOrder.GetBasketSize(); i++)
 			{
 				cout << TempOrder.GetBasketItem(i);
 			}
-
+			/*displays the basket's total price*/
 			cout << "Basket Total: " << CurrencySym;
 			cout << setprecision(2) << fixed << TempOrder.GetBasketPrice() << endl;
 		}
@@ -1351,6 +1418,7 @@ private:
 	vector <string> Cuisine;
 };
 
+/*Employees are split into two inherited classes with virtual functions*/
 class Chef :public Employee
 {
 public:
@@ -1358,7 +1426,7 @@ public:
 	{}
 
 	virtual void CreateEmployee(int Index)
-	{
+	{/*allows the user to create an chef object*/
 		Clear();
 
 		cout << "Please enter:" << endl << "name: ";
@@ -1378,8 +1446,9 @@ public:
 	}
 
 	virtual void Display()
-	{
+	{/*displays the object*/
 		cout << EmpID << endl << "Name: " << Name << endl;
+		/*tabs used again to neaten formatting*/
 		cout << "\tPhone No.: " << PhoneNo << endl << "\tPosition: ";
 		cout << Position << endl << "\tSpeciality: " << Speciality << endl;
 		cout << "Home: " << endl << Addrs;
@@ -1398,7 +1467,7 @@ public:
 	}
 
 	virtual void Clear()
-	{
+	{/*clears the object*/
 		Name.clear();
 		EmpID.clear();
 		PhoneNo.clear();
@@ -1413,12 +1482,13 @@ public:
 	{return Position;}
 
 	virtual void Read(ifstream& Reader)
-	{
+	{/*takes in a passed Reader object to read from a file*/
 		string Temp, Block;
 		vector <string> Segments;
 
 		getline(Reader >> ws, Block);
 
+		/*line of data is split up into segments*/
 		for (int i = 0; i < Block.size(); i++)
 		{
 			if (Block[i] != ',')
@@ -1434,25 +1504,30 @@ public:
 		Segments.push_back(Temp);
 		Temp.clear();
 
+		/*segments correspond to fields*/
 		EmpID = Segments[0];
 		Name = Segments[1];
 		PhoneNo = Segments[2];
 		Position = Segments[3];
 		Speciality = Segments[4];
 
+		/*because the address class can have overloaded functions, it's
+		given control of reading it's data*/
 		Reader >> Addrs;
 
 		Segments.clear();
 	}
 
 	virtual void Write(ofstream& Writer)
-	{
+	{/*passed Writer object for writing to a file*/
 		string Data;
 
 		Data = "1 " + EmpID + "," + Name + "," + PhoneNo + "," + Position;
 		Data += "," + Speciality;
 
 		Writer << Data << endl;
+		/*Addrs has it's own line because the compiler kept calling the ostream
+		overload instead of ofstream*/
 		Writer << Addrs;
 	}
 
@@ -1466,13 +1541,13 @@ private:
 };
 
 class GeneralEmployee :public Employee
-{
+{/*effectively similar to Chef, but without speciality and implied position*/
 public:
 	GeneralEmployee()
 	{};
 
 	virtual void CreateEmployee(int Index)
-	{
+	{/*allows user to create a non-chef employee*/
 		Clear();
 
 		cout << "Please enter:" << endl << "name: ";
@@ -1492,7 +1567,7 @@ public:
 	}
 
 	virtual void Display()
-	{
+	{/*displays the details of the employee*/
 		cout << EmpID << endl << "Name: " << Name << endl;
 		cout << "\tPhone No.: " << PhoneNo << endl << "\tPosition: ";
 		cout << Position << endl << "Home: " << endl << Addrs;
@@ -1529,7 +1604,7 @@ public:
 	}
 
 	virtual void Read(ifstream& Reader)
-	{
+	{/*uses the passed reader object to read in details*/
 		string Temp, Block;
 		vector <string> Segments;
 
@@ -1579,7 +1654,7 @@ private:
 };
 
 class RestraurantSys
-{
+{/*the primary class of the program, the class junction of function jucntions*/
 public:
 	RestraurantSys()
 	{
@@ -1588,7 +1663,7 @@ public:
 	}
 
 	Order MakeOrder()
-	{
+	{/*(starts the order making process) allows user to make an order*/
 		string Command; int Temp; bool Valid = false;
 		Customer TempCust;
 		Order CurrentOrder;
@@ -1605,6 +1680,7 @@ public:
 
 			if (Command == "yes")
 			{
+				/*allows user to search for a customer*/
 				Temp = CustSearcher();
 
 				if (Temp == -1)
@@ -1618,13 +1694,14 @@ public:
 				}
 			}
 			else if (Command == "no")
-			{
+			{/*allows user to make a customer*/
+
 				if (Customers.empty() == true)
-				{
+				{/*if there aren't any saved customers, the new CustID is 0*/
 					TempCust.CreateCustomer(0);
 				}
 				else
-				{
+				{/*the new CustID is taken from the current number of customers*/
 					TempCust.CreateCustomer(Customers.size());
 				}
 			}
@@ -1642,8 +1719,10 @@ public:
 					cin >> Command;
 				}
 
+				/*checks if the program has reached the max amount of orders*/
 				if (Command == "pickup" && MaxNoTakeaways < 1)
 				{
+					/*allows user to change the order type*/
 					cout << "Max number of takeaways reached" << endl;
 					cout << "Would you like to change the order type? [yes/no]" << endl << "> ";
 					cin >> Command;
@@ -1671,14 +1750,16 @@ public:
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + " Select Foods");
 
+			/*handles the food-end of the order*/
 			CurrentOrder = Bwydlen.CreateOrder();
 
+			/*assigns the customer to the order*/
 			CurrentOrder.SetCust(TempCust);
 
-
+			/*adds delivery cost if necessary*/
 			if (Command == "pickup")
 			{
-				CurrentOrder.SetDelivery(false, DeliveryCost);
+				CurrentOrder.SetDelivery(false, 0);
 			}
 			else
 			{
@@ -1687,8 +1768,10 @@ public:
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirmation");
 
+			/*creates ID*/
 			CurrentOrder.SetID(Orders.size());
 
+			/*displays the current order*/
 			cout << CurrentOrder;
 
 			cout << endl << "Is this correct? [yes/no]" << endl << "> ";
@@ -1700,19 +1783,19 @@ public:
 			{
 				return CurrentOrder;
 			}
+			/*restarts the process if the order is incorrect*/
 		} while (Command == "no");
-
 		return CurrentOrder;
 	}
 
 	void WriteAllFiles()
-	{
+	{/*allows the program to save all data*/
 		string Command;
 		ofstream Writer;
 
 		Bwydlen.WriteFile();
 
-		//write employees
+		WriteEmployees();
 		//write misc
 
 		Writer.open("Orders.txt");
@@ -1746,7 +1829,7 @@ public:
 	}
 
 	void ReadAllFiles()
-	{//kinda function-junction?
+	{/*allows the program to read in all data*/
 		string Command;
 		ifstream Reader;
 		Customer TempCust;
@@ -1803,17 +1886,17 @@ public:
 	}
 
 	void DisplayMenu()
-	{
+	{/*displays the food menu*/
 		Bwydlen.DisplayMenu();
 	}
 
 	void CreateCusine()
-	{
+	{/*allows the user to create a new cuisine*/
 		Bwydlen.CreateCuisine();
 	}
 
 	void EditDeliveryCost()
-	{
+	{/*allows the user to update the delivery cost*/
 		MenuTitle = "Delivery cost > ";
 
 		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
@@ -1823,7 +1906,7 @@ public:
 	}
 
 	void BrowseCustomers()
-	{
+	{/*allows the user to view all saved customers*/
 		string Command;
 
 		MenuTitle = "Browse Customers > ";
@@ -1834,12 +1917,15 @@ public:
 			cout << Customers[i];
 		}
 
-		cout << "Enter [exit] to return to menu" << endl << "> ";
+		cout << "Enter [return] to return to menu" << endl << "> ";
 		cin >> Command;
+
+		AJT.VC.CustCheck(Command, "return");
 
 		return;
 	}
 
+	//I don't like this
 	void CreateTempFiles(int Option)
 	{
 		ofstream Writer;
@@ -1876,7 +1962,7 @@ public:
 	}
 
 	int CustSearcher()
-	{
+	{/*allows the user to search through saved customers*/
 		bool Found = false;
 		string Query, Command;
 
@@ -1904,7 +1990,7 @@ public:
 			}
 
 			if (Found == false)
-			{
+			{/*not found clause*/
 				cout << "The searched customer could not be found" << endl;
 				cout << "Would you like to try again? [yes/no]" << endl << "> ";
 				cin >> Command;
@@ -1921,11 +2007,10 @@ public:
 				}
 			}
 		} while (Found == false);
-
 	}
 
 	void CloseOrder()
-	{
+	{/*allows the user to close an order if it has been completed*/
 		string Command;
 		bool Valid = false;
 		int Index;
@@ -1940,17 +2025,18 @@ public:
 				cout << i + 1 << ") " << Orders[i].GetID() << endl;
 			}
 
+			/*gives the user the option to view a specific order or to close it*/
 			cout << "Please type either [view #] or [close #] where # is between [1-" << Orders.size() << "]";
 			cout << " or type [exit] to leave";
 			cout << endl << "> ";
 			cin >> Command;
 
 			if (Command[0] == 'e')
-			{
+			{/*exit clause*/
 				return;
 			}
 			else if (Command[0] == 'v')
-			{
+			{/*view clause*/
 				Index = stoi(Command.substr(5));
 				cout << Orders[Index];
 
@@ -1965,18 +2051,17 @@ public:
 					return;
 				}
 				else
-				{
+				{/*for re-looping*/
 					Valid = false;
 				}
-
 			}
 			else if (Command[0] == 'c')
-			{
+			{/*close clause*/
 				Index = stoi(Command.substr(6));
 				Orders[Index].SetOpen(false);
 			}
 			else
-			{
+			{/*error message*/
 				cout << "Please enter either [view #], [close #] or [exit]" << endl;
 				cin >> Command;
 			}
@@ -1984,7 +2069,7 @@ public:
 	}
 
 	void MainMenu()
-	{
+	{/*The mani menut of the program & functionjunction*/
 		vector <string> Options{
 			"View Menu sub-Menu","Make New Order","Close Order","View Employee sub-Menu",
 			"View Customer sub-Menu", "Misc sub-menu",
@@ -1998,19 +2083,15 @@ public:
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
+			/*displays options*/
 			AJT.Graphics.DisplayOptions(Options, 1);
 
 			cin >> Command;
 
-			while (stoi(Command) < 1 || stoi(Command) > Options.size() + 1)
-			{
-				cout << "Please enter a value between [1-" << Options.size() + 1 << "] ";
-				cout << endl << "> ";
-				cin >> Command;
-			}
+			Command = AJT.VC.NumRangeCheck(Command, 1, Options.size() + 1);
 
 			switch (stoi(Command))
-			{
+			{/*junction*/
 			case 1:
 			{
 				Bwydlen.SelectionMenu();
@@ -2047,7 +2128,7 @@ public:
 				break;
 			}
 			case 7:
-			{
+			{/*prompts user to save files before exiting*/
 				cout << "Would you like to save your files first? [yes/no]" << endl << "> ";
 				cin >> Command;
 
@@ -2062,14 +2143,17 @@ public:
 				break;
 			}
 			default:
+			{
+				cout << "ERROR::Outside of switch bounds (MainMenu)" << endl;
 				break;
+			}
 			}
 		} while (Command != "exit");
 	}
 
 	void CustomerMenu()
-	{
-		vector <string> Options{ "View Customers","Create Customer","Edit Customer" };
+	{/*sub-menu for handling customers*/
+		vector <string> Options{"View Customers","Create Customer"};
 		string Command;
 
 		do
@@ -2077,17 +2161,13 @@ public:
 			MenuTitle = "Customer Menu > ";
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
-
+			
+			/*displays options*/
 			AJT.Graphics.DisplayOptions(Options, 1);
 
 			cin >> Command;
 
-			while (stoi(Command) < 1 || stoi(Command) > Options.size() + 1)
-			{
-				cout << "Please enter a value between [1-" << Options.size() + 1 << "] ";
-				cout << endl << "> ";
-				cin >> Command;
-			}
+			Command = AJT.VC.NumRangeCheck(Command, 1, Options.size() + 1);
 
 			switch (stoi(Command))
 			{
@@ -2100,6 +2180,7 @@ public:
 			{
 				Customer TempCust;
 
+				/*checks if the new CustID should be 0 or greater*/
 				if (Customers.empty() == true)
 				{
 					TempCust.CreateCustomer(0);
@@ -2108,28 +2189,29 @@ public:
 				{
 					TempCust.CreateCustomer(Customers.size());
 				}
+
+				/*adds customer to customer list*/
 				Customers.push_back(TempCust);
 				TempCust.Clear();
 				break;
 			}
 			case 3:
 			{
-				//CustSearcher();
-				break;
-			}
-			case 4:
-			{
 				Command = "exit";
 				break;
 			}
 			default:
+			{
+				cout << "ERROR::Outside of switch bounds (CustomerMenu)" << endl;
 				break;
+			}
 			}
 		} while (Command != "exit");
 	}
 
+	//needs to be saved to file
 	void MiscMenu()
-	{
+	{/*miscellaneous menu */
 		vector <string> Options{
 			"Change Delivery Cost", "Change Maximum Takeaway Orders","Save All Files",
 			"Read All Files"
@@ -2142,21 +2224,17 @@ public:
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
+			/*displays options*/
 			AJT.Graphics.DisplayOptions(Options, 1);
 
 			cin >> Command;
 
-			while (stoi(Command) < 1 && stoi(Command) > Options.size() + 1)
-			{
-				cout << "Please enter between [1-" << Options.size() + 1 << "]";
-				cout << endl << "> ";
-				cin >> Command;
-			}
+			Command = AJT.VC.NumRangeCheck(Command, 1, Options.size() + 1);
 
 			switch (stoi(Command))
 			{
 			case 1:
-			{
+			{/*allows the user to change the delivery cost*/
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Change delivery cost");
 
 				cout << "Current Delivery price: " << CurrencySym;
@@ -2168,7 +2246,7 @@ public:
 				break;
 			}
 			case 2:
-			{
+			{/*allows the user to change the MaxAmount of orders*/
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Change No. orders");
 
 				cout << "Current number of max orders: " << MaxNoTakeaways << endl;
@@ -2198,16 +2276,19 @@ public:
 			case 5:
 			{
 				return;
-			}
-			default:
 				break;
 			}
-
+			default:
+			{
+				cout << "ERROR::Outside of switch bounds (MiscMenu)" << endl;
+				break;
+			}
+			}
 		} while (Command != "exit");
 	}
 
 	void EmployeeMenu()
-	{
+	{/*sub-menu for employees*/
 		vector <string> Options{
 			"View Emplyees", "Create Employee", "Edit Employee", "Delete Employee"
 		};
@@ -2222,6 +2303,7 @@ public:
 
 			AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
+			/*displays options*/
 			AJT.Graphics.DisplayOptions(Options, 1);
 			cin >> Command;
 
@@ -2231,7 +2313,7 @@ public:
 			{
 			case 1:
 			{
-				ReadEmployees();
+				//ReadEmployees();
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "View Employees");
 
 				for (auto X : Employees)
@@ -2247,18 +2329,21 @@ public:
 				break;
 			}
 			case 2:
-			{
+			{/*allows the user to make a new employee*/
 				do
 				{
 					MenuTitle = "Employee Menu > Create Employee > ";
 
 					AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
+					/*determines which derived class to use*/
 					cout << "Is the new employee a chef? [yes/no]" << endl;
 					cin >> Command;
 
 					Command = AJT.VC.YNCheck(Command);
 
+					/*current index keeps track of which Employees 
+					element we're on*/
 					if (Employees.empty() == true)
 					{
 						CurrentIndex = 0;
@@ -2270,6 +2355,8 @@ public:
 
 					if (Command == "yes")
 					{
+						/*new chef object is added, Current Index 
+						should be synced with it's position*/
 						Employees.push_back(new Chef);
 						
 						do
@@ -2277,6 +2364,7 @@ public:
 							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "New Chef > ");
 
 							Employees[CurrentIndex]->CreateEmployee(CurrentIndex);
+							/*position is set automatically*/
 							Employees[CurrentIndex]->SetPosition("Chef");
 
 							AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirmation > ");
@@ -2294,7 +2382,9 @@ public:
 						}
 					}
 					else
-					{
+					{/*same goes for Employee*/
+						/*new GeneralEmployee added to the vector 
+						with CurrentIndex synced*/
 						Employees.push_back(new GeneralEmployee);
 
 						do
@@ -2319,7 +2409,7 @@ public:
 					}
 
 					if (Command == "yes")
-					{
+					{/*allows the user to make a new employee*/
 						cout << "Would you like to make another employee [yes/no]";
 						cout << endl << "> ";
 						cin >> Command;
@@ -2328,14 +2418,17 @@ public:
 
 						if (Command == "no")
 						{
+							Command = "leave";
 							break;
 						}
 					}
-				} while (Command != "exit");
+				} while (Command != "leave");
 				break;
 			}
 			case 3:
-			{//edit employee
+			{/*edit employee*/
+				/*allows the user to edit an employee by displaying the 
+				current details, making a new one then overwiting the old one*/
 				int ChosenIndex;
 				string Temp;
 
@@ -2345,6 +2438,7 @@ public:
 
 					AJT.SCH.ScreenCleanerTM(0, MenuTitle + "\n");
 
+					/*displays employees*/
 					for (int i = 0; i < Employees.size(); i++)
 					{
 						cout << i + 1 << ") ";
@@ -2370,15 +2464,19 @@ public:
 					{
 						cout << endl;
 
+						/*obtains the current ID*/
 						Temp = Employees[ChosenIndex]->GetID();
 
+						/*removes the letters*/
 						Temp = Temp.substr(3);
 
+						/*creates a new employee with the old ID*/
 						Employees[ChosenIndex]->CreateEmployee(stoi(Temp));
 					}
 
 					AJT.SCH.ScreenCleanerTM(0, MenuTitle + "Confirmation > ");
 
+					/*shows new details*/
 					Employees[ChosenIndex]->Display();
 
 					cout << "Is this correct? [yes/no]" << endl << "> ";
@@ -2390,12 +2488,13 @@ public:
 					{
 						break;
 					}
-				} while (Command != "leave");
-				
+				} while (Command != "leave");				
 				break;
 			}
 			case 4:
-			{//delete employee
+			{/*delete employee*/
+				/*allows the user to select an employee, then sets their ID to -1
+				this is then ignored when the vector is rebuilt*/
 				int ChosenIndex;
 				vector <Employee*> TempEmployees;
 
@@ -2403,6 +2502,7 @@ public:
 
 				AJT.SCH.ScreenCleanerTM(0, MenuTitle + "\n");
 
+				/*displays employees*/
 				for (int i = 0; i < Employees.size(); i++)
 				{
 					cout << i + 1 << ") ";
@@ -2426,17 +2526,20 @@ public:
 
 				if (Command == "yes")
 				{
+					/*marks employee for deletion*/
 					Employees[ChosenIndex]->SetID("-1");
 				}
 
+				/*rebuilds vector*/
 				for (int i = 0; i < Employees.size(); i++)
 				{
 					if (Employees[i]->GetID() != "-1")
-					{
+					{/*ignores marked employees*/
 						TempEmployees.push_back(Employees[i]);
 					}
 				}
 
+				/*overwrites old vector with new one*/
 				Employees = TempEmployees;
 				break;
 			}
@@ -2452,12 +2555,11 @@ public:
 				break;
 			}
 			}
-
 		} while (Command != "exit");
 	}
 
 	void ReadEmployees()
-	{
+	{/*reads the employee file and populates Employees<> vector*/
 		ifstream Reader;
 		int NoEmps, EmpType;
 		string Input;
@@ -2468,12 +2570,15 @@ public:
 
 		Reader.open("Employees.txt");
 
+		/*obtains the number of employees*/
 		Reader >> NoEmps;
 
 		for (int i = 0; i < NoEmps; i++)
 		{
+			/*reads the type of employee*/
 			Reader >> EmpType;
 
+			/*determines which derived class to use*/
 			if (EmpType == 1)
 			{
 				Employees.push_back(new Chef);
@@ -2495,12 +2600,13 @@ public:
 	}
 
 	void WriteEmployees()
-	{
+	{/*writes employees to file*/
 		ofstream Writer;
 		Writer.open("Employees.txt");
 
 		Writer << Employees.size() << endl;
 
+		/*auto used for simplicity*/
 		for (auto X : Employees)
 		{
 			X->Write(Writer);
@@ -2521,8 +2627,9 @@ private:
 };
 
 int main()
-{
+{/*barren main*/
 	RestraurantSys RSys;
 
+	/*calls the main menu*/
 	RSys.MainMenu();
 }

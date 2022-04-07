@@ -1,35 +1,52 @@
-﻿  TakeAwaySys.cpp
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(34,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+﻿  Employee.cpp
+  FoodItem.cpp
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(46,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(54,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(66,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(65,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(78,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(89,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(308,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(445,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(613,29): warning C4101: 'Counter': unreferenced local variable
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(722,55): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(814,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(869,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(925,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(997,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1040,7): warning C4101: 'CuisineChoice': unreferenced local variable
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1645,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1707,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2126,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2245,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2285,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2375,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2433,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1942): warning C4715: 'RestraurantSys::CustSearcher': not all control paths return a value
-MSBUILD : error MSB4166: Child node "2" exited prematurely. Shutting down. Diagnostic information may be found in files in "C:\Users\gecko\AppData\Local\Temp\" and will be named MSBuild_*.failure.txt. This location can be changed by setting the MSBUILDDEBUGPATH environment variable to a different directory.
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(102,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(326,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  TakeAwaySys.cpp
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(46,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(66,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(78,1): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(102,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\AJTools.h(326,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(461,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(617,2): error C2144: syntax error: 'void' should be preceded by ';'
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(705,55): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(797,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(852,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(908,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(980,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1628,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(1690,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2109,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2228,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2268,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2358,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\TakeAwaySys2\TakeAwaySys\TakeAwaySys\TakeAwaySys.cpp(2416,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
