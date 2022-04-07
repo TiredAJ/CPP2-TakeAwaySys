@@ -1820,6 +1820,8 @@ public:
 
 		Writer.close();
 
+		WriteMisc();
+
 		MenuTitle = "Write Files > ";
 
 		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
@@ -1876,6 +1878,8 @@ public:
 			}
 		}
 		Reader.close();
+
+		ReadMisc();
 
 		MenuTitle = "Read Files > ";
 
@@ -2613,6 +2617,26 @@ public:
 		}
 
 		Writer.close();
+	}
+
+	void WriteMisc()
+	{
+		ofstream Writer;
+		Writer.open("Misc.txt");
+
+		Writer << MaxNoTakeaways << endl << NoTakeaways << endl << DeliveryCost;
+
+		Writer.close();
+	}
+
+	void ReadMisc()
+	{
+		ifstream Reader;
+		Reader.open("Misc.txt");
+
+		Reader >> MaxNoTakeaways >> NoTakeaways >> DeliveryCost;
+
+		Reader.close();
 	}
 
 private:
