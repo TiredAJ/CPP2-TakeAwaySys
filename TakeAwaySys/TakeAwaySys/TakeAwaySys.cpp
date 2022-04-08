@@ -92,7 +92,6 @@ public:
 		Home.Clear();
 		Email = "Undefined";
 		PhoneNo = "Undefined";
-		Loyalty = 0;
 	}
 
 	string GetName()
@@ -132,7 +131,7 @@ public:
 	{/*overloaded for writing to a file. The + sign is used as a delimiter
 	 as commas are used by orders*/
 		Filer << Cust.CustID << "+" << Cust.Name << "+" << Cust.Email;
-		Filer << "+" << Cust.PhoneNo << "+" << Cust.Loyalty;
+		Filer << "+" << Cust.PhoneNo;
 		Filer << "+";
 		Filer << Cust.Home << endl;
 
@@ -164,8 +163,7 @@ public:
 		Cust.Name = Segments[1];
 		Cust.Email = Segments[2];
 		Cust.PhoneNo = Segments[3];
-		Cust.Loyalty = stoi(Segments[4]);
-		Cust.Home.ReadAddr(Segments[5]);
+		Cust.Home.ReadAddr(Segments[4]);
 
 		Segments.clear();
 
@@ -178,7 +176,6 @@ private:
 	Address Home;
 	string Email;
 	string PhoneNo;
-	int Loyalty;
 };
 
 class FoodItem
@@ -461,11 +458,6 @@ public:
 		Clear();
 	};
 
-	/*Order(int ID)
-	{
-		OrderID = ID;
-	}*/
-
 	void AddItem(FoodItem& AddedItem)
 	{/*adds a chosen FoodItem to basket*/
 		Basket.push_back(&AddedItem);
@@ -606,7 +598,6 @@ public:
 		return Filer;
 	}
 
-	//need to work on this
 	friend ifstream& operator>>(ifstream& Obtainer, Order OR)
 	{/*overloaded reader object*/
 		vector <string> Segments;
@@ -2015,21 +2006,15 @@ public:
 
 		Reader.open("Customers.txt");
 
-		if (Reader.is_open() != true)
-		{
-			CreateTempFiles(2);
-		}
-		else
-		{
-			Reader >> NoCusts;
+		Reader >> NoCusts;
 
-			for (int i = 0; i < NoCusts; i++)
-			{
-				Reader >> TempCust;
-				Customers.push_back(TempCust);
-				TempCust.Clear();
-			}
+		for (int i = 0; i < NoCusts; i++)
+		{
+			Reader >> TempCust;
+			Customers.push_back(TempCust);
+			TempCust.Clear();
 		}
+
 		Reader.close();
 
 		ReadMisc();
@@ -2080,42 +2065,6 @@ public:
 		AJT.VC.CustCheck(Command, "return");
 
 		return;
-	}
-
-	//I don't like this
-	void CreateTempFiles(int Option)
-	{
-		ofstream Writer;
-
-		switch (Option)
-		{
-		case 1:
-		{
-			Writer.open("Employees.txt");
-			Writer.close();
-			break;
-		}
-		case 2:
-		{
-			Writer.open("Customers.txt");
-			Writer.close();
-			break;
-		}
-		case 3:
-		{
-			Writer.open("Orders.txt");
-			Writer.close();
-			break;
-		}
-		case 4:
-		{
-			Writer.open("Dishes.txt");
-			Writer.close();
-			break;
-		}
-		default:
-			break;
-		}
 	}
 
 	int CustSearcher()

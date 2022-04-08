@@ -46,7 +46,7 @@ public:
 		return OS;
 	}
 
-	/*An unorthodox delimiter was used for address as commas were used
+	/*A unique delimiter was used for address as commas were used
 	elsewhere up the chain*/
 	friend ofstream& operator<<(ofstream& Filer, const Address Addr)
 	{/*overloaded operator for outputting to a file*/
