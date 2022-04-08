@@ -188,23 +188,15 @@ private:
 
 			/*for-loop pieces the vector back together, omitting 
 			either the first or last element*/
-			for (int j = 0; j < Temps.size(); j++)
+			if (Option == "left")		//removes first section
 			{
-				if (Option == "left")		//removes first section
-				{
-					if (j != 0)
-					{
-						Result += Temps[j];
-					}
-				}
-				else if (Option == "right")		//removes last section
-				{
-					if (j != Temps.size())
-					{
-						Result += Temps[j];
-					}
-				}
+				Result = Temps[0];
 			}
+			else if (Option == "right")		//removes last section
+			{
+				Result = Temps[1];				
+			}
+
 			return Result;
 		}
 

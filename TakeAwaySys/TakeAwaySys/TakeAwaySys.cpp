@@ -1469,7 +1469,7 @@ public:
 				}
 				else
 				{
-					Dishes[Page][stoi(Command) - 1].Added();
+					Dishes[Outer][Inner].Added();
 					TempOrder.AddItem(Dishes[Outer][Inner]);
 				}				
 			}
@@ -2785,7 +2785,7 @@ public:
 
 		AJT.SCH.ScreenCleanerTM(0, MenuTitle);
 
-		cout << "Please enter a nane for the report: " << endl << "> ";
+		cout << "Please enter a name for the report: " << endl << "> ";
 		getline(cin >> ws, FileName);
 
 		FileName += ".txt";
