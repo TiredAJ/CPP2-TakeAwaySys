@@ -1,7 +1,0 @@
-3
-1 Emp0,Douglas Thomas,5698167811,Chef,Italian
-No. 11:Wine Street:Pontlottyn:Cardiff:CF81 9PH
-0 Emp1,Anya Lane,8624070330,Receptionist
-25:Oxford Street:Cardiff:Cardiff:CF24 3DT
-0 Emp2,Manisha Dolan,7533297900,Manager
-14:Commercial Street:Blaenllechau:Cardiff:CF43 4NN

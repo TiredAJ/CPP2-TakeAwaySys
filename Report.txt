@@ -1,0 +1,11 @@
+Daily report
+
+No. of orders booked: 4
+Most popular cuisine: Italian
+Most Popular Dish: Spaghetti
+Top customers: 
+	Axelle Thomas [CID0] 
+	Kasi Jules [CID2] 
+
+
+total income: £37
